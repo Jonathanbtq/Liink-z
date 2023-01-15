@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('assets/script.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+	<div class="example-wrapper div_container">
+		<div
+			class="Link_div_ctn">
+			{# {{ dump(user[0].user) }} #}
+			<div class="d-flex text-light align-item-center div_links">
+				{% if user[0].youtube %}
+					<p class="pe-5 p_links">Youtube :</p>
+					<a href="{{ user[0].youtube }}" target="_blank" class="box-txt">{{ user[0].youtube }}</a>
+					<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
+						<i class="fas fa-copy">Copy</i>
+					</button>
+				{% else %}
+					<p class="pe-5 p_links">Youtube :</p>
+				{% endif %}
+			</div>
+			<div class="d-flex bg-dark text-light align-item-center div_links">
+				{% if user[0].twitter %}
+					<p class="pe-5 p_links">twitter :</p>
+					<a href="{{ user[0].twitter }}" target="_blank" class="box-txt">{{ user[0].twitter }}</a>
+					<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
+						Copy
+					</button>
+				{% else %}
+					<p class="pe-5 p_links">twitter :</p>
+				{% endif %}
+			</div>
+			<div class="d-flex bg-dark text-light align-item-center div_links">
+				{% if user[0].facebook %}
+					<p class="pe-5 p_links">facebook :</p>
+					<a href="{{ user[0].facebook }}" target="_blank" class="box-txt">{{ user[0].facebook }}</a>
+					<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
+						<i class="fas fa-copy">Copy</i>
+					</button>
+				{% else %}
+					<p class="pe-5 p_links">facebook :</p>
+				{% endif %}
+			</div>
+			<div class="d-flex bg-dark text-light align-item-center div_links">
+				{% if user[0].instagram %}
+					<p class="pe-5 p_links">instagram :</p>
+					<a href="{{ user[0].instagram }}" target="_blank" class="box-txt">{{ user[0].instagram }}</a>
+					<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
+						<i class="fas fa-copy">Copy</i>
+					</button>
+				{% else %}
+					<p class="pe-5 p_links">instagram :</p>
+				{% endif %}
+			</div>
+			<div class="d-flex bg-dark text-light align-item-center div_links">
+				{% if user[0].github %}
+					<p class="pe-5 p_links">github :</p>
+					<a href="{{ user[0].github }}" target="_blank" class="box-txt">{{ user[0].github }}</a>
+					<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
+						<i class="fas fa-copy">Copy</i>
+					</button>
+				{% else %}
+					<p class="pe-5 p_links">github :</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

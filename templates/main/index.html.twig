@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil
+{% endblock %}
+
+{% block body %}
+	<div class="example-wrapper div_container">
+		{% if app.user %}
+			<a href="{{ path('show', {id: app.user.id}) }}">
+				<h1>
+					{{ app.user.pseudo }}</h1>
+			</a>
+			{% if form %}
+				<div class="Link_div_ctn">
+					{% for form in form %}
+						<div class="add_links">
+							<a href="{{ path('edit', {id: form.id}) }}">+</a>
+						</div>
+						<div class="d-flex bg-dark text-light align-item-center div_links">
+							{% if form.youtube %}
+								<p class="pe-5 p_links">Youtube :</p>
+								<a href="{{ form.youtube }}" class="link_idx" target="_blank">{{ form.youtube }}</a>
+							{% else %}
+								<p class="pe-5 p_links">Youtube :</p>
+							{% endif %}
+						</div>
+						<div class="d-flex bg-dark text-light align-item-center div_links">
+							{% if form.twitter %}
+								<p class="pe-5 p_links">twitter :</p>
+								<a href="{{ form.twitter }}" class="link_idx" target="_blank">{{ form.twitter }}</a>
+							{% else %}
+								<p class="pe-5 p_links">twitter :</p>
+							{% endif %}
+						</div>
+						<div class="d-flex bg-dark text-light align-item-center div_links">
+							{% if form.facebook %}
+								<p class="pe-5 p_links">facebook :</p>
+								<a href="{{ form.facebook }}" class="link_idx" target="_blank">{{ form.facebook }}</a>
+							{% else %}
+								<p class="pe-5 p_links">facebook :</p>
+							{% endif %}
+						</div>
+						<div class="d-flex bg-dark text-light align-item-center div_links">
+							{% if form.instagram %}
+								<p class="pe-5 p_links">instagram :</p>
+								<a href="{{ form.instagram }}" class="link_idx" target="_blank">{{ form.instagram }}</a>
+							{% else %}
+								<p class="pe-5 p_links">instagram :</p>
+							{% endif %}
+						</div>
+						<div class="d-flex bg-dark text-light align-item-center div_links">
+							{% if form.github %}
+								<p class="pe-5 p_links">github :</p>
+								<a href="{{ form.github }}" class="link_idx" target="_blank">{{ form.github }}</a>
+							{% else %}
+								<p class="pe-5 p_links">github :</p>
+							{% endif %}
+						</div>
+					{% endfor %}
+				</div>
+
+			{% else %}
+
+				{{ form(formLink)}}
+					<div class="d-flex m-5">
+						<div class="mb-3">
+							<a href="">Youtube</a>
+							<a href="">Twitter</a>
+							<a href="">Instagram</a>
+							<a href="">Facebook</a>
+							<a href="">Twitch</a>
+							<a href="">GitHub</a>
+						</div>
+					</div>
+				{% endif %}
+			{% else %}
+				<div class="example-wrapper div_container">
+					<div class="Link_div_ctn">
+						<a href="{{ path('login') }}">Se connecter</a>
+						<p>Bienvenue sur le site qui te permettra de partager tous tes liens vers tes divers réseaux sociaux
+																																																																																																																																																																										N'hesites pas a partager le site et ta page a tes amis !
+						</p>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	{% endblock %}
