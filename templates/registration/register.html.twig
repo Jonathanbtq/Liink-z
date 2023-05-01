@@ -4,16 +4,30 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Register</h1>
+	<div class="register_wdt">
+		<div class="register_h_ctn">
+			<h1 class="h_register">Create your account now</h1>
+		</div>
+		
+		<div class="register_ctn">
+			<div class="form_register">
+				{{ form_start(registrationForm) }}
+				{{ form_row(registrationForm.pseudo)}}
+				{{ form_row(registrationForm.email)}}
+				{{ form_row(registrationForm.plainPassword) }}
+				{{ form_row(registrationForm.agreeTerms) }}
 
-	{{ form_start(registrationForm) }}
-	{{ form_row(registrationForm.pseudo)}}
-	{{ form_row(registrationForm.email)}}
-	{{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-	{{ form_row(registrationForm.agreeTerms) }}
+				<button type="submit" class="btn_register_submit">Sign up ></button>
+				{{ form_end(registrationForm) }}
 
-	<button type="submit" class="btn">Register</button>
-	{{ form_end(registrationForm) }}
+			</div>
+		</div>
+
+		<div class="register_p_ctn">
+			<p>Already have you an account?<span class="span_red_color"> Login</span></p>
+		</div>
+	</div>
+	
+	
+	
 {% endblock %}

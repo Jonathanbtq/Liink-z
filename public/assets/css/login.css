@@ -1,0 +1,60 @@
+:root {
+    --blue-color: #0d6efd;
+}
+
+.login_wdt{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.post_login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    margin-bottom: 50px;
+}
+.login_singin{
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 100px;
+}
+.form_register_login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+.form_register_login > div{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.form_register_login > div > input{
+    width: 100%;
+    min-height: 2.5vw;
+    border: none;
+    border-bottom: 1px rgb(38, 32, 63) solid;
+    background-color: rgb(17, 15, 27);
+    color: white;
+}
+.sbt_login{
+    background-color: var(--blue-color);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    width: 25%;
+    min-height: 2vw;
+    margin-top: 20px;
+}
+.login_p_ctn{
+    display: flex;
+    justify-content: center;
+    width: 25%;
+    margin-top: 50px;
+    color: white;
+}

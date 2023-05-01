@@ -62,26 +62,26 @@
 			{% else %}
 
 				{{ form(formLink)}}
-					<div class="d-flex m-5">
-						<div class="mb-3">
-							<a href="">Youtube</a>
-							<a href="">Twitter</a>
-							<a href="">Instagram</a>
-							<a href="">Facebook</a>
-							<a href="">Twitch</a>
-							<a href="">GitHub</a>
-						</div>
-					</div>
-				{% endif %}
-			{% else %}
-				<div class="example-wrapper div_container">
-					<div class="Link_div_ctn">
-						<a href="{{ path('login') }}">Se connecter</a>
-						<p>Bienvenue sur le site qui te permettra de partager tous tes liens vers tes divers réseaux sociaux
-																																																																																																																																																																										N'hesites pas a partager le site et ta page a tes amis !
-						</p>
+				<div class="d-flex m-5">
+					<div class="mb-3">
+						<a href="">Youtube</a>
+						<a href="">Twitter</a>
+						<a href="">Instagram</a>
+						<a href="">Facebook</a>
+						<a href="">Twitch</a>
+						<a href="">GitHub</a>
 					</div>
 				</div>
 			{% endif %}
+		{% else %}
+			<div class="example-wrapper div_container">
+				<div class="Link_div_ctn">
+					<a href="{{ path('login') }}">Se connecter</a>
+					<p>Bienvenue sur le site qui te permettra de partager tous tes liens vers tes divers réseaux sociaux
+																																																																																																																																																																									N'hesites pas a partager le site et ta page a tes amis !
+					</p>
+				</div>
+			</div>
+		{% endif %}
 		</div>
 	{% endblock %}

@@ -4,7 +4,8 @@
 {% endblock %}
 
 {% block body %}
-	<form method="post">
+<div class="login_wdt">
+	<form method="post" class="post_login">
 		{% if error %}
 			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 		{% endif %}
@@ -17,16 +18,32 @@
 			</div>
 		{% endif %}
 
-		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-		<label for="inputId">Pseudo</label>
-		<input type="text" value="{{ last_username }}" name="pseudo" id="pseudo" class="form-control" autocomplete="pseudo" required autofocus>
-		<label for="inputPassword">Password</label>
-		<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+		<div class="register_h_ctn">
+			<h1 class="login_singin">Please sign in</h1>
+		</div>
+		<div class="register_ctn">
+			<div class="form_register_login">
+				<div>
+					<label for="inputId">Pseudo</label>
+					<input type="text" value="{{ last_username }}" name="pseudo" id="pseudo" class="form-control" autocomplete="pseudo" required autofocus>
+				</div>
+				<div>
+					<label for="inputPassword">Password</label>
+					<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+				</div>
+				
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<button class="sbt_login" type="submit">
+					Sign in >
+				</button>
+			</div>
+		</div>
 
-		<button class="btn btn-lg btn-primary" type="submit">
-			Sign in
-		</button>
+		<div class="login_p_ctn">
+			<p>Create an account?<span class="span_red_color"> Create it</span></p>
+		</div>
 	</form>
+</div>
+	
 {% endblock %}
