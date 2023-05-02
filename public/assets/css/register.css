@@ -1,7 +1,10 @@
 .span_red_color{
     color: rgb(224, 112, 21);
 }
-
+.span_register_error{
+    width: 50%;
+    color: red;
+}
 .register_wdt{
     display: flex;
     flex-direction: column;

@@ -40,7 +40,7 @@ class LinksRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return OrganismeFormation[] Returns an array of OrganismeFormation objects
+     * @return Link[] Returns an array of Link objects
      */
     public function findByAdresse($value): array
     {

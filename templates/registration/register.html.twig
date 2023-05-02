@@ -13,6 +13,9 @@
 			<div class="form_register">
 				{{ form_start(registrationForm) }}
 				{{ form_row(registrationForm.pseudo)}}
+				{% if message == true %}
+					<span class="span_register_error">This pseudo / username is already taken</span>
+				{% endif %}
 				{{ form_row(registrationForm.email)}}
 				{{ form_row(registrationForm.plainPassword) }}
 				{{ form_row(registrationForm.agreeTerms) }}
@@ -24,7 +27,7 @@
 		</div>
 
 		<div class="register_p_ctn">
-			<p>Already have you an account?<span class="span_red_color"> Login</span></p>
+			<p>Already have you an account?<a href="{{ path('login')}}"><span class="span_red_color"> Login</span></a></p>
 		</div>
 	</div>
 	

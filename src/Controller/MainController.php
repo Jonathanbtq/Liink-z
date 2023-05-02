@@ -20,6 +20,8 @@ class MainController extends AbstractController
         $form = $this->createForm(AddLinkFormType::class, $link);
         $form->handleRequest($request);
 
+        $user = $this->getUser();
+        $pseudo = $user->pseudo;
         if ($form->isSubmitted() && $form->isValid()) {
             $link->setUser($this->getUser());
             $linkRepo->save($link, true);
@@ -29,7 +31,7 @@ class MainController extends AbstractController
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
             'formLink' => $form->createView(),
-            'form' => $linkRepo->findByAdresse($this->getUser())
+            'form' => $linkRepo->findByAdresse($pseudo)
         ]);
     }
 
@@ -58,12 +60,13 @@ class MainController extends AbstractController
     /***
      * Affichage de la page utilisateur
      */
-    #[Route('/show/{id}', name: 'show')]
-    public function showLink($id, Request $request, LinksRepository $linkRepo): Response
+    #[Route('/show/{pseudo}', name: 'show')]
+    public function showLink($pseudo, LinksRepository $linkRepo, UserRepository $userRepo): Response
     {
+        $user = $userRepo->findBy(['pseudo' => $pseudo]);
         return $this->render('main/show.html.twig', [
             'controller_name' => 'Main page',
-            'user' => $linkRepo->findByAdresse($id),
+            'user' => $linkRepo->findByAdresse($user[0]->getId()),
         ]);
     }
 

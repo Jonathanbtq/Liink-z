@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Links;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\LinksRepository;
+use App\Repository\UserRepository;
 use App\Security\UserAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,13 +20,21 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, LinksRepository $linkRepo,UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
+        $message = false;
         if ($form->isSubmitted() && $form->isValid()) {
+            if($userRepo->findOneByPseudo($form['pseudo']->getData()) != null){
+                $message = True;
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                    'message' => $message
+                ]);
+            }
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -46,6 +57,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'message' => $message
         ]);
     }
 }

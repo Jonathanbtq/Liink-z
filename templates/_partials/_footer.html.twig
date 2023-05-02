@@ -21,7 +21,7 @@
 					<ul class="list-unstyled mb-0">
 						<li>
 							{% if app.user %}
-								<a href="{{ path('show', {id: app.user.id}) }}" class="text-white">Profile</a>
+								<a href="{{ path('show', {pseudo: app.user.pseudo}) }}" class="text-white">Profile</a>
 							{% endif %}
 						</li>
 					</ul>

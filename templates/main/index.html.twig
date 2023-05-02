@@ -6,16 +6,18 @@
 {% block body %}
 	<div class="example-wrapper div_container">
 		{% if app.user %}
-			<a href="{{ path('show', {id: app.user.id}) }}">
+			<a href="{{ path('show', {pseudo: app.user.pseudo}) }}">
 				<h1>
 					{{ app.user.pseudo }}</h1>
 			</a>
 			{% if form %}
 				<div class="Link_div_ctn">
 					{% for form in form %}
+						{% if app.user.id == form.getUser.id %}
 						<div class="add_links">
 							<a href="{{ path('edit', {id: form.id}) }}">+</a>
 						</div>
+						{% endif %}
 						<div class="d-flex bg-dark text-light align-item-center div_links">
 							{% if form.youtube %}
 								<p class="pe-5 p_links">Youtube :</p>

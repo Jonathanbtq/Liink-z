@@ -126,6 +126,7 @@ a {
     background: linear-gradient(225deg, #27d86c 0%, #26CAF8 50%, #C625D0 100%);
     border-radius: 50%;
     text-align: center;
+    color: rgb(17, 15, 27);
 }
 
 .link_idx {
@@ -149,3 +150,4 @@ a {
     padding-top: 50px;
     padding-bottom: 150px;
 }
+
