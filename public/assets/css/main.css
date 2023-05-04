@@ -1,0 +1,12 @@
+.abonnement_ctn{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+.sub_abo{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(3, 14, 27);
+    margin-bottom: 10px;
+    width: 100%;
+}

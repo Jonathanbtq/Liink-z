@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Links;
+use App\Entity\User;
 use App\Form\AddLinkFormType;
+use App\Form\DetailUserFormType;
 use App\Repository\LinksRepository;
 use App\Repository\SubscriptionRepository;
 use App\Repository\UserRepository;
@@ -17,12 +19,22 @@ class MainController extends AbstractController
     #[Route('/', name: 'main')]
     public function index(Request $request, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo): Response
     {
-        $user = $this->getUser();
-        $sub = $subRepo->findBy(['subscriber' => $this->getUser()]);
+        if($this->getUser()){
+            $user = $this->getUser();
+            $sub = $subRepo->findSubscriptionsByUser($this->getUser());
+
+            $userAbo = [];
+            foreach($sub as $sub){
+                $userAbo[] = $userRepo->findBy(['id' => $sub->getSubscriptionUser()->getId()]);
+            }
+        }else{
+            $userAbo = 'Vous n\'etes pas abonnée';
+        }
+        
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
             'user' => $user,
-            'sub' => $sub
+            'sub' => $userAbo
         ]);
     }
 
@@ -49,19 +61,53 @@ class MainController extends AbstractController
     /***
      * Affichage de la page utilisateur
      */
-    #[Route('/{pseudo}', name: 'show')]
-    public function showLink($pseudo, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo): Response
+    #[Route('/show/{pseudo}', name: 'show')]
+    public function showLink($pseudo, Request $request, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo, User $userc): Response
     {
         $user = $userRepo->findBy(['pseudo' => $pseudo]);
         $abo = $subRepo->findOneByIdAbo($user, $this->getUser());
+
+        if(isset($_POST['addDescShow'])){
+            if (isset($_POST['description']) && !empty($_POST['description'])){
+                $monInputValue = $request->request->get('description');
+                $desc = $user[0];
+                $desc->setDescription($monInputValue);
+
+                $userRepo->save($desc, true);
+                return $this->redirectToRoute('show', ['pseudo' => $user[0]->getPseudo()]);
+            }
+        }
+       
+
         return $this->render('main/show.html.twig', [
             'controller_name' => 'Main page',
             'user' => $linkRepo->findByAdresse($user[0]->getId()),
-            'user_main' => $user,
+            'user_main' => $userRepo->findBy(['pseudo' => $pseudo]),
             'abo' => $abo
         ]);
     }
 
+    /***
+     * Affichage de la page utilisateur
+     */
+    #[Route('/appearance/{pseudo} ', name: 'appearance')]
+    public function ChangeUser($pseudo, Request $request, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo, User $userc): Response
+    {
+        $user = $userRepo->findBy(['pseudo' => $pseudo]);
+        $form = $this->createForm(DetailUserFormType::class, $user[0]);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) { 
+            $userRepo->save($user[0], true);
+            return $this->redirectToRoute('show', ['pseudo' => $user[0]->getPseudo()]);
+        }
+
+        return $this->render('main/appearance.html.twig', [
+            'user_main' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+    
     /**
      * Page condition d'utilisation
      */

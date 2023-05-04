@@ -5,6 +5,7 @@
 
 {% block javascripts %}
 	<script src="{{ asset('assets/script.js') }}" defer></script>
+	<script src="{{ asset('assets/js/showdesc.js') }}" defer></script>
 {% endblock %}
 
 {% block body %}
@@ -31,16 +32,20 @@
 				{% endif %}
 			{% endif %}
 		</div>
-		
+		<div class="profile_show_desc">
+			{% if user_main[0].description != null and app.user.id == user_main[0].id %}
+				<p class="desc_show_p">{{ user_main[0].description }}</p>
+			{% endif %}
+		</div>
 		<div class="Link_div_ctn">
-			{% if user[0] is defined  %}
-				{% if app.user %}
-					{% if app.user.id == user_main[0].id %}
-						<div class="add_links">
-							<a href="{{ path('edit', {id: user_main[0].id}) }}">+</a>
-						</div>
-					{% endif %}
+			{% if app.user %}
+				{% if app.user.id == user_main[0].id %}
+					<div class="add_links">
+						<a href="{{ path('edit', {id: user_main[0].id}) }}">+</a>
+					</div>
 				{% endif %}
+			{% endif %}
+			{% if user[0] is defined  %}
 				<div class="d-flex text-light align-item-center div_links">
 					{% if user[0].youtube %}
 						<p class="pe-5 p_links">Youtube :</p>
@@ -51,68 +56,6 @@
 					{% else %}
 						<p class="pe-5 p_links">Youtube :</p>
 					{% endif %}
-				</div>
-				<div class="d-flex bg-dark text-light align-item-center div_links">
-					{% if user[0].twitter %}
-						<p class="pe-5 p_links">twitter :</p>
-						<a href="{{ user[0].twitter }}" target="_blank" class="box-txt">{{ user[0].twitter }}</a>
-						<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
-							Copy
-						</button>
-					{% else %}
-						<p class="pe-5 p_links">twitter :</p>
-					{% endif %}
-				</div>
-				<div class="d-flex bg-dark text-light align-item-center div_links">
-					{% if user[0].facebook %}
-						<p class="pe-5 p_links">facebook :</p>
-						<a href="{{ user[0].facebook }}" target="_blank" class="box-txt">{{ user[0].facebook }}</a>
-						<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
-							<i class="fas fa-copy">Copy</i>
-						</button>
-					{% else %}
-						<p class="pe-5 p_links">facebook :</p>
-					{% endif %}
-				</div>
-				<div class="d-flex bg-dark text-light align-item-center div_links">
-					{% if user[0].instagram %}
-						<p class="pe-5 p_links">instagram :</p>
-						<a href="{{ user[0].instagram }}" target="_blank" class="box-txt">{{ user[0].instagram }}</a>
-						<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
-							<i class="fas fa-copy">Copy</i>
-						</button>
-					{% else %}
-						<p class="pe-5 p_links">instagram :</p>
-					{% endif %}
-				</div>
-				<div class="d-flex bg-dark text-light align-item-center div_links">
-					{% if user[0].github %}
-						<p class="pe-5 p_links">github :</p>
-						<a href="{{ user[0].github }}" target="_blank" class="box-txt">{{ user[0].github }}</a>
-						<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
-							<i class="fas fa-copy">Copy</i>
-						</button>
-					{% else %}
-						<p class="pe-5 p_links">github :</p>
-					{% endif %}
-				</div>
-			{% else %}
-				<div class="Link_div_ctn">
-					<div class="d-flex bg-dark text-light align-item-center div_links">
-						<p class="pe-5 p_links">Youtube :</p>
-					</div>
-					<div class="d-flex bg-dark text-light align-item-center div_links">
-						<p class="pe-5 p_links">twitter :</p>
-					</div>
-					<div class="d-flex bg-dark text-light align-item-center div_links">
-						<p class="pe-5 p_links">facebook :</p>
-					</div>
-					<div class="d-flex bg-dark text-light align-item-center div_links">
-						<p class="pe-5 p_links">instagram :</p>
-					</div>
-					<div class="d-flex bg-dark text-light align-item-center div_links">
-						<p class="pe-5 p_links">github :</p>
-					</div>
 				</div>
 			{% endif %}
 		</div>

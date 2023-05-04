@@ -38,7 +38,6 @@ class SubscriptionRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
     
     public function findOneByIdAbo($value, $user): ?Subscription
    {
@@ -49,6 +48,18 @@ class SubscriptionRepository extends ServiceEntityRepository
            ->getQuery()
            ->getOneOrNullResult()
        ;
+   }
+
+       
+   public function findSubscriptionsByUser($user): array
+   {
+       return $this->createQueryBuilder('s')
+        ->Join('s.subscription_user', 'su')
+        ->where('s.subscriber = :user')
+        ->setParameter('user', $user)
+        ->getQuery()
+        ->getResult();
+        ;
    }
 
 //    /**

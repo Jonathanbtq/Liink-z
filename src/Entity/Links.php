@@ -13,87 +13,18 @@ class Links
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $youtube = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $twitter = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $facebook = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $instagram = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $github = null;
-
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    #[ORM\Column]
+    private ?bool $isActived = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $link = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getYoutube(): ?string
-    {
-        return $this->youtube;
-    }
-
-    public function setYoutube(?string $youtube): self
-    {
-        $this->youtube = $youtube;
-
-        return $this;
-    }
-
-    public function getTwitter(): ?string
-    {
-        return $this->twitter;
-    }
-
-    public function setTwitter(?string $twitter): self
-    {
-        $this->twitter = $twitter;
-
-        return $this;
-    }
-
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    public function setFacebook(?string $facebook): self
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
-    public function getInstagram(): ?string
-    {
-        return $this->instagram;
-    }
-
-    public function setInstagram(?string $instagram): self
-    {
-        $this->instagram = $instagram;
-
-        return $this;
-    }
-
-    public function getGithub(): ?string
-    {
-        return $this->github;
-    }
-
-    public function setGithub(?string $github): self
-    {
-        $this->github = $github;
-
-        return $this;
     }
 
     public function getUser(): ?User
@@ -104,6 +35,30 @@ class Links
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function isIsActived(): ?bool
+    {
+        return $this->isActived;
+    }
+
+    public function setIsActived(bool $isActived): self
+    {
+        $this->isActived = $isActived;
+
+        return $this;
+    }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(string $link): self
+    {
+        $this->link = $link;
 
         return $this;
     }

@@ -4,7 +4,6 @@
 {% endblock %}
 
 {% block body %}
-	{{ dump(sub) }}
 	<div class="example-wrapper div_container">
 		<div class="example-wrapper div_container">
 			<div class="Link_div_ctn">
@@ -16,11 +15,18 @@
 					<p>Bienvenue sur le site qui te permettra de partager tous tes liens vers tes divers réseaux sociaux N'hesites pas a partager le site et ta page a tes amis !</p>
 			</div>
 			<div class="abonnement_ctn">
-				{% for sub in sub %}
-					<div class="sub_abo">
-						<h2>{{ sub.id}}</h2>
-					</div>
-				{% endfor %}
+				<h2>Subscription :</h2>
+				{% if app.user %}
+					{% for sub in sub %}
+						{% for subscriber in sub %}
+						<div class="sub_abo">
+							<a href="{{path('show', {pseudo: subscriber.pseudo})}}"><h2>{{ subscriber.pseudo }}{% if subscriber.certified == 1 %}
+								<img class="logo_certified" src="{{ asset('assets/images/certified/certified_badge.png')}}" alt="certified logo">
+							{% endif %}</h2></a>
+						</div>
+						{% endfor %}
+					{% endfor %}
+				{% endif %}
 			</div>
 		</div>
 	</div>

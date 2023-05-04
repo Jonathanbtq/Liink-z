@@ -2,31 +2,27 @@
 
 namespace App\Form;
 
-use App\Entity\Links;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddLinkFormType extends AbstractType
+class DetailUserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('link', TextType::class, [
-                'label' => 'Ajoute ton lien',
-                'required' => true
+            ->add('description', TextType::class, [
+                'empty_data' => 'test',
             ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer'
-            ]);
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Links::class,
+            'data_class' => User::class,
         ]);
     }
 }
