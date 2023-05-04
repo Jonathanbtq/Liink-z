@@ -41,22 +41,20 @@
 			{% if app.user %}
 				{% if app.user.id == user_main[0].id %}
 					<div class="add_links">
-						<a href="{{ path('edit', {id: user_main[0].id}) }}">+</a>
+						<a href="{{ path('edit', {id: user_main[0].id}) }}"><p>Add Links +</p></a>
 					</div>
 				{% endif %}
 			{% endif %}
-			{% if user[0] is defined  %}
-				<div class="d-flex text-light align-item-center div_links">
-					{% if user[0].youtube %}
-						<p class="pe-5 p_links">Youtube :</p>
-						<a href="{{ user[0].youtube }}" target="_blank" class="box-txt">{{ user[0].youtube }}</a>
+			{% if links is defined  %}
+				{% for link in links %}
+					<div class="d-flex text-light align-item-center div_links">
+						<p class="pe-5 p_links">{{ link.title }}</p>
+						<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
 						<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
 							<i class="fas fa-copy">Copy</i>
 						</button>
-					{% else %}
-						<p class="pe-5 p_links">Youtube :</p>
-					{% endif %}
-				</div>
+					</div>
+				{% endfor %}
 			{% endif %}
 		</div>
 	</div>

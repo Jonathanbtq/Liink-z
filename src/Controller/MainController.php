@@ -42,12 +42,15 @@ class MainController extends AbstractController
      * Modification des liens utilisateur
      */
     #[Route('/edit/{id}', name: 'edit')]
-    public function editLink(Request $request, links $link, LinksRepository $linkRepo): Response
+    public function editLink(Request $request, LinksRepository $linkRepo): Response
     {
+        $link = new Links();
         $Form = $this->createForm(AddLinkFormType::class, $link);
         $Form->handleRequest($request);
 
         if ($Form->isSubmitted() && $Form->isValid()) {
+            $link->setIsActived(1);
+            $link->setUser($this->getUser());
             $linkRepo->save($link, true);
             return $this->redirectToRoute('main');
         }
@@ -81,7 +84,7 @@ class MainController extends AbstractController
 
         return $this->render('main/show.html.twig', [
             'controller_name' => 'Main page',
-            'user' => $linkRepo->findByAdresse($user[0]->getId()),
+            'links' => $linkRepo->findByAdresse($user[0]->getId()),
             'user_main' => $userRepo->findBy(['pseudo' => $pseudo]),
             'abo' => $abo
         ]);

@@ -13,7 +13,7 @@ class Links
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'links')]
     private ?User $user = null;
 
     #[ORM\Column]
@@ -21,6 +21,10 @@ class Links
 
     #[ORM\Column(length: 255)]
     private ?string $link = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $title = null;
+
 
     public function getId(): ?int
     {
@@ -59,6 +63,18 @@ class Links
     public function setLink(string $link): self
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

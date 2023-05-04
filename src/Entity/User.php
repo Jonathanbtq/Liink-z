@@ -44,9 +44,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Links::class, orphanRemoval: true)]
+    private Collection $link;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Links::class)]
+    private Collection $links;
+
     public function __construct()
     {
         $this->subscriptions = new ArrayCollection();
+        $this->link = new ArrayCollection();
+        $this->links = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -190,5 +198,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Links>
+     */
+    public function getLink(): Collection
+    {
+        return $this->link;
+    }
+
+    public function addLink(Links $link): self
+    {
+        if (!$this->link->contains($link)) {
+            $this->link->add($link);
+            $link->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLink(Links $link): self
+    {
+        if ($this->link->removeElement($link)) {
+            // set the owning side to null (unless already changed)
+            if ($link->getUser() === $this) {
+                $link->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Links>
+     */
+    public function getLinks(): Collection
+    {
+        return $this->links;
     }
 }

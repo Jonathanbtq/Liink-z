@@ -4,11 +4,27 @@
 {% endblock %}
 
 {% block body %}
-    <h2>Profile</h2>
-    <p>Pick an Image</p>
-    <p>Remove</p>
-    {{form_start(form)}}
-    <input type="submit">
-    {{form_end(form)}}
+    <div class="div_container">
+        <h2>Profile</h2>
+        <div class="appearance_ctn">
+            <div class="appearance_img_user">
+                <div class="app_img">
+                    <h2>Profile</h2>
+                </div>
+                <div class="app_img_p">
+                    <p>Pick an Image</p>
+                    <p>Remove</p>
+                </div>
+            </div>
+            
+            {{form_start(form)}}
+            <div class="textarea_appearance">
+                {{ form_row(form.description) }}
+            </div>
+            <input type="submit">
+            {{form_end(form)}}
+        </div>
+    </div>
+    
     
 {% endblock %}
