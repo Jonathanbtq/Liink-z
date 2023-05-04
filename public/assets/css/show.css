@@ -1,0 +1,11 @@
+.show_header{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.head_show_h{
+    display: flex;
+    margin-right: 10px;
+}

@@ -9,10 +9,39 @@
 
 {% block body %}
 	<div class="example-wrapper div_container">
-		<div
-			class="Link_div_ctn">
-			<div class="d-flex text-light align-item-center div_links">
-				{% if user[0] is defined %}
+		<div class="show_header">
+			<div class="head_show_h">
+				<a href="{{ path('show', {pseudo: user_main[0].pseudo}) }}">
+					<h1>{{ user_main[0].pseudo }}
+						{% if user_main[0].certified == 1 %}
+							<img class="logo_certified" src="{{ asset('assets/images/certified/certified_badge.png')}}" alt="certified logo">
+						{% endif %}
+					</h1>
+				</a>
+			</div>
+			{% if app.user.id != user_main[0].id %}
+				{% if abo is null %}
+					<span class="subscription">
+						<a href="{{path('subscription', {showuser: user_main[0].id } )}}">Subscibe</a>
+					</span>
+				{% else %}
+					<span class="unsubscription">
+						<a href="{{path('unsubscription', {showuser: user_main[0].id } )}}">Unsubscribe</a>
+					</span>
+				{% endif %}
+			{% endif %}
+		</div>
+		
+		<div class="Link_div_ctn">
+			{% if user[0] is defined  %}
+				{% if app.user %}
+					{% if app.user.id == user_main[0].id %}
+						<div class="add_links">
+							<a href="{{ path('edit', {id: user_main[0].id}) }}">+</a>
+						</div>
+					{% endif %}
+				{% endif %}
+				<div class="d-flex text-light align-item-center div_links">
 					{% if user[0].youtube %}
 						<p class="pe-5 p_links">Youtube :</p>
 						<a href="{{ user[0].youtube }}" target="_blank" class="box-txt">{{ user[0].youtube }}</a>
@@ -22,12 +51,8 @@
 					{% else %}
 						<p class="pe-5 p_links">Youtube :</p>
 					{% endif %}
-				{% else %}
-					<p class="pe-5 p_links">Youtube :</p>
-				{% endif %}
-			</div>
-			<div class="d-flex bg-dark text-light align-item-center div_links">
-				{% if user[0] is defined  %}
+				</div>
+				<div class="d-flex bg-dark text-light align-item-center div_links">
 					{% if user[0].twitter %}
 						<p class="pe-5 p_links">twitter :</p>
 						<a href="{{ user[0].twitter }}" target="_blank" class="box-txt">{{ user[0].twitter }}</a>
@@ -37,12 +62,8 @@
 					{% else %}
 						<p class="pe-5 p_links">twitter :</p>
 					{% endif %}
-				{% else %}
-					<p class="pe-5 p_links">twitter :</p>
-				{% endif %}
-			</div>
-			<div class="d-flex bg-dark text-light align-item-center div_links">
-				{% if user[0] is defined  %}
+				</div>
+				<div class="d-flex bg-dark text-light align-item-center div_links">
 					{% if user[0].facebook %}
 						<p class="pe-5 p_links">facebook :</p>
 						<a href="{{ user[0].facebook }}" target="_blank" class="box-txt">{{ user[0].facebook }}</a>
@@ -52,12 +73,8 @@
 					{% else %}
 						<p class="pe-5 p_links">facebook :</p>
 					{% endif %}
-				{% else %}
-					<p class="pe-5 p_links">facebook :</p>
-				{% endif %}
-			</div>
-			<div class="d-flex bg-dark text-light align-item-center div_links">
-				{% if user[0] is defined  %}
+				</div>
+				<div class="d-flex bg-dark text-light align-item-center div_links">
 					{% if user[0].instagram %}
 						<p class="pe-5 p_links">instagram :</p>
 						<a href="{{ user[0].instagram }}" target="_blank" class="box-txt">{{ user[0].instagram }}</a>
@@ -67,12 +84,8 @@
 					{% else %}
 						<p class="pe-5 p_links">instagram :</p>
 					{% endif %}
-				{% else %}
-					<p class="pe-5 p_links">instagram :</p>
-				{% endif %}
-			</div>
-			<div class="d-flex bg-dark text-light align-item-center div_links">
-				{% if user[0] is defined  %}
+				</div>
+				<div class="d-flex bg-dark text-light align-item-center div_links">
 					{% if user[0].github %}
 						<p class="pe-5 p_links">github :</p>
 						<a href="{{ user[0].github }}" target="_blank" class="box-txt">{{ user[0].github }}</a>
@@ -82,10 +95,26 @@
 					{% else %}
 						<p class="pe-5 p_links">github :</p>
 					{% endif %}
-				{% else %}
-					<p class="pe-5 p_links">github :</p>
-				{% endif %}
-			</div>
+				</div>
+			{% else %}
+				<div class="Link_div_ctn">
+					<div class="d-flex bg-dark text-light align-item-center div_links">
+						<p class="pe-5 p_links">Youtube :</p>
+					</div>
+					<div class="d-flex bg-dark text-light align-item-center div_links">
+						<p class="pe-5 p_links">twitter :</p>
+					</div>
+					<div class="d-flex bg-dark text-light align-item-center div_links">
+						<p class="pe-5 p_links">facebook :</p>
+					</div>
+					<div class="d-flex bg-dark text-light align-item-center div_links">
+						<p class="pe-5 p_links">instagram :</p>
+					</div>
+					<div class="d-flex bg-dark text-light align-item-center div_links">
+						<p class="pe-5 p_links">github :</p>
+					</div>
+				</div>
+			{% endif %}
 		</div>
 	</div>
 {% endblock %}

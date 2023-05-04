@@ -1,6 +1,33 @@
 :root {
     --blue-color: #0d6efd;
 }
+.logo_certified{
+    width: 2vw;
+    height: 2vw;
+}
+.subscription{
+    display: flex;
+    align-items: center;
+    height: 1.5vw;
+    font-size: 15px;
+    margin-left: 10px;
+    background-color: green;
+    border-radius: 50px;
+}
+.unsubscription{
+    display: flex;
+    align-items: center;
+    height: 1.5vw;
+    font-size: 15px;
+    margin-left: 10px;
+    background-color: red;
+    border-radius: 50px;
+}
+.unsubscription a, .subscription a{
+    color: white;
+    justify-content: center;
+    font-weight: bold;
+}
 
 body {
     background-color: rgb(24, 21, 33);

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -31,6 +33,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
+
+    #[ORM\Column]
+    private ?bool $certified = null;
+
+    #[ORM\OneToMany(mappedBy: 'subscription_user', targetEntity: Subscription::class)]
+    private Collection $subscriptions;
+
+    public function __construct()
+    {
+        $this->subscriptions = new ArrayCollection();
+    }
 
     public function getId(): ?string
     {
@@ -117,6 +130,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function isCertified(): ?bool
+    {
+        return $this->certified;
+    }
+
+    public function setCertified(bool $certified): self
+    {
+        $this->certified = $certified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Subscription>
+     */
+    public function getSubscriptions(): Collection
+    {
+        return $this->subscriptions;
+    }
+
+    public function addSubscription(Subscription $subscription): self
+    {
+        if (!$this->subscriptions->contains($subscription)) {
+            $this->subscriptions->add($subscription);
+            $subscription->setSubscriptionUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscription(Subscription $subscription): self
+    {
+        if ($this->subscriptions->removeElement($subscription)) {
+            // set the owning side to null (unless already changed)
+            if ($subscription->getSubscriptionUser() === $this) {
+                $subscription->setSubscriptionUser(null);
+            }
+        }
 
         return $this;
     }
