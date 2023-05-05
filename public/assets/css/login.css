@@ -1,7 +1,3 @@
-:root {
-    --blue-color: #0d6efd;
-}
-
 .login_wdt{
     display: flex;
     flex-direction: column;

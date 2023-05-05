@@ -6,6 +6,10 @@
 {% block body %}
 	<div class="example-wrapper div_container">
 		<div class="example-wrapper div_container">
+			<div class="idx_ctn_head">
+				<p>Link'z a french website ! Do you need to share your Link with your
+				friend or your Suscriber? We are here for it</p>
+			</div>
 			<div class="Link_div_ctn">
 				{% if user is defined %}
 					<a href="{{ path('show', {pseudo: app.user.pseudo}) }}">Your Profil</a>
@@ -27,6 +31,37 @@
 						{% endfor %}
 					{% endfor %}
 				{% endif %}
+			</div>
+			<div class="idx_ctn_exp">
+				<h2>Why choice Link'z?</h2>
+				<div class="idx_ctn_exp_p">
+					<div class="idx_exp_card">
+						<p>An easy way to use</p>
+					</div>
+				</div>
+			</div>
+			<div class="form_contact">
+				<div class="avis_p">
+					<h3>Your opinion is important !</h3>
+					<p>A question ? A joke ? if you have anything to say, its the place !</p>
+					<i></i><p>Link'z@gmail.com</p>
+					<i></i><p>twitter.com</p>
+				</div>
+				<form action="">
+					<div class="">
+						<label for="">Your name</label>
+						<input type="text">
+					</div>
+					<div class="">
+						<label for="">Your email</label>
+						<input type="text">
+					</div>
+					<div class="">
+						<label for="">Give me tips or question !</label>
+						<input type="textarea">
+					</div>
+					<input type="submit">
+				</form>
 			</div>
 		</div>
 	</div>

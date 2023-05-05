@@ -15,11 +15,11 @@ class AddLinkFormType extends AbstractType
     {
         $builder
             ->add('link', TextType::class, [
-                'label' => 'Ajoute ton lien',
+                'label' => false,
                 'required' => true
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer'
+                'label' => 'Add'
             ]);
     }
 

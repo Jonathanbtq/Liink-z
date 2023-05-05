@@ -1,5 +1,7 @@
 :root {
     --blue-color: #0d6efd;
+    --gradient-card: linear-gradient(225deg, #0f2f1c 0%, #18404b 50%, #38183b 100%);
+    --gradient-button: linear-gradient(225deg, #27d86c 0%, #26CAF8 50%, #C625D0 100%);
 }
 .logo_certified{
     width: 2vw;
