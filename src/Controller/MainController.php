@@ -19,18 +19,19 @@ class MainController extends AbstractController
     #[Route('/', name: 'main')]
     public function index(Request $request, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo): Response
     {
-        if($this->getUser()){
+        $user = '';
+        if ($this->getUser()) {
             $user = $this->getUser();
             $sub = $subRepo->findSubscriptionsByUser($this->getUser());
 
             $userAbo = [];
-            foreach($sub as $sub){
+            foreach ($sub as $sub) {
                 $userAbo[] = $userRepo->findBy(['id' => $sub->getSubscriptionUser()->getId()]);
             }
-        }else{
+        } else {
             $userAbo = 'Vous n\'etes pas abonnée';
         }
-        
+
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
             'user' => $user,
@@ -70,8 +71,8 @@ class MainController extends AbstractController
         $user = $userRepo->findBy(['pseudo' => $pseudo]);
         $abo = $subRepo->findOneByIdAbo($user, $this->getUser());
 
-        if(isset($_POST['addDescShow'])){
-            if (isset($_POST['description']) && !empty($_POST['description'])){
+        if (isset($_POST['addDescShow'])) {
+            if (isset($_POST['description']) && !empty($_POST['description'])) {
                 $monInputValue = $request->request->get('description');
                 $desc = $user[0];
                 $desc->setDescription($monInputValue);
@@ -80,7 +81,7 @@ class MainController extends AbstractController
                 return $this->redirectToRoute('show', ['pseudo' => $user[0]->getPseudo()]);
             }
         }
-       
+
 
         return $this->render('main/show.html.twig', [
             'controller_name' => 'Main page',
@@ -99,8 +100,8 @@ class MainController extends AbstractController
         $user = $userRepo->findBy(['pseudo' => $pseudo]);
         $form = $this->createForm(DetailUserFormType::class, $user[0]);
         $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) { 
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $userRepo->save($user[0], true);
             return $this->redirectToRoute('show', ['pseudo' => $user[0]->getPseudo()]);
         }
@@ -110,7 +111,7 @@ class MainController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    
+
     /**
      * Page condition d'utilisation
      */

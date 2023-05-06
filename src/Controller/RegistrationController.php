@@ -20,7 +20,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, LinksRepository $linkRepo,UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
+    public function register(Request $request, LinksRepository $linkRepo, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -28,7 +28,8 @@ class RegistrationController extends AbstractController
 
         $message = false;
         if ($form->isSubmitted() && $form->isValid()) {
-            if($userRepo->findOneByPseudo($form['pseudo']->getData()) != null){
+            $user->setCertified(0);
+            if ($userRepo->findOneByPseudo($form['pseudo']->getData()) != null) {
                 $message = True;
                 return $this->render('registration/register.html.twig', [
                     'registrationForm' => $form->createView(),

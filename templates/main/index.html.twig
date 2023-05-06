@@ -8,26 +8,32 @@
 		<div class="example-wrapper div_container">
 			<div class="idx_ctn_head">
 				<p>Link'z a french website ! Do you need to share your Link with your
-				friend or your Suscriber? We are here for it</p>
+									friend or your Suscriber? We are here for it</p>
 			</div>
 			<div class="Link_div_ctn">
 				{% if user is defined %}
-					<a href="{{ path('show', {pseudo: app.user.pseudo}) }}">Your Profil</a>
+					{% if app.user %}
+						<a href="{{ path('show', {pseudo: app.user.pseudo}) }}">Your Profil</a>
+					{% endif %}
 				{% else %}
 					<a href="{{ path('login') }}">Se connecter</a>
 				{% endif %}
-					<p>Bienvenue sur le site qui te permettra de partager tous tes liens vers tes divers réseaux sociaux N'hesites pas a partager le site et ta page a tes amis !</p>
+				<p>Bienvenue sur le site qui te permettra de partager tous tes liens vers tes divers réseaux sociaux N'hesites pas a partager le site et ta page a tes amis !</p>
 			</div>
 			<div class="abonnement_ctn">
 				<h2>Subscription :</h2>
 				{% if app.user %}
 					{% for sub in sub %}
 						{% for subscriber in sub %}
-						<div class="sub_abo">
-							<a href="{{path('show', {pseudo: subscriber.pseudo})}}"><h2>{{ subscriber.pseudo }}{% if subscriber.certified == 1 %}
-								<img class="logo_certified" src="{{ asset('assets/images/certified/certified_badge.png')}}" alt="certified logo">
-							{% endif %}</h2></a>
-						</div>
+							<div class="sub_abo">
+								<a href="{{path('show', {pseudo: subscriber.pseudo})}}">
+									<h2>{{ subscriber.pseudo }}
+										{% if subscriber.certified == 1 %}
+											<img class="logo_certified" src="{{ asset('assets/images/certified/certified_badge.png')}}" alt="certified logo">
+										{% endif %}
+									</h2>
+								</a>
+							</div>
 						{% endfor %}
 					{% endfor %}
 				{% endif %}
@@ -44,8 +50,10 @@
 				<div class="avis_p">
 					<h3>Your opinion is important !</h3>
 					<p>A question ? A joke ? if you have anything to say, its the place !</p>
-					<i></i><p>Link'z@gmail.com</p>
-					<i></i><p>twitter.com</p>
+					<i></i>
+					<p>Link'z@gmail.com</p>
+					<i></i>
+					<p>twitter.com</p>
 				</div>
 				<form action="">
 					<div class="">
@@ -65,4 +73,4 @@
 			</div>
 		</div>
 	</div>
-	{% endblock %}
+{% endblock %}
