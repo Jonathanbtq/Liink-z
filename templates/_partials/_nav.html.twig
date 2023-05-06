@@ -36,9 +36,9 @@
 		<ul class="navbar-nav">
 			<li class="nav_a">
 				{% if app.user %}
-					<a class="nav_a" href="{{ path('show', {pseudo: app.user.pseudo}) }}">Profile</a>
+					<a class="nav_a_ctn" href="{{ path('show', {pseudo: app.user.pseudo}) }}">Profile</a>
 				{% else %}
-					<a class="nav-a" href="{{ path('login') }}">Profile</a>
+					<a class="nav_a_ctn" href="{{ path('login') }}">Profile</a>
 				{% endif %}
 			</li>
 		</ul>

@@ -50,6 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Links::class)]
     private Collection $links;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profile_img = null;
+
     public function __construct()
     {
         $this->subscriptions = new ArrayCollection();
@@ -236,5 +239,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getLinks(): Collection
     {
         return $this->links;
+    }
+
+    public function getProfileImg(): ?string
+    {
+        return $this->profile_img;
+    }
+
+    public function setProfileImg(?string $profile_img): self
+    {
+        $this->profile_img = $profile_img;
+
+        return $this;
     }
 }

@@ -35,4 +35,19 @@ class UserController extends AbstractController
         $userPseudo = $userfind[0]->pseudo;
         return $this->redirectToRoute('show', ['pseudo' => $userPseudo]);
     }
+
+    #[Route('/appearance/{pseudo}/remove', name: 'appearanceDeleteImg')]
+    public function imgProfile($pseudo, UserRepository $userRepo): Response
+    {
+        $user = $userRepo->findBy(['pseudo' => $pseudo]);
+        $image = $user[0]->getProfileImg();
+
+        if($image != null){
+            $image = null;
+            $userRepo->save($user[0], true);
+            return $this->redirectToRoute('show', ['pseudo' => $user[0]->pseudo]);
+        }else{
+            return $this->redirectToRoute('show', ['pseudo' => $user[0]->pseudo]);
+        }
+    }
 }

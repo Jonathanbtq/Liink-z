@@ -1,12 +1,135 @@
-.abonnement_ctn{
+.idx_ctn_head{
+    display: flex;
+    flex-wrap: nowrap;
+    height: 30vw;
+    width: 100%;
+}
+.left_idx_head{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    width: 50%;
+    height: 100%;
+}
+.left_idx_head h2{
+    display: flex;
+    width: 30%;
+    font-size: 35px;
+    text-align: center;
+    font-weight: bold;
+}
+.left_idx_head a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    width: 30%;
+    font-size: 35px;
+    border: none;
+    text-decoration: none;
+    border-radius: 50px;
+    color: white;
+    background: var(--gradient-button);
+    font-weight: bold;
+}
+.right_idx_head{
+    display: flex;
+    width: 50%;
+}
+
+.idx_ctn_deux_why{
+    display: flex;
+    flex-direction: column;
+    padding: 30px 0 50px 0;
+    width: 100%;
+    background: var(--gradient-card);
+}
+.idx_why_head{
+    display: flex;
+    width: 100%;
+}
+.idx_why_head h2{
+    font-size: 35px;
+    font-weight: bold;
+    margin-left: 40px;
+    margin-bottom: 40px;
+}
+.idx_why_ctn{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    width: 100%;
+}
+.idx_why_ctn_card{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin-left: 30px;
+    border-radius: 25px;
+    padding: 10px;
+    background-color: white;
+}
+.idx_why_card{
+    display: flex;
+    flex-direction: column;
+    width: 100;
+    justify-content: center;
+    align-items: center;  
+}
+.idx_why_card h3{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 18px;
+    width: 100%;
+    height: 2.5vw;
+    background-color: grey;
+    border-radius: 50px;
+}
+.idx_why_card img{
+    border-radius: 25px;
+    margin: 30px 0 30px 0;
+    width: 21vw;
+}
+
+.abo_wth{
     display: flex;
     flex-direction: column;
     width: 90%;
 }
 .sub_abo{
     display: flex;
-    flex-wrap: wrap;
-    background-color: rgb(3, 14, 27);
+    flex-wrap: nowrap;
+    width: 80%;
     margin-bottom: 10px;
+    padding: 10px;
+    background: var(--gradient-card);
+}
+.sub_abo_idx{
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+.abonnement_ctn{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 90%;
+}
+.abo_idx_wth{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.abo_wth{
+    display: flex;
     width: 100%;
+}
+.idx_abo_right{
+    display: flex;
+    width: 50%;
 }

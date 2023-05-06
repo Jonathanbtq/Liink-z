@@ -1,0 +1,10 @@
+.nav_a_ctn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    width: 4vw;
+    height: 2vw;
+    border-radius: 50px;
+    background: var(--gradient-buttonMain);
+}

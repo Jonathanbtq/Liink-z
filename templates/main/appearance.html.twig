@@ -7,21 +7,26 @@
     <div class="div_container">
         <h2>Profile</h2>
         <div class="appearance_ctn">
-            <div class="appearance_img_user">
-                <div class="app_img">
-                    <img src="" alt="">
-                </div>
-                <div class="app_img_p">
-                    <a href=""><p>Pick an Image</p></a>
-                    <a href=""><p>Remove</p></a>
-                </div>
-            </div>
-            
             {{form_start(form)}}
-            <div class="textarea_appearance">
-                {{ form_row(form.description) }}
-            </div>
-            <input type="submit">
+                <div class="appearance_img_user">
+                    <div class="app_img">
+                        {% if app.user.getProfileImg %}
+                            <img class="profile_img_user" src="/uploads/photos/{{ app.user.getProfileImg }}">
+                        {% else %}
+                            <img class="" src="">
+                        {% endif %}
+                    </div>
+                    <div class="app_img_p">
+                        {# {{ form_row(form.profile_img) }} #}
+                        <a href="{{ path('appearanceDeleteImg', {pseudo: app.user.pseudo})}}"><p>Remove</p></a>
+                    </div>
+                </div>
+                
+                
+                <div class="textarea_appearance">
+                    {{ form_row(form.description) }}
+                </div>
+                <input type="submit">
             {{form_end(form)}}
         </div>
     </div>
