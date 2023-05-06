@@ -44,7 +44,7 @@ class MainController extends AbstractController
     /**
      * Modification des liens utilisateur
      */
-    #[Route('/edit/{id}', name: 'edit')]
+    #[Route('/newlink/{id}', name: 'edit')]
     public function editLink(Request $request, LinksRepository $linkRepo): Response
     {
         $link = new Links();
@@ -52,6 +52,11 @@ class MainController extends AbstractController
         $Form->handleRequest($request);
 
         if ($Form->isSubmitted() && $Form->isValid()) {
+            $title = $Form['link']->getdata();
+            if(strlen($title) >= 31){
+                $title = substr($title, 0, 31);
+            }
+            $link->setTitle($title);
             $link->setIsActived(1);
             $link->setUser($this->getUser());
             $linkRepo->save($link, true);

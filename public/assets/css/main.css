@@ -36,7 +36,20 @@
 }
 .right_idx_head{
     display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
     width: 50%;
+}
+.right_idx_head img{
+    display: flex;
+    width: 25%;
+    border-radius: 50px;
+    transition: all .5s ease;
+}
+.right_idx_head img:hover{
+    transform: scale(1.1);
+    translate: .2s;
 }
 
 .idx_ctn_deux_why{

@@ -50,9 +50,8 @@
         margin: 0 !important;
     }
     .div_links{
-        max-height: 15vw;
         width: 100% !important;
-        height: 15vw !important;
+        min-height: 15vw !important;
         border-radius: 5px !important;
         margin-bottom: 25px !important;
         padding: 0 10px 0 10px !important;
@@ -66,25 +65,43 @@
 }
 
 @media screen and (max-width: 360px) {
+    .head_show_h h1{
+        font-size: 40px !important;
+    }
+    .head_show_h img{
+        width: 10vw !important;
+        height: 10vw !important;
+    }
     .desc_show_ctn{
         text-align : center !important;
     }
     .profile_show_desc{
         width: 80% !important;
     }
+    .Link_div_ctn{
+        padding-top: 10px !important;
+        min-width: 90% !important;
+    }
     .add_links{
         display: flex;
         justify-content: center !important;
+        margin-bottom: 20px !important;
     }
     .add_links a{
+        display: flex;
+        align-items: center;
         margin: 0 10px 10px 0 !important;
-        width: 50px !important;
-        height: 50px !important;
+        width: 70% !important;
+        height: 60px !important;
+    }
+    .add_links a p{
+        font-size: 30px !important;
+        font-weight: bold !important;
     }
     .div_links{
-        max-height: 15vw;
+        min-height: 15vw;
         width: 100%  !important;
-        border-radius: 5px !important;
+        border-radius: 50px !important;
         margin-bottom: 25px !important;
         padding: 0 10px 0 10px !important;
     }
