@@ -13,11 +13,20 @@
 		<div class="show_header">
 			<div class="head_show_h">
 				<a href="{{ path('show', {pseudo: user_main[0].pseudo}) }}">
-					<h1>{{ user_main[0].pseudo }}
+					{% if user_main[0].getProfileImg %}
+						<img class="profile_img_user" src="/uploads/photos/{{ user_main[0].getProfileImg }}">
+						<h1>{{ user_main[0].pseudo }}
 						{% if user_main[0].certified == 1 %}
 							<img class="logo_certified" src="{{ asset('assets/images/certified/certified_badge.png')}}" alt="certified logo">
 						{% endif %}
-					</h1>
+						</h1>
+					{% else %}
+						<h1>{{ user_main[0].pseudo }}
+							{% if user_main[0].certified == 1 %}
+								<img class="logo_certified" src="{{ asset('assets/images/certified/certified_badge.png')}}" alt="certified logo">
+							{% endif %}
+						</h1>
+					{% endif %}
 				</a>
 			</div>
 			{% if app.user.id != user_main[0].id %}
