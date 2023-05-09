@@ -28,7 +28,7 @@ class MainController extends AbstractController
 
             $userAbo = [];
             foreach ($sub as $sub) {
-                $userAbo[] = $userRepo->findBy(['id' => $sub->getSubscriptionUser()->getId()]);
+                $userAbo[] = $userRepo->findBy(['id' => $sub->getSubscriptionUser()->getId()], null, 5);
             }
         } else {
             $userAbo = 'Vous n\'etes pas abonnée';
@@ -56,7 +56,9 @@ class MainController extends AbstractController
             if(strlen($title) >= 31){
                 $title = substr($title, 0, 31);
             }
-            $link->setTitle($title);
+            if($Form['title']->getdata() == null){
+                $link->setTitle($title);
+            }
             $link->setIsActived(1);
             $link->setUser($this->getUser());
             $linkRepo->save($link, true);

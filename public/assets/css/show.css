@@ -41,6 +41,30 @@
 .addDescShow{
     display: none;
 }
+.div_links {
+    display: flex;
+    width: 80%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 50px;
+    border-radius: 45px;
+    background: linear-gradient(225deg, #0f2f1c 0%, #18404b 50%, #38183b 100%);
+}
+.div_links a {
+    text-decoration: none;
+}
+.btn_prf_edit{
+    background: var(--gradient-button);
+    width: 3.5vw;
+    border-radius: 50px;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+}
+.btn_prf_edit img{
+    width: 2vw;
+}
 
 @media screen and (max-width: 720px) {
     .desc_show_ctn{

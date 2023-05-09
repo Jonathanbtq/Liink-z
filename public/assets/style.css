@@ -85,22 +85,8 @@ a {
     background-color: rgb(13, 11, 28);
 }
 
-.div_links {
-    display: flex;
-    width: 80%;
-    align-items: center;
-    padding: 15px;
-    margin-bottom: 50px;
-    border-radius: 45px;
-    background: linear-gradient(225deg, #0f2f1c 0%, #18404b 50%, #38183b 100%);
-}
-
-.div_links a {
-    text-decoration: none;
-}
-
 .p_links {
-    margin: 30px;
+    margin: 0 0 0 30px;
     width: 20%;
     text-transform: uppercase;
     font-weight: bold;

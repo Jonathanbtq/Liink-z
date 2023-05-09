@@ -59,69 +59,74 @@
 		</div> #}
 
 		<div class="abonnement_ctn">
-			<div class="abo_idx_wth">
-				<h2>Subscription :</h2>
-				<div class="abo_wth">
-					{% if app.user %}
-						{% for sub in sub %}
-							{% for subscriber in sub %}
-								<div class="sub_abo">
-									{% if subscriber.getProfileImg %}
-									<img class="profile_img_user" src="/uploads/photos/{{ subscriber.getProfileImg }}">
-									{% else %}
-										<img class="img_empty" src="">
-									{% endif %}
-									<div class="sub_abo_idx">
-										<a href="{{path('show', {pseudo: subscriber.pseudo})}}">
-											<h2>{{ subscriber.pseudo }}
-												{% if subscriber.certified == 1 %}
-													<img class="logo_certified" src="{{ asset('assets/images/certified/certified_badge.png')}}" alt="certified logo">
-												{% endif %}
-											</h2>
-										</a>
-										{% if subscriber.description %}
-											<p>{{ subscriber.description }}</p>
+			<div class="abo_idx_ctn">
+				<div class="abo_idx_wth">
+					<h2>Subscription :</h2>
+					<div class="abo_wth">
+						{% if app.user %}
+							{% for sub in sub %}
+								{% for subscriber in sub %}
+									<div class="sub_abo">
+										{% if subscriber.getProfileImg %}
+										<img class="profile_img_user" src="/uploads/photos/{{ subscriber.getProfileImg }}">
+										{% else %}
+											<img class="img_empty" src="">
 										{% endif %}
+										<div class="sub_abo_idx">
+											<a href="{{path('show', {pseudo: subscriber.pseudo})}}">
+												<h2>{{ subscriber.pseudo }}
+													{% if subscriber.certified == 1 %}
+														<img class="logo_certified" src="{{ asset('assets/images/certified/certified_badge.png')}}" alt="certified logo">
+													{% endif %}
+												</h2>
+											</a>
+											{% if subscriber.description %}
+												<p>{{ subscriber.description }}</p>
+											{% endif %}
+										</div>
+										
+										<p></p>
 									</div>
-									
-									<p></p>
-								</div>
+								{% endfor %}
 							{% endfor %}
-						{% endfor %}
-					{% endif %}
+						{% endif %}
+					</div>
 				</div>
-			</div>
-			<div class="idx_abo_right">
-				<div class="idx_abo_rgt_ctn">
-					<h3>Follow many friend and stars !</h3>
-					<p>Connect your TikTok, Instagram, Twitter, website, store, videos, music, podcast. It all seen by your follower and visitor !</p>
+				<div class="idx_abo_right">
+					<div class="idx_abo_rgt_ctn">
+						<h3>Follow many friend and stars !</h3>
+						<p>Connect your TikTok, Instagram, Twitter, website, store, videos, music, podcast. It all seen by your follower and visitor !</p>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="form_contact">
-			<div class="avis_p">
-				<h3>Your opinion is important !</h3>
-				<p>A question ? A joke ? if you have anything to say, its the place !</p>
-				<i></i>
-				<p>Link'z@gmail.com</p>
-				<i></i>
-				<p>twitter.com</p>
+			<div class="form_idx_ctn_wth">
+				<div class="avis_p">
+					<h3>Your opinion is important for us !</h3>
+					<p>A question ? A joke ? if you have anything to say, its the place !</p>
+					<i></i>
+					<p>Link'z@gmail.com</p>
+					<i></i>
+					<p>twitter.com</p>
+				</div>
+				<form action="" class="form_idx_ctn">
+					<div class="form_idx_div">
+						<label for="">Your name</label>
+						<input type="text">
+					</div>
+					<div class="form_idx_div">
+						<label for="">Your email</label>
+						<input type="text">
+					</div>
+					<div class="form_idx_ctn_qst">
+						<label for="">Give me tips or question !</label>
+						<input type="textarea">
+					</div>
+					<input type="submit" value="Send your message" class="idx_form_submit">
+				</form>
 			</div>
-			<form action="">
-				<div class="">
-					<label for="">Your name</label>
-					<input type="text">
-				</div>
-				<div class="">
-					<label for="">Your email</label>
-					<input type="text">
-				</div>
-				<div class="">
-					<label for="">Give me tips or question !</label>
-					<input type="textarea">
-				</div>
-				<input type="submit">
-			</form>
+			
 		</div>
 	</div>
 {% endblock %}

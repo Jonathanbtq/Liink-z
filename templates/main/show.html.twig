@@ -5,7 +5,7 @@
 
 {% block javascripts %}
 	<script src="{{ asset('assets/script.js') }}" defer></script>
-	<script src="{{ asset('assets/js/showdesc.js') }}" defer></script>
+	<script src="{{ asset('assets/js/show.js') }}" defer></script>
 {% endblock %}
 
 {% block body %}
@@ -50,19 +50,33 @@
 			{% if app.user %}
 				{% if app.user.id == user_main[0].id %}
 					<div class="add_links">
-						<a href="{{ path('edit', {id: user_main[0].id}) }}"><p>Add Links +</p></a>
+						<a href="{{ path('edit', {id: user_main[0].id}) }}"><p>+ Add Links</p></a>
 					</div>
 				{% endif %}
 			{% endif %}
 			{% if links is defined  %}
 				{% for link in links %}
-					<div class="d-flex text-light align-item-center div_links">
-						<p class="pe-5 p_links">{{ link.title }}</p>
-						<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
-						<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
-							<i class="fas fa-copy">Copy</i>
-						</button>
-					</div>
+					{% if link.isActived == 1 %}
+						<div class="d-flex text-light align-item-center div_links">
+							<p class="pe-5 p_links">{{ link.title }}</p>
+							<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
+							<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
+								<i class="fas fa-copy">Copy</i>
+							</button>
+						</div>
+					{% else %}
+						{% if app.user.id == user_main[0].id %}
+							<div class="d-flex text-light align-item-center div_links">
+								<p class="pe-5 p_links">{{ link.title }}</p>
+								<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
+								<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
+									<i class="fas fa-copy">Copy</i>
+								</button>
+								<a href="" class="btn_prf_edit"><img src="{{ asset('assets/images/show/edit.png')}}"></a>
+							</div>
+						{% endif %}
+					{% endif %}
+					
 				{% endfor %}
 			{% endif %}
 		</div>

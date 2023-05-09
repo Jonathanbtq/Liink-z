@@ -16,7 +16,7 @@
 .left_idx_head h2{
     display: flex;
     width: 50%;
-    font-size: 60px;
+    font-size: clamp(60px, 50% 80px);
     text-align: center;
     font-weight: bold;
 }
@@ -65,10 +65,10 @@
     width: 100%;
 }
 .idx_why_head h2{
-    font-size: 35px;
+    font-size: 50px;
     font-weight: bold;
     margin-left: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 4vw;
 }
 .idx_why_ctn{
     display: flex;
@@ -134,9 +134,16 @@
     width: 100%;
     height: 35vw;
 }
+.abo_idx_ctn{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 90%;
+}
 .abo_idx_wth{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 45%;
 }
 .abo_wth{
@@ -162,13 +169,194 @@
 }
 .idx_abo_rgt_ctn h3{
     font-size: 60px;
-    width: 50%;
+    width: 70%;
     font-weight: bold;
     margin-bottom: 50px;
     text-align: center;
 }
 .idx_abo_rgt_ctn p{
     font-size: 45px;
-    width: 60%;
+    width: 80%;
     text-align: center;
+}
+
+.form_contact{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 25vw;
+}
+.form_idx_ctn_wth{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+}
+.avis_p{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+.avis_p h3{
+    font-size: 60px;
+    font-weight: bold;
+}
+.avis_p p{
+    font-size: 30px;
+}
+.form_idx_ctn{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 45%;
+}
+.form_idx_ctn label{
+    display: flex;
+    font-size: 30px;
+    width: 100% !important;
+}
+.form_idx_div{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+.form_idx_div input{
+    height: 3vw;
+    border-radius: 5px;
+}
+.form_idx_ctn_qst{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.form_idx_ctn_qst label, .form_idx_ctn_qst input{
+    display: flex;
+    flex-direction: column;
+    height: 3vw;
+    border-radius: 5px;
+    width: 100%;
+}
+.idx_form_submit{
+    display: flex;
+    border: none;
+    margin-top: 20px;
+    width: 60%;
+    height: 3vw;
+    background: var(--gradient-button);
+    border-radius: 10px;
+    color: white;
+    font-size: 25px;
+}
+
+@media screen and (max-width: 1550px) {
+    .abonnement_ctn{
+        height: auto !important;
+        padding: 5vw 0 5vw 0;
+    }
+    .idx_abo_rgt_ctn h3{
+        font-size: 50px;
+        width: 80% !important;
+        margin-bottom: 1vw;
+        grid-area: 1 / 2 / 2 / 3;
+    }
+    .idx_abo_rgt_ctn p{
+        width: 90% !important;
+        grid-area: 1 / 1 / 2 / 2;
+    }
+    .abo_idx_ctn{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px; 
+    }
+    .idx_abo_right{
+        width: 100% !important;
+        align-items: center !important;
+    }
+    .abo_idx_wth{
+        width: 100% !important;
+        align-items: center !important;
+    }
+    .abo_wth{
+        align-items: center;
+    }
+    /*---FOOTER---*/
+    .form_contact{
+        height: auto !important;
+    }
+    .form_idx_ctn_wth{
+        flex-direction: column !important;
+    }
+    .avis_p{
+        flex-wrap: wrap !important;
+        width: 90% !important;
+    }
+    .form_idx_ctn{
+        width: 90% !important;
+    }
+    .form_idx_ctn_qst label, .form_idx_ctn_qst input{
+        height: 5vw !important;
+    }
+    .idx_form_submit{
+        width: 60%;
+        height: 5vw !important;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .left_idx_head h2{
+        font-size: 40px;
+        width: 70% !important;
+    }
+    .left_idx_head a{
+        width: 50% !important;
+        margin-top: 20px !important;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .idx_ctn_head{
+        height: auto;
+        flex-direction: column !important;
+        padding-top: 10vw;
+        background-color: black;
+    }
+    .left_idx_head{
+        width: 100% !important;
+    }
+    .left_idx_head h2{
+        font-size: 40px;
+        width: 70% !important;
+    }
+    .left_idx_head a{
+        width: 50% !important;
+        margin-top: 20px !important;
+    }
+    .right_idx_head{
+        width: 100% !important;
+        padding: 10vw 0 10vw 0;
+    }
+    .idx_ctn_deux_why{
+        height: auto;
+    }
+    .idx_why_head{
+        width: 100% !important;
+        justify-content: center;
+    }
+    .idx_why_ctn{
+        display: flex;
+        flex-direction: column !important;
+        justify-content: center;
+        align-items: center;
+        width: 100% !important;
+    }
+    .idx_why_ctn_card{
+        width: 80%;
+        margin-top: 15vw;
+    }
 }
