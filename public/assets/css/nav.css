@@ -3,8 +3,94 @@
     align-items: center;
     justify-content: center;
     color: white;
-    width: 4vw;
-    height: 2vw;
+    font-weight: bold;
+    width: 78px;
+    height: 42px;
     border-radius: 50px;
     background: var(--gradient-buttonMain);
+}
+.nav-deux-ctn{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 70%;
+}
+.navbar_nav_rgt{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: end;
+    margin: 0 30px 0 0;
+    padding: 0;
+    width: 100%;
+}
+.nav_item_rgt{
+    display: flex;
+    margin-right: 50px;
+    align-items: center;
+    justify-content: center;
+}
+.nav_link {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(13, 11, 28);
+    color: white;
+}
+.nav-link {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+}
+.nav_a{
+    color: white;
+    font-size: 17px;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 30px;
+    padding: 0;
+    font-weight: bold;
+}
+.burger_menu_close{
+    display: none;
+}
+.button_nav_brg{
+    display: none;
+}
+
+@media screen and (max-width: 720px) {
+    .header_nav{
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+    }
+    .button_nav_brg{
+        display: flex !important;
+        background: var(--gradient-button) !important;
+        padding: 10px !important;
+        margin-right: 10px !important;
+    }
+    .navbar_nav_rgt{
+        display: none;
+    }
+    .burger_menu_close{
+        display: none;
+    }
+    .nav_link{
+        display: flex;
+        flex-direction: column !important;
+    }
+}
+@media screen and (max-width: 380px) {
+    .header_nav{
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+    }
+    .button_nav_brg{
+        background: var(--gradient-button) !important;
+        padding: 10px !important;
+        margin-right: 10px !important;
+    }
 }

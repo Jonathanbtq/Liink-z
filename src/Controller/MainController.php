@@ -22,6 +22,7 @@ class MainController extends AbstractController
     public function index(Request $request, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo): Response
     {
         $user = '';
+        $errormessage = '';
         if ($this->getUser()) {
             $user = $this->getUser();
             $sub = $subRepo->findSubscriptionsByUser($this->getUser());
@@ -33,11 +34,25 @@ class MainController extends AbstractController
         } else {
             $userAbo = 'Vous n\'etes pas abonnée';
         }
+        if(isset($_POST['idx_input_avis'])){
+            if(!empty($_POST['name']) && !empty($_POST['mail']) && $_POST['text']){
+                if(is_string(htmlspecialchars($_POST['name'])) && is_string(htmlspecialchars($_POST['mail'])) && is_string(htmlspecialchars($_POST['text']))){
+                    $headers = "From ". $_POST['name'] . " with this email : " . $_POST['mail']. " Le message est :" . $_POST['text'];
+                    mail('botquin.jonathan@yahoo.fr', $_POST['name'], $_POST['text'], $headers);
+                    return $this->redirectToRoute('main');
+                }else{
+                    $errormessage = 'Please put correct elements';
+                }
+            }else{
+                $errormessage = 'Please indicate all the informations';
+            }
+        }
 
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
             'user' => $user,
-            'sub' => $userAbo
+            'sub' => $userAbo,
+            'errormessage' =>  $errormessage
         ]);
     }
 

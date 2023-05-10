@@ -3,17 +3,19 @@
 {% endblock %}
 
 <nav class="navbar navbar-expand-lg navbar-light nav_link">
-	<div class="w-75">
+	<div class="header_nav">
 		{% if app.user %}
-		<a class="nav-link" href="{{ path('main') }}">Link'Z</a>
+		<a class="nav-link title_site" href="{{ path('main') }}">Link'Z</a>
 		{% else %}
-		<a class="nav-link" href="{{ path('login') }}">Link'Z</a>
+		<a class="nav-link title_site" href="{{ path('login') }}">Link'Z</a>
 		{% endif %}
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<button class="button_nav_brg" type="button" onClick="openMenu()" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 	</div>
-	<div class="collapse navbar-collapse" id="navbarNav">
+	<!---collapse navbar-collapse-->
+	<div class="nav-deux-ctn" id="navbarNav">
+		<button class="burger_menu_close"onClick="closeMenu()" >X</button>
 		<ul class="navbar_nav_rgt">
 			{% if app.user %}
 				<li class="nav_item_rgt">
@@ -30,11 +32,7 @@
 					<a class="nav_a" href="{{ path('login') }}">Login</a>
 				</li>
 			{% endif %}
-		</ul>
-	</div>
-	<div class="collapse navbar-collapse" id="navbarNav">
-		<ul class="navbar-nav">
-			<li class="nav_a">
+			<li class="nav_item_rgt">
 				{% if app.user %}
 					<a class="nav_a_ctn" href="{{ path('show', {pseudo: app.user.pseudo}) }}">Profile</a>
 				{% else %}

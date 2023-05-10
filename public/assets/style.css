@@ -46,40 +46,6 @@ a {
     text-decoration: none;
 }
 
-.nav_link {
-    background-color: rgb(13, 11, 28);
-    color: white;
-}
-
-.nav-link {
-    color: white;
-    font-size: 25px;
-    font-weight: bold;
-}
-
-.navbar_nav_rgt{
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-.nav_item_rgt{
-    display: flex;
-    justify-content: center;
-    width: 50%;
-}
-
-.nav_a {
-    color: white;
-    font-size: 17px;
-    text-decoration: none;
-    padding-left: 30px;
-    padding: 0;
-    font-weight: bold;
-}
-
 .footer_bckgrn {
     width: 100%;
     background-color: rgb(13, 11, 28);

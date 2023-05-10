@@ -32,27 +32,27 @@
 }
 #add_link_form{
     display: flex;
-    flex-wrap: nowrap;
+    flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
 }
-#add_link_form :nth-child(1){
-    display: flex;
-    width: 80%;
-    height: 2vw;
-}
-#add_link_form :nth-child(1) > input{
+#add_link_form :nth-child(1), #add_link_form :nth-child(2){
     display: flex;
     width: 95%;
     border: none;
     border-radius: .5rem;
-}
-#add_link_form :nth-child(2){
-    display: flex;
-    width: 20%;
+    margin-bottom: 10px;
     height: 2vw;
 }
-#add_link_form :nth-child(2) > button{
+#add_link_form :nth-child(1), #add_link_form :nth-child(2){
+    font-size: 20px;
+}
+#add_link_form :nth-child(3){
+    display: flex;
+    width: 50%;
+}
+#add_link_form :nth-child(3) > button{
     display: flex;
     width: 95%;
     font-weight: bold;

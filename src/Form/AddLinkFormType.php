@@ -16,11 +16,17 @@ class AddLinkFormType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'label' => false,
-                'required' => false
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => 'Title'
+                )
             ])
             ->add('link', TextType::class, [
                 'label' => false,
-                'required' => true
+                'required' => true,
+                'attr' => array(
+                    'placeholder' => 'Link'
+                )
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Add'

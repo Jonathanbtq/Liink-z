@@ -20,13 +20,13 @@
 		</div>
 		<div class="idx_ctn_deux_why">
 			<div class="idx_why_head">
-				<h2>Why use Link'Z ? </h2>
+				<h2>Why use Link'Z ?</h2>
 			</div>
 			<div class="idx_why_ctn">
 				<div class="idx_why_ctn_card">
 					<div class="idx_why_card">
 						<h3>Easy use</h3>
-						<img src="{{ asset('assets/images/index/imgnewlink.PNG')}}" alt="">
+						<img src="{{ asset('assets/images/index/inputadd.PNG')}}" alt="">
 					</div>
 				</div>
 
@@ -110,20 +110,27 @@
 					<i></i>
 					<p>twitter.com</p>
 				</div>
-				<form action="" class="form_idx_ctn">
+				{% if errormessage is defined %}
+					{% if errormessage == 'Please put correct elements' %}
+						<p>{{ errormessage }}</p>
+					{% elseif errormessage == 'Please indicate all the informations' %}
+						<p><p>{{ errormessage }}</p></p>
+					{% endif %}
+				{% endif %}
+				<form action="" method="POST" class="form_idx_ctn">
 					<div class="form_idx_div">
-						<label for="">Your name</label>
-						<input type="text">
+						<label for="">Your name*</label>
+						<input type="text" name="name">
 					</div>
 					<div class="form_idx_div">
-						<label for="">Your email</label>
-						<input type="text">
+						<label for="">Your email*</label>
+						<input type="text" name="mail">
 					</div>
 					<div class="form_idx_ctn_qst">
-						<label for="">Give me tips or question !</label>
-						<input type="textarea">
+						<label for="">Give me tips or question !*</label>
+						<input type="textarea" name="text">
 					</div>
-					<input type="submit" value="Send your message" class="idx_form_submit">
+					<input type="submit" value="Send your message" class="idx_form_submit" name="idx_input_avis">
 				</form>
 			</div>
 			
