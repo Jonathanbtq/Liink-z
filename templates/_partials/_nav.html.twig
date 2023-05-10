@@ -9,13 +9,12 @@
 		{% else %}
 		<a class="nav-link title_site" href="{{ path('login') }}">Link'Z</a>
 		{% endif %}
-		<button class="button_nav_brg" type="button" onClick="openMenu()" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<div class="button_nav_brg">
+			<span class=""></span>
+		</div>
 	</div>
 	<!---collapse navbar-collapse-->
 	<div class="nav-deux-ctn" id="navbarNav">
-		<button class="burger_menu_close"onClick="closeMenu()" >X</button>
 		<ul class="navbar_nav_rgt">
 			{% if app.user %}
 				<li class="nav_item_rgt">
