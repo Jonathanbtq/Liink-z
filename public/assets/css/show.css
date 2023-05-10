@@ -54,6 +54,19 @@
 .div_links a {
     text-decoration: none;
 }
+.div_links_phone {
+    display: none;
+    width: 80%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 50px;
+    border-radius: 45px;
+    background: linear-gradient(225deg, #0f2f1c 0%, #18404b 50%, #38183b 100%);
+}
+.div_links_phone a {
+    text-decoration: none;
+}
 .btn_prf_edit{
     background: var(--gradient-button);
     width: 3.5vw;
@@ -67,6 +80,17 @@
 }
 
 @media screen and (max-width: 720px) {
+    .head_show_h h1{
+        font-size: 40px !important;
+    }
+    .profile_img_user{
+        width: 40vw !important;
+        height: 40vw !important;
+    }
+    .logo_certified{
+        width: 10vw !important;
+        height: 10vw !important;
+    }
     .desc_show_ctn{
         text-align : center !important;
     }
@@ -93,12 +117,29 @@
         margin: 0 !important;
     }
     .div_links{
+        display: none !important;
+    }
+    .div_links_phone {
+        display: flex !important;
         width: 100% !important;
         min-height: 15vw !important;
         border-radius: 5px !important;
         margin-bottom: 25px !important;
         padding: 0 10px 0 10px !important;
         justify-content: space-between;
+    }
+    .div_links_phone a {
+        text-decoration: none;
+    }
+    .p_links_phone{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        font-weight: bold;
+        color: white;
+        font-size: 30px;
+        margin: 0;
+        padding: 0 !important;
     }
     .btn-copy{
         width: 8vw !important;

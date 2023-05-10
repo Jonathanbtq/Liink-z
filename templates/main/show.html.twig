@@ -57,12 +57,15 @@
 			{% if links is defined  %}
 				{% for link in links %}
 					{% if link.isActived == 1 %}
-						<div class="d-flex text-light align-item-center div_links">
+						<div class="div_links">
 							<p class="pe-5 p_links">{{ link.title }}</p>
 							<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
 							<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
 								<i class="fas fa-copy">Copy</i>
 							</button>
+						</div>
+						<div class="div_links_phone">
+							<a href="{{ link.link }}" target="_blank" class="p_links_phone">{{ link.title }}</a>
 						</div>
 					{% else %}
 						{% if app.user.id == user_main[0].id %}
