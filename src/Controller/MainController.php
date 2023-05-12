@@ -134,14 +134,24 @@ class MainController extends AbstractController
                     // Unable to upload the photo, give up
                 }
                 $user[0]->setProfileImg($filename);
+            }else{
+                $img = $user[0]->getProfileImg();
+                $user[0]->setProfileImg($img);
             }
             $userRepo->save($user[0], true);
             return $this->redirectToRoute('show', ['pseudo' => $user[0]->getPseudo()]);
         }
-
+        
+        $img = $user[0]->getProfileImg();
+        if($img != null){
+            $img = $img;
+        }else{
+            $img = null;
+        }
         return $this->render('main/appearance.html.twig', [
             'user_main' => $user,
             'form' => $form->createView(),
+            'img' => $img,
         ]);
     }
 

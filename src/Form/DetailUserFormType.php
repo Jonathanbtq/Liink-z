@@ -17,9 +17,12 @@ class DetailUserFormType extends AbstractType
         $builder
             ->add('profile_img', FileType::class, [
                 'label' => false,
+                'required' => false,
                 'attr' => [
-                    'class' => 'input_img'
-                ]
+                    'class' => 'input_img',
+                    'data_class' => null
+                ],
+                'data_class' => null // add this line
             ])
             ->add('description', TextareaType::class, [
                 'empty_data' => 'test',

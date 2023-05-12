@@ -46,7 +46,7 @@
     display: flex;
     margin: 0;
 }
-.app_img_p a{
+.app_img_p a, .input_img{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,7 +91,10 @@
     color: white;
     padding: 5px;
 }
-.appearance_ctn form input, .input_img{
+.input_img{
+    height: auto;
+}
+.appearance_ctn form .sbt_app_btn{
     width: 100%;
     height: 2vw;
     color: white;

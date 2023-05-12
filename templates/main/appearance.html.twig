@@ -18,7 +18,11 @@
                     </div>
                     <div class="app_img_p">
                         {{ form_row(form.profile_img) }}
-                        <a href="{{ path('appearanceDeleteImg', {pseudo: app.user.pseudo})}}"><p>Remove</p></a>
+                        {% if img is null %}
+                            <a href="">You don't have profile image</a>
+                        {% else %}
+                            <a href="{{ path('appearanceDeleteImg', {pseudo: app.user.pseudo})}}"><p>Remove</p></a>
+                        {% endif %}
                     </div>
                 </div>
                 
@@ -26,7 +30,7 @@
                 <div class="textarea_appearance">
                     {{ form_row(form.description) }}
                 </div>
-                <input type="submit">
+                <input type="submit" class="sbt_app_btn">
             {{form_end(form)}}
         </div>
     </div>

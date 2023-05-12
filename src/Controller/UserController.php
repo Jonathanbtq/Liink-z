@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Subscription;
 use App\Repository\SubscriptionRepository;
 use App\Repository\UserRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class UserController extends AbstractController
 {
@@ -40,9 +42,16 @@ class UserController extends AbstractController
     public function imgProfile($pseudo, UserRepository $userRepo): Response
     {
         $user = $userRepo->findBy(['pseudo' => $pseudo]);
-        $user[0]->setProfileImg(null);
+        $img = $user[0]->getProfileImg();
 
-        $userRepo->save($user[0], true);
-        return $this->redirectToRoute('show', ['pseudo' => $user[0]->pseudo]);
+        if($img != null){
+            unlink("../public/uploads/photos/" . $img);
+            $user[0]->setProfileImg(null);
+            
+            $userRepo->save($user[0], true);
+            return $this->redirectToRoute('show', ['pseudo' => $user[0]->pseudo]);
+        }else{
+            return $this->redirectToRoute('appearanceDeleteImg', ['pseudo' => $user[0]->pseudo]);
+        }
     }
 }
