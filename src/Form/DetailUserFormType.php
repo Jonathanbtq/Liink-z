@@ -15,12 +15,12 @@ class DetailUserFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('profile_img', FileType::class, [
-            //     'label' => false,
-            //     'attr' => [
-            //         'data_class' => null
-            //     ]
-            // ])
+            ->add('profile_img', FileType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'input_img'
+                ]
+            ])
             ->add('description', TextareaType::class, [
                 'empty_data' => 'test',
             ])

@@ -79,6 +79,11 @@
     width: 2vw;
 }
 
+@media screen and (max-width: 1600px) {
+    .add_links a{
+        height: 4vw !important;
+    }
+}
 @media screen and (max-width: 720px) {
     .head_show_h h1{
         font-size: 40px !important;

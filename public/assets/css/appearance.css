@@ -91,7 +91,7 @@
     color: white;
     padding: 5px;
 }
-.appearance_ctn form input{
+.appearance_ctn form input, .input_img{
     width: 100%;
     height: 2vw;
     color: white;

@@ -17,7 +17,7 @@
                         {% endif %}
                     </div>
                     <div class="app_img_p">
-                        {# {{ form_row(form.profile_img) }} #}
+                        {{ form_row(form.profile_img) }}
                         <a href="{{ path('appearanceDeleteImg', {pseudo: app.user.pseudo})}}"><p>Remove</p></a>
                     </div>
                 </div>

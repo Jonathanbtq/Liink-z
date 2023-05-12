@@ -108,6 +108,8 @@ a {
 }
 
 .add_links a {
+    display: flex;
+    align-items: center;
     text-decoration: none;
     width: 50%;
     height: 3vw;

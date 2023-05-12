@@ -16,7 +16,7 @@
 .left_idx_head h2{
     display: flex;
     width: 50%;
-    font-size: clamp(60px, 50% 80px);
+    font-size: clamp(30px, 4.5vw, 70px) !important;
     text-align: center;
     font-weight: bold;
 }

@@ -40,14 +40,9 @@ class UserController extends AbstractController
     public function imgProfile($pseudo, UserRepository $userRepo): Response
     {
         $user = $userRepo->findBy(['pseudo' => $pseudo]);
-        $image = $user[0]->getProfileImg();
+        $user[0]->setProfileImg(null);
 
-        if($image != null){
-            $image = null;
-            $userRepo->save($user[0], true);
-            return $this->redirectToRoute('show', ['pseudo' => $user[0]->pseudo]);
-        }else{
-            return $this->redirectToRoute('show', ['pseudo' => $user[0]->pseudo]);
-        }
+        $userRepo->save($user[0], true);
+        return $this->redirectToRoute('show', ['pseudo' => $user[0]->pseudo]);
     }
 }
