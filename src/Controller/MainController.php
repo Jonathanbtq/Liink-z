@@ -121,28 +121,29 @@ class MainController extends AbstractController
     #[Route('/appearance/{pseudo}', name: 'appearance')]
     public function ChangeUser($pseudo, Request $request, LinksRepository $linkRepo, UserRepository $userRepo, #[Autowire('%photo_dir%')] string $photoDir): Response
     {
-        $user = $userRepo->findBy(['pseudo' => $pseudo]);
-        $form = $this->createForm(DetailUserFormType::class, $user[0]);
+        $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+        $form = $this->createForm(DetailUserFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($photo = $form['profile_img']->getData()) {
+            $photo = $form['profile_img']->getData();
+            if ($photo) {
                 $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
                 try {
                     $photo->move($photoDir, $filename);
                 } catch (FileException $e) {
                     // Unable to upload the photo, give up
                 }
-                $user[0]->setProfileImg($filename);
+                $user->setProfileImg($filename);
             }else{
-                $img = $user[0]->getProfileImg();
-                $user[0]->setProfileImg($img);
+                $img = $user->getProfileImg();
+                $user->setProfileImg($img);
             }
-            $userRepo->save($user[0], true);
-            return $this->redirectToRoute('show', ['pseudo' => $user[0]->getPseudo()]);
+            $userRepo->save($user, true);
+            return $this->redirectToRoute('show', ['pseudo' => $user->getPseudo()]);
         }
         
-        $img = $user[0]->getProfileImg();
+        $img = $user->getProfileImg();
         if($img != null){
             $img = $img;
         }else{
