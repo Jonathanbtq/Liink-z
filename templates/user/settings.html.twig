@@ -1,19 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page d'accueil
+{% block title %}Settings
 {% endblock %}
 
 {% block body %}
     <div class="div_container">
         <div class="settings_ctn">
+            <a class ="sett_a" href="{{ path('usermodifaccount', {pseudo: app.user.pseudo}) }}">My account</a>
             <div class="subscribe_parameter_ctn">
                 <div class="head_sub_param">
                     <h2>Let visitors subscribe</h2>
                     <a href="{{ path('usersubscribe', {pseudo: user.pseudo})}}">Accept</a>
                 </div>
+                <p>Add a button for your visitor can follow you</p>
             </div>
             <div class="activated_links">
-            
+                <div class="head_links_settings">
+                    <h2>Your links</h2>
+                </div>
+                {% for links in links %}
+                    <div class="links_user_stg">
+                        {% if links.title != null %}
+                        <p>{{ links.title }}</p>
+                        {% else %}
+                            <p>{{ links.link }}</p>
+                        {% endif %}
+                        {% if links.isActived == true %}
+                            <a href="{{ path('activedlinks', {link: links.id})}}">V</a>
+                        {% else %}
+                            <a href="{{ path('activedlinks', {link: links.id})}}">X</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

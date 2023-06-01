@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Subscription;
+use App\Form\UserModifType;
+use App\Repository\LinksRepository;
 use App\Repository\SubscriptionRepository;
 use App\Repository\UserRepository;
 use Exception;
@@ -10,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends AbstractController
 {
@@ -57,12 +61,14 @@ class UserController extends AbstractController
 
     
     #[Route('/settings/{pseudo}', name: 'usersettings')]
-    public function userSetting($pseudo, UserRepository $userRepo): Response
+    public function userSetting($pseudo, UserRepository $userRepo, LinksRepository $linksRepo): Response
     {
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+        $links = $linksRepo->findBy(['user' => $this->getUser()]);
 
         return $this->render('user/settings.html.twig', [
             'user' => $user,
+            'links' => $links,
         ]);
     }
 
@@ -78,5 +84,89 @@ class UserController extends AbstractController
         
         $userRepo->save($user, true);
         return $this->redirectToRoute('usersettings', ['pseudo' => $user->pseudo]);
+    }
+
+    #[Route('/settings/links/{link}', name: 'activedlinks')]
+    public function userLinksActived($link, LinksRepository $linksRepo): Response
+    {
+        $links = $linksRepo->findOneBy(['id' => $link]);
+        if($links->isIsActived() == false){
+            $links->isIsActived(true);
+        }else{
+            $links->isIsActived(false);
+        }
+        
+        $linksRepo->save($links, true);
+        $user = $this->getUser();
+        return $this->redirectToRoute('usersettings', ['pseudo' => $user->pseudo]);
+    }
+
+    #[Route('/modification/user/{pseudo}', name: 'usermodifaccount')]
+    public function userModifAccount(Request $request, $pseudo, UserRepository $userRepo): Response
+    {
+        $message = '';
+        $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+        if(!$this->getUser()){
+            return $this->redirectToRoute('login');
+        }
+        if(!$this->getUser() === $user){
+            return $this->redirectToRoute('login');
+        }
+        $form = $this->createForm(UserModifType::class, $user);
+        $form->handleRequest($request);
+
+        if( $form->isSubmitted() && $form->isValid()){
+            $user->setEmail($form->get('email')->getData());
+
+            $userRepo->save($user, true);
+            return $this->redirectToRoute('usermodifaccount', ['pseudo' => $user->pseudo]);
+        }
+
+        return $this->render('user/accountmodif.html.twig', [
+            'form' => $form->createView(),
+            'message' => $message
+        ]);
+    }
+
+    #[Route('/password/user/{pseudo}', name: 'usermodifpassword')]
+    public function userModifPassword(Request $request, $pseudo, UserRepository $userRepo, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $message = '';
+        $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+        if(!$this->getUser()){
+            return $this->redirectToRoute('login');
+        }
+        if(!$this->getUser() === $user){
+            return $this->redirectToRoute('login');
+        }
+        $form = $this->createForm(UserPasswordModifType::class, $user);
+        $form->handleRequest($request);
+
+        if( $form->isSubmitted() && $form->isValid()){
+            $hashPassword = $userPasswordHasher->hashPassword(
+                $user,
+                $form->get('plainPassword')->getData()
+                );
+            if($form->get('verifypassword')->getData() != null){
+                if(password_verify($form->get('verifypassword')->getData(), $hashPassword)){
+                    $user->setPassword($hashPassword);
+                }else{
+                    return $message = ['state' => 'errorPassword',
+                        'error' => "The password dont be the same"
+                    ];
+                }
+            }else{
+                return $message = ['state' => 'errorPasswordRepeat',
+                    'error' => "Please repeat you password"
+                ];
+            }
+            $userRepo->save($user, true);
+            return $this->redirectToRoute('usermodifaccount', ['pseudo' => $user->pseudo]);
+        }
+
+        return $this->render('user/passwordmodif.html.twig', [
+            'form' => $form->createView(),
+            'message' => $message
+        ]);
     }
 }

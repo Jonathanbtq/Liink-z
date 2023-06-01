@@ -22,6 +22,7 @@
 		<link rel="stylesheet" href="{{ asset('assets/css/appearance.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/css/linksnew.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/css/nav.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css/settings.css') }}">
 		{% block stylesheets %}
 			{# {{ encore_entry_link_tags('app') }} #}
 		{% endblock %}
@@ -32,6 +33,7 @@
 	</head>
 	<body>
 		{% include "_partials/_nav.html.twig" %}
+		{% include "_partials/_flash.html.twig" %}
 		{% block body %}{% endblock %}
 		{% include "_partials/_footer.html.twig" %}
 	</body>

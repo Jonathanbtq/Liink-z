@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification Account
+{% endblock %}
+
+{% block body %}
+    <div class="div_container">
+        <div class="modifaccount_ctn">
+            {% if message != '' %}
+                {% if message.state == 'errorPassword' %}
+                    <p>{{ message.error }}</p>
+                {% endif %}
+            {% endif %}
+            <h1>Account informations :</h1>
+            {{form_start(form)}}
+            {{form_row(form.email)}}
+            <button type="submit">Valider</button>
+            {{form_end(form)}}
+        </div>
+        <div class="modif_acc_paw">
+            <a href="{{ path('usermodifpassword', {pseudo: app.user.pseudo}) }}">Change Password</a>
+        </div>
+    </div>
+{% endblock %}
