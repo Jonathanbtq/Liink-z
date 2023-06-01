@@ -54,4 +54,29 @@ class UserController extends AbstractController
             return $this->redirectToRoute('appearanceDeleteImg', ['pseudo' => $user[0]->pseudo]);
         }
     }
+
+    
+    #[Route('/settings/{pseudo}', name: 'usersettings')]
+    public function userSetting($pseudo, UserRepository $userRepo): Response
+    {
+        $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+
+        return $this->render('user/settings.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/settings/{pseudo}', name: 'usersubscribe')]
+    public function userSubscribe($pseudo, UserRepository $userRepo): Response
+    {
+        $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+        if($user->isSubscribeAccept() == false){
+            $user->setSubscribeAccept(true);
+        }else{
+            $user->setSubscribeAccept(false);
+        }
+        
+        $userRepo->save($user, true);
+        return $this->redirectToRoute('usersettings', ['pseudo' => $user->pseudo]);
+    }
 }

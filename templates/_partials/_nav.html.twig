@@ -23,6 +23,9 @@
 				<li class="nav_item_rgt">
 					<a class="nav_a" href="{{ path('appearance', {pseudo: app.user.pseudo}) }}">Appearance</a>
 				</li>
+				<li class="nav_item_rgt">
+					<a class="nav_a" href="{{ path('usersubscribe', {pseudo: app.user.pseudo}) }}">Settings</a>
+				</li>
 			{% else %}
 				<li class="nav_item_rgt">
 					<a class="nav_a" href="{{ path('app_register') }}">Account creation</a>

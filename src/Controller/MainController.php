@@ -125,29 +125,25 @@ class MainController extends AbstractController
         $form = $this->createForm(DetailUserFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $photo = $form['profile_img']->getData();
-            $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
-            try {
-                $photo->move($photoDir, $filename);
-            } catch (FileException $e) {
-                // Unable to upload the photo, give up
-            }
-            $user->setProfileImg($filename);
+        $img = $user->getProfileImg();
 
-            if($user->getProfileImg() != null){
-                $img = $user->getProfileImg();
-                $user->setProfileImg($img);
+        if($form->isSubmitted() && $form->isValid()) {
+            $photo = $form['profile_img']->getData();
+            if(is_string($photo)){
+                $user->setProfileImg($photo);
+            }else{
+                $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+                try {
+                    $photo->move($photoDir, $filename);
+                } catch (FileException $e) {
+                    // Unable to upload the photo, give up
+                }
+                $user->setProfileImg($filename);
             }
+            
+
             $userRepo->save($user, true);
             return $this->redirectToRoute('show', ['pseudo' => $user->getPseudo()]);
-        }
-        
-        $img = $user->getProfileImg();
-        if($img != null){
-            $img = $img;
-        }else{
-            $img = null;
         }
         return $this->render('main/appearance.html.twig', [
             'user_main' => $user,

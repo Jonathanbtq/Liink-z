@@ -17,7 +17,7 @@
                         {% endif %}
                     </div>
                     <div class="app_img_p">
-                        {{ form_row(form.profile_img) }}
+                        {{ form_row(form.profile_img, {"attr":{"placeholder":img}})}}
                         {% if img is null %}
                             <a href="">You don't have profile image</a>
                         {% else %}

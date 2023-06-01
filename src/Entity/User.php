@@ -53,6 +53,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profile_img = null;
 
+    #[ORM\Column]
+    private ?bool $subscribe_accept = null;
+
     public function __construct()
     {
         $this->subscriptions = new ArrayCollection();
@@ -249,6 +252,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setProfileImg(?string $profile_img): self
     {
         $this->profile_img = $profile_img;
+
+        return $this;
+    }
+
+    public function isSubscribeAccept(): ?bool
+    {
+        return $this->subscribe_accept;
+    }
+
+    public function setSubscribeAccept(bool $subscribe_accept): self
+    {
+        $this->subscribe_accept = $subscribe_accept;
 
         return $this;
     }
