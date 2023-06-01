@@ -127,15 +127,15 @@ class MainController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $photo = $form['profile_img']->getData();
-            if ($photo) {
-                $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
-                try {
-                    $photo->move($photoDir, $filename);
-                } catch (FileException $e) {
-                    // Unable to upload the photo, give up
-                }
-                $user->setProfileImg($filename);
-            }else{
+            $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+            try {
+                $photo->move($photoDir, $filename);
+            } catch (FileException $e) {
+                // Unable to upload the photo, give up
+            }
+            $user->setProfileImg($filename);
+
+            if($user->getProfileImg() != null){
                 $img = $user->getProfileImg();
                 $user->setProfileImg($img);
             }
