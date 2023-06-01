@@ -129,7 +129,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/password/user/{pseudo}', name: 'usermodifpassword')]
-    public function userModifPassword(Request $request, $pseudo, UserRepository $userRepo, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function userModifPassword($pseudo, Request $request, UserRepository $userRepo, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $message = '';
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);

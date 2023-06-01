@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,5 +30,13 @@ class SecurityController extends AbstractController
     {
         return $this->redirectToRoute('login');
         // throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    #[Route(path: '/deleteaccount/{pseudo}', name: 'deleteaccount')]
+    public function deleteAccount($pseudo, UserRepository $userRepo): Response
+    {
+        $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+        // $userRepo->remove($user, true);
+        return $this->redirectToRoute('usermodifaccount', ['pseudo' => $user->pseudo]);
     }
 }
