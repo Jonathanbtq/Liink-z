@@ -33,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    public ?string $email = null;
 
     #[ORM\Column]
     private ?bool $certified = null;

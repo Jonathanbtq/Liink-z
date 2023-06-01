@@ -30,14 +30,16 @@
 				</a>
 			</div>
 			{% if app.user.id != user_main[0].id %}
-				{% if abo is null %}
-					<span class="subscription">
-						<a href="{{path('subscription', {showuser: user_main[0].id } )}}">Subscibe</a>
-					</span>
-				{% else %}
-					<span class="unsubscription">
-						<a href="{{path('unsubscription', {showuser: user_main[0].id } )}}">Unsubscribe</a>
-					</span>
+				{% if user_main[0].isSubscribeAccept == true %}
+					{% if abo is null %}
+						<span class="subscription">
+							<a href="{{path('subscription', {showuser: user_main[0].id } )}}">Subscibe</a>
+						</span>
+					{% else %}
+						<span class="unsubscription">
+							<a href="{{path('unsubscription', {showuser: user_main[0].id } )}}">Unsubscribe</a>
+						</span>
+					{% endif %}
 				{% endif %}
 			{% endif %}
 		</div>

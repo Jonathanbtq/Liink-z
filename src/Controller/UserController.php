@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Subscription;
 use App\Form\UserModifType;
+use App\Form\UserPasswordModifType;
 use App\Repository\LinksRepository;
 use App\Repository\SubscriptionRepository;
 use App\Repository\UserRepository;
