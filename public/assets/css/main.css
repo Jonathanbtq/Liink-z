@@ -227,6 +227,7 @@
 .form_idx_div input{
     height: 3vw;
     border-radius: 5px;
+    width: 100%;
 }
 .form_idx_ctn_qst{
     display: flex;

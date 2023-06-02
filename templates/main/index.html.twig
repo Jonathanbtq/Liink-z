@@ -116,21 +116,21 @@
 						<p><p>{{ errormessage }}</p></p>
 					{% endif %}
 				{% endif %}
-				<form action="" method="POST" class="form_idx_ctn">
+				{{ form_start(formcontact, {attr: {'class':'form_idx_ctn'}}) }}
 					<div class="form_idx_div">
-						<label for="">Your name*</label>
-						<input type="text" name="name">
+						<label for="">Your name / Pseudo*</label>
+						{{form_row(formcontact.pseudo)}}
 					</div>
 					<div class="form_idx_div">
-						<label for="">Your email*</label>
-						<input type="text" name="mail">
+						<label for="">Your Email*</label>
+						{{form_row(formcontact.email)}}
 					</div>
 					<div class="form_idx_ctn_qst">
 						<label for="">Give me tips or question !*</label>
-						<input type="textarea" name="text">
+						{{form_row(formcontact.message)}}
 					</div>
 					<input type="submit" value="Send your message" class="idx_form_submit" name="idx_input_avis">
-				</form>
+				{{ form_end(formcontact) }}
 			</div>
 			
 		</div>

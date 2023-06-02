@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Entity\Links;
 use App\Entity\User;
 use App\Form\AddLinkFormType;
 use App\Form\DetailUserFormType;
+use App\Form\IndexContactFormType;
+use App\Repository\ContactRepository;
 use App\Repository\LinksRepository;
 use App\Repository\SubscriptionRepository;
 use App\Repository\UserRepository;
@@ -15,11 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 class MainController extends AbstractController
 {
     #[Route('/', name: 'main')]
-    public function index(Request $request, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo): Response
+    public function index(Request $request, ContactRepository $contactRepo, MailerInterface $mailer, UserRepository $userRepo, SubscriptionRepository $subRepo): Response
     {
         $user = '';
         $errormessage = '';
@@ -34,25 +39,63 @@ class MainController extends AbstractController
         } else {
             $userAbo = 'Vous n\'etes pas abonnée';
         }
-        if(isset($_POST['idx_input_avis'])){
-            if(!empty($_POST['name']) && !empty($_POST['mail']) && $_POST['text']){
-                if(is_string(htmlspecialchars($_POST['name'])) && is_string(htmlspecialchars($_POST['mail'])) && is_string(htmlspecialchars($_POST['text']))){
-                    $headers = "From ". $_POST['name'] . " with this email : " . $_POST['mail']. " Le message est :" . $_POST['text'];
-                    mail('botquin.jonathan@yahoo.fr', $_POST['name'], $_POST['text'], $headers);
-                    return $this->redirectToRoute('main');
-                }else{
-                    $errormessage = 'Please put correct elements';
-                }
-            }else{
-                $errormessage = 'Please indicate all the informations';
-            }
+
+        $contact = new Contact();
+        $form = $this->createForm(IndexContactFormType::class, $contact);
+        $form->handleRequest($request);
+        
+        if($this->getUser()){
+            $contact->setPseudo($this->getUser()->pseudo)
+                ->setEmail($this->getUser()->email)
+                ->setSubject('Null');
         }
+
+        if($form->isSubmitted() && $form->isValid()){
+            $contact = $form->getData();
+            $contact->setCreatedAt(new \DateTimeImmutable());
+            $contactRepo->save($contact, true);
+            
+            $email = (new TemplatedEmail())
+                ->from($contact->getEmail())
+                ->subject($contact->getSubject())
+                ->to('botquin.jonathan@yahoo.fr')
+                ->text($contact->getMessage())
+                ->htmlTemplate('_partials/_contactTemplate.html.twig')
+
+                ->context([
+                    'contact' => $contact
+                ]);
+
+            $mailer->send($email);
+
+            $this->addFlash(
+                'success',
+                'Your message as been send with succes !'
+            );
+
+            return $this->redirectToRoute('contact');
+        }
+
+        // if(isset($_POST['idx_input_avis'])){
+        //     if(!empty($_POST['name']) && !empty($_POST['mail']) && $_POST['text']){
+        //         if(is_string(htmlspecialchars($_POST['name'])) && is_string(htmlspecialchars($_POST['mail'])) && is_string(htmlspecialchars($_POST['text']))){
+        //             $headers = "From ". $_POST['name'] . " with this email : " . $_POST['mail']. " Le message est :" . $_POST['text'];
+        //             mail('botquin.jonathan@yahoo.fr', $_POST['name'], $_POST['text'], $headers);
+        //             return $this->redirectToRoute('main');
+        //         }else{
+        //             $errormessage = 'Please put correct elements';
+        //         }
+        //     }else{
+        //         $errormessage = 'Please indicate all the informations';
+        //     }
+        // }
 
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
             'user' => $user,
             'sub' => $userAbo,
-            'errormessage' =>  $errormessage
+            'errormessage' =>  $errormessage,
+            'formcontact' => $form
         ]);
     }
 
