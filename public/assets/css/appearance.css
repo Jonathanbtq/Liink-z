@@ -20,7 +20,7 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
-    width: 95%;
+    width: 100%;
     margin-top: 10px;
 }
 .app_img{
@@ -103,6 +103,13 @@
     background: var(--gradient-button);
     border: none;
     border-radius: .5rem;
+}
+/****BackGround Image****/
+.app_back_img{
+    width: 100%;
+}
+.app_back_img img{
+    width: 100%;
 }
 @media screen and (max-width: 1540px) {
     .app_img_p{

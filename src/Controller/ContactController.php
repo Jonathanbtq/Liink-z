@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactFormType;
+use Symfony\Component\Mime\Email;
 use App\Repository\ContactRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ContactController extends AbstractController
 {
@@ -56,5 +57,19 @@ class ContactController extends AbstractController
             'form' => $form->createView(),
             'contact' => $contact
         ]);
+    }
+
+    #[Route('/mail', name: 'mail')]
+    public function mail(MailerInterface $mailer, Request $request, ContactRepository $contactRepo): Response
+    {
+        $email = (new Email())
+            ->from('jonathan@yahoo.fr')
+            ->to('linkz@jonathanbotquin.com')
+            ->subject('test de sujet')
+            ->text('message de qualités++');
+
+        $mailer->send($email);
+
+        return $this->redirectToRoute('main');
     }
 }

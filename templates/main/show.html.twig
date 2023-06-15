@@ -11,6 +11,13 @@
 {% block body %}
 	<div class="example-wrapper div_container">
 		<div class="show_header">
+			<div class="show_header_img">
+				{% if user_main[0].getImageBack %}
+					<img class="profile_back_user" src="/assets/images/show/{{user_main[0].id}}/{{ app.user.getImageBack }}">
+				{% else %}
+					<img class="" src="">
+				{% endif %}
+			</div>
 			<div class="head_show_h">
 				<a href="{{ path('show', {pseudo: user_main[0].pseudo}) }}">
 					{% if user_main[0].getProfileImg %}
@@ -42,11 +49,11 @@
 					{% endif %}
 				{% endif %}
 			{% endif %}
-		</div>
-		<div class="profile_show_desc">
+			<div class="profile_show_desc">
 			{% if user_main[0].description != null and app.user.id == user_main[0].id %}
 				<p class="desc_show_p">{{ user_main[0].description }}</p>
 			{% endif %}
+			</div>
 		</div>
 		<div class="Link_div_ctn">
 			{% if app.user %}

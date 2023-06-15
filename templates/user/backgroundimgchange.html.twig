@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil
+{% endblock %}
+
+{% block body %}
+    <div class="div_container">
+        <h2>Profile Background theme</h2>
+        <div class="appearance_ctn">
+            {{form_start(form)}}
+                <div class="appearance_img_user">
+                    <div class="app_back_img">
+                        {% if app.user.getImageBack %}
+                            <img class="profile_img_back_user" src="/assets/images/show/{{app.user.id}}/{{ app.user.getImageBack }}">
+                        {% else %}
+                            <img class="" src="">
+                        {% endif %}
+                    </div>
+                </div>
+                <input type="submit" class="sbt_app_btn">
+            {{form_end(form)}}
+            <a href="{{path('deletebackground', {pseudo: app.user.pseudo})}}">Delete the Background</a>
+        </div>
+    </div>
+    
+    
+{% endblock %}

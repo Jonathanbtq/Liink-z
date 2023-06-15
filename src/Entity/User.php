@@ -18,7 +18,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    public ?int $id = null;
 
     #[ORM\Column]
     private array $roles = [];
@@ -55,6 +55,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $subscribe_accept = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image_back = null;
 
     public function __construct()
     {
@@ -264,6 +267,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSubscribeAccept(bool $subscribe_accept): self
     {
         $this->subscribe_accept = $subscribe_accept;
+
+        return $this;
+    }
+
+    public function getImageBack(): ?string
+    {
+        return $this->image_back;
+    }
+
+    public function setImageBack(?string $image_back): self
+    {
+        $this->image_back = $image_back;
 
         return $this;
     }

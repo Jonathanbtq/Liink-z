@@ -162,7 +162,7 @@ class MainController extends AbstractController
      * Affichage de la page utilisateur
      */
     #[Route('/appearance/{pseudo}', name: 'appearance')]
-    public function ChangeUser($pseudo, Request $request, LinksRepository $linkRepo, UserRepository $userRepo, #[Autowire('%photo_dir%')] string $photoDir): Response
+    public function ChangeUser($pseudo, Request $request, #[Autowire('%photo_dir%')] string $photoDir, UserRepository $userRepo): Response
     {
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
         $form = $this->createForm(DetailUserFormType::class, $user);

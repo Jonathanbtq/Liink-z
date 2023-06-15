@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Subscription;
+use App\Form\ImgBackFormType;
 use App\Form\UserModifType;
 use App\Form\UserPasswordModifType;
 use App\Repository\LinksRepository;
 use App\Repository\SubscriptionRepository;
 use App\Repository\UserRepository;
 use Exception;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -92,9 +94,9 @@ class UserController extends AbstractController
     {
         $links = $linksRepo->findOneBy(['id' => $link]);
         if($links->isIsActived() == false){
-            $links->isIsActived(true);
+            $links->setIsActived(true);
         }else{
-            $links->isIsActived(false);
+            $links->setIsActived(false);
         }
         
         $linksRepo->save($links, true);
@@ -169,5 +171,84 @@ class UserController extends AbstractController
             'form' => $form->createView(),
             'message' => $message
         ]);
+    }
+
+    // Formulaire d'ajout d'image de BackGround profil
+    #[Route('/background/{pseudo}', name: 'usermodifbackground')]
+    public function userModifBackGround($pseudo, Request $request, #[Autowire('%background_dir%')] string $photoDir, UserRepository $userRepo, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $message = '';
+        $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+        if(!$this->getUser()){
+            return $this->redirectToRoute('login');
+        }
+        if(!$this->getUser() === $user){
+            return $this->redirectToRoute('login');
+        }
+        $form = $this->createForm(ImgBackFormType::class, $user);
+        $form->handleRequest($request);
+        if($user->getImageBack() != null){
+            $directory = $photoDir.'/'.$user->id;
+        }
+
+        if( $form->isSubmitted() && $form->isValid()){
+            if($img = $form['image_back']->getData()){
+                $filename = bin2hex(random_bytes(6)) . '.' . $img->guessExtension();
+                // Vérification de l'éxistance d'un fichier nommé à l'id de l'user
+                if(!file_exists($photoDir.'/'.$user->id)){
+                    $photoDir = $photoDir.'/'.$user->id;
+                    mkdir($photoDir, 777);
+                }else{
+                    $objects = scandir($directory);
+                    foreach ($objects as $object) {
+                        if ($object != "." && $object != "..") {
+                            if (filetype($directory."/".$object) == "dir"){
+                                rmdir($directory."/".$object); 
+                            }else{
+                                unlink($directory."/".$object);
+                            }
+                        }
+                    }
+                    rmdir($directory);
+                    $photoDir = $photoDir.'/'.$user->id;
+                    mkdir($photoDir, 777);
+                }
+                if($img->move($photoDir, $filename)){
+                    $message = 'Upload effectué avec succès';
+                }else{
+                    $message = 'Erreur lors de l\'upload';
+                }
+                $user->setImageBack($filename);
+            }
+           
+            $userRepo->save($user, true);
+            return $this->redirectToRoute('appearance', ['pseudo' => $user->pseudo]);
+        }
+
+        return $this->render('user/backgroundimgchange.html.twig', [
+            'form' => $form->createView(),
+            'message' => $message
+        ]);
+    }
+
+    #[Route('/deletebackground/{pseudo}', name: 'deletebackground')]
+    public function deleteBackground($pseudo, UserRepository $userRepo, #[Autowire('%background_dir%')] string $photoDir): Response
+    {
+        $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+        $directory = $photoDir.'/'.$user->id;
+        $objects = scandir($directory);
+        foreach ($objects as $object) {
+            if ($object != "." && $object != "..") {
+                if (filetype($directory."/".$object) == "dir"){
+                    rmdir($directory."/".$object); 
+                }else{
+                    unlink($directory."/".$object);
+                }
+            }
+        }
+        $user->setImageBack(null);
+
+        $userRepo->save($user, true);
+        return $this->redirectToRoute('usermodifbackground', ['pseudo' => $pseudo]);
     }
 }
