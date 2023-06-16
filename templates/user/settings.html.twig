@@ -26,9 +26,9 @@
                             <p>{{ links.link }}</p>
                         {% endif %}
                         {% if links.isActived == true %}
-                            <a href="{{ path('activedlinks', {link: links.id})}}">V</a>
+                            <a href="{{ path('activedlinks', {link: links.id})}}">Desactived</a>
                         {% else %}
-                            <a href="{{ path('activedlinks', {link: links.id})}}">X</a>
+                            <a href="{{ path('activedlinks', {link: links.id})}}">Actived</a>
                         {% endif %}
                             <a href="{{path('deletelink', {link: links.id})}}">Delete</a>
                     </div>

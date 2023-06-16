@@ -27,9 +27,9 @@ class AddLinkFormType extends AbstractType
                 'attr' => array(
                     'placeholder' => 'Link'
                 )
-            ])
+                ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Add'
+                'label' => 'Confirm'
             ]);
     }
 

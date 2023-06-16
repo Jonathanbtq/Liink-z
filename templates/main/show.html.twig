@@ -13,7 +13,7 @@
 		<div class="show_header">
 			<div class="show_header_img">
 				{% if user_main[0].getImageBack %}
-					<img class="profile_back_user" src="/assets/images/show/{{user_main[0].id}}/{{ app.user.getImageBack }}">
+					<img class="profile_back_user" src="/assets/images/show/{{user_main[0].id}}/{{ user_main[0].getImageBack }}">
 				{% else %}
 					<img class="" src="">
 				{% endif %}
@@ -66,17 +66,6 @@
 			{% if links is defined  %}
 				{% for link in links %}
 					{% if link.isActived == 1 %}
-						<div class="div_links">
-							<p class="pe-5 p_links">{{ link.title }}</p>
-							<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
-							<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
-								<i class="fas fa-copy">Copy</i>
-							</button>
-						</div>
-						<div class="div_links_phone">
-							<a href="{{ link.link }}" target="_blank" class="p_links_phone">{{ link.title }}</a>
-						</div>
-					{% else %}
 						{% if app.user.id == user_main[0].id %}
 							<div class="d-flex text-light align-item-center div_links">
 								<p class="pe-5 p_links">{{ link.title }}</p>
@@ -84,11 +73,21 @@
 								<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
 									<i class="fas fa-copy">Copy</i>
 								</button>
-								<a href="" class="btn_prf_edit"><img src="{{ asset('assets/images/show/edit.png')}}"></a>
+								<a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit"><img src="{{ asset('assets/images/show/edit.png')}}"></a>
+							</div>
+						{% else %}
+							<div class="div_links">
+								<p class="pe-5 p_links">{{ link.title }}</p>
+								<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
+								<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
+									<i class="fas fa-copy">Copy</i>
+								</button>
+							</div>
+							<div class="div_links_phone">
+								<a href="{{ link.link }}" target="_blank" class="p_links_phone">{{ link.title }}</a>
 							</div>
 						{% endif %}
 					{% endif %}
-					
 				{% endfor %}
 			{% endif %}
 		</div>
