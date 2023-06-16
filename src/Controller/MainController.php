@@ -120,7 +120,7 @@ class MainController extends AbstractController
             $link->setIsActived(1);
             $link->setUser($this->getUser());
             $linkRepo->save($link, true);
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('show', ['pseudo' => $this->getUser()->pseudo]);
         }
 
         return $this->render('main/edit.html.twig', [

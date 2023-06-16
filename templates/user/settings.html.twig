@@ -30,6 +30,7 @@
                         {% else %}
                             <a href="{{ path('activedlinks', {link: links.id})}}">X</a>
                         {% endif %}
+                            <a href="{{path('deletelink', {link: links.id})}}">Delete</a>
                     </div>
                 {% endfor %}
             </div>
