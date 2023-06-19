@@ -75,6 +75,10 @@
 								</button>
 								<a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit"><img src="{{ asset('assets/images/show/edit.png')}}"></a>
 							</div>
+							<div class="div_links_phone">
+								<p class="pe-5 p_links_phone">{{ link.title }}</p>
+								<a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit"><img src="{{ asset('assets/images/show/edit.png')}}"></a>
+							</div>
 						{% else %}
 							<div class="div_links">
 								<p class="pe-5 p_links">{{ link.title }}</p>
@@ -83,8 +87,8 @@
 									<i class="fas fa-copy">Copy</i>
 								</button>
 							</div>
-							<div class="div_links_phone">
-								<a href="{{ link.link }}" target="_blank" class="p_links_phone">{{ link.title }}</a>
+							<div class="div_links_phone_user">
+								<a href="{{ link.link }}" target="_blank" class="p_links_phone_user">{{ link.title }}</a>
 							</div>
 						{% endif %}
 					{% endif %}

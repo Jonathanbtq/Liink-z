@@ -1,3 +1,8 @@
+.delete_button{
+    border-radius: 15px;
+    background-color: rgb(24, 21, 33);
+    transition: .5s;
+}
 .settings_ctn{
     display: flex;
     flex-direction: column;
@@ -19,7 +24,12 @@
 .subscribe_parameter_ctn{
     display: flex;
     flex-direction: column;
+    padding: 20px 10px 20px 10px;
+    background-color: rgb(31, 28, 43);
     width: 100%;
+}
+.subscribe_parameter_ctn h2{
+    font-weight: bold;
 }
 .head_sub_param{
     display: flex;
@@ -29,13 +39,30 @@
     justify-content: space-between;
     width: 100%;
 }
+.head_sub_param p{
+    margin: 0;
+}
+.head_sub_param a{
+    padding: 10px;
+    border-radius: 15px;
+    background-color: rgb(24, 21, 33);
+    transition: .5s;
+}
+.head_sub_param a:hover{
+    transform: scale(1.09);
+    color: green;
+    font-weight: bold;
+    border-radius: 15px;
+    background-color: rgb(24, 21, 33);
+}
 .activated_links{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5px;
-    background-color: rgb(80, 68, 68);
+    padding: 10px;
+    /* background-color: rgb(80, 68, 68); */
+    background-color: rgb(31, 28, 43);
     margin: 5vw 0 5vw 0;
     width: 100%;
 }
@@ -45,20 +72,129 @@
 }
 .head_links_settings h2{
     font-size: 35px;
+    margin-bottom: 30px;
     font-weight: bold;
 }
 .links_user_stg{
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    justify-content: space-around;
-    background: var(--gradient-card);
+    justify-content: space-between;
+    padding: 0 5px 0 5px;
+    /* background: var(--gradient-card); */
     margin-bottom: 10px;
-    border-radius: 5px;
-    width: 100%;
+    width: 90%;
+    border-top: 1px solid rgba(255, 255, 255, 0.253);
 }
 .links_user_stg p{
     font-size: 25px;
     padding: 0;
     margin: 0;
+}
+
+/*----My Account----*/
+
+.modif_account_wth{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+}
+.modifaccount_ctn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.modifaccount_ctn form{
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0 30px 0;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: rgb(31, 28, 43);
+    width: 70%;
+}
+.modifaccount_ctn form div{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.modifaccount_ctn form button{
+    display: flex;
+    width: 100px;
+    justify-content: center;
+    border: none;
+    background: var(--gradient-button);
+    border-radius: 5px;
+}
+.modifaccount_ctn form button:hover{
+    color: white;
+}
+.modif_acc_paw{
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0 30px 0;
+    background-color: rgb(31, 28, 43);
+    padding: 20px;
+    border-radius: 5px;
+    width: 70%;
+}
+.modif_acc_paw a{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    /* background-color: rgb(80, 68, 68); */
+    background-color: rgb(50, 46, 66);
+    border-radius: 5px;
+    width: 30%;
+}
+.modif_delete_account{
+    display: flex;
+    margin: 30px 0 30px 0;
+}
+.deleteaccount{
+    background-color: rgb(50, 46, 66);
+    /* background-color: red; */
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+.deleteaccount:hover{
+    /* background-color: rgb(50, 46, 66); */
+    background-color: red;
+    color: white;
+    transform: scale(1.009);
+}
+
+@media screen and (max-width: 1200px) {
+    .modif_account_wth{
+        width: 90% !important;
+        margin-top: 30px;
+    }
+    .modif_acc_paw{
+        width: 70% !important;
+    }
+}
+@media screen and (max-width: 900px) {
+    .modif_acc_paw a{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 500px) {
+    .modif_account_wth{
+        width: 90% !important;
+    }
+    .modif_acc_paw{
+        width: 90% !important;
+    }
+    .modifaccount_ctn form{
+        width: 90% !important;
+    }
+    .modif_acc_paw a{
+        width: 100%;
+    }
 }

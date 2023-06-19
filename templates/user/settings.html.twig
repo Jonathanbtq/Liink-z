@@ -8,11 +8,12 @@
         <div class="settings_ctn">
             <a class ="sett_a" href="{{ path('usermodifaccount', {pseudo: app.user.pseudo}) }}">My account</a>
             <div class="subscribe_parameter_ctn">
+                <h2>Let visitors subscribe</h2>
                 <div class="head_sub_param">
-                    <h2>Let visitors subscribe</h2>
+                    <p>Add a button for your visitor can follow you</p>
                     <a href="{{ path('usersubscribe', {pseudo: user.pseudo})}}">Accept</a>
                 </div>
-                <p>Add a button for your visitor can follow you</p>
+                
             </div>
             <div class="activated_links">
                 <div class="head_links_settings">
@@ -30,7 +31,7 @@
                         {% else %}
                             <a href="{{ path('activedlinks', {link: links.id})}}">Actived</a>
                         {% endif %}
-                            <a href="{{path('deletelink', {link: links.id})}}">Delete</a>
+                            <a class="delete_button" href="{{path('deletelink', {link: links.id})}}">Delete</a>
                     </div>
                 {% endfor %}
             </div>

@@ -5,31 +5,32 @@
 
 {% block body %}
     <div class="div_container">
-        <div class="modifaccount_ctn">
-            {% if message != '' %}
-                {% if message.state == 'errorPassword' %}
-                    <p>{{ message.error }}</p>
+        <div class="modif_account_wth">
+            <div class="modifaccount_ctn">
+                {% if message != '' %}
+                    {% if message.state == 'errorPassword' %}
+                        <p>{{ message.error }}</p>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-            <h1>Account information</h1>
-            <p>My information :</p>
-            {{form_start(form)}}
-            {{form_row(form.email)}}
-            <button type="submit">Save</button>
-            {{form_end(form)}}
-        </div>
-        <div class="modif_acc_paw">
-            <h2>Account actions for {{ app.user.pseudo }}</h2>
-            <a href="{{ path('usermodifpassword', {pseudo: app.user.pseudo}) }}">Change Password</a>
-        </div>
-        <div class="modif_delete_account">
-            <a class="deleteaccount" href="{{ path('deleteaccount', {pseudo: app.user.pseudo}) }}">Delete my account</a>
-            <script>
-                document.querySelector('.deleteaccount').addEventListener('click', () => {
-                    event.preventDefault();
-                    return confirm('Are you sure to delete your account ?');
-                })
-            </script>
+                <h1>Account information</h1>
+                {{form_start(form)}}
+                {{form_row(form.email)}}
+                <button type="submit">Save</button>
+                {{form_end(form)}}
+            </div>
+            <div class="modif_acc_paw">
+                <h2>Account actions for {{ app.user.pseudo }}</h2>
+                <a href="{{ path('usermodifpassword', {pseudo: app.user.pseudo}) }}">Change Password</a>
+            </div>
+            <div class="modif_delete_account">
+                <a class="deleteaccount" href="{{ path('deleteaccount', {pseudo: app.user.pseudo}) }}">Delete my account</a>
+                <script>
+                    document.querySelector('.deleteaccount').addEventListener('click', () => {
+                        event.preventDefault();
+                        return confirm('Are you sure to delete your account ?');
+                    })
+                </script>
+            </div>
         </div>
     </div>
 {% endblock %}

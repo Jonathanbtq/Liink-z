@@ -76,6 +76,16 @@
     border-radius: 45px;
     background: linear-gradient(225deg, #0f2f1c 0%, #18404b 50%, #38183b 100%);
 }
+.div_links_phone_user {
+    display: none;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 50px;
+    border-radius: 45px;
+    background: linear-gradient(225deg, #0f2f1c 0%, #18404b 50%, #38183b 100%);
+}
 .div_links_phone a {
     text-decoration: none;
 }
@@ -144,7 +154,7 @@
     .div_links{
         display: none !important;
     }
-    .div_links_phone {
+    .div_links_phone, .div_links_phone_user {
         display: flex !important;
         width: 100% !important;
         min-height: 15vw !important;
@@ -155,14 +165,26 @@
     }
     .div_links_phone a {
         text-decoration: none;
+        width: 15%;
     }
     .p_links_phone{
         display: flex;
         justify-content: center;
-        width: 100%;
+        width: 80%;
         font-weight: bold;
         color: white;
-        font-size: 30px;
+        font-size: 28px;
+        margin: 0;
+        padding: 0 !important;
+    }
+    .p_links_phone_user{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        font-size: 28px;
         margin: 0;
         padding: 0 !important;
     }
@@ -221,6 +243,9 @@
     .p_links{
         margin: 0 !important;
         font-size: 12px !important;
+    }
+    .p_links_phone_user{
+        font-size: 20px !important;
     }
     .btn-copy{
         width: 10%;
