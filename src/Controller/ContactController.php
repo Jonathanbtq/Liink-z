@@ -6,6 +6,7 @@ use App\Entity\Contact;
 use App\Form\ContactFormType;
 use Symfony\Component\Mime\Email;
 use App\Repository\ContactRepository;
+use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -34,6 +35,7 @@ class ContactController extends AbstractController
             
             $email = (new TemplatedEmail())
                 ->from($contact->getEmail())
+                ->to('contact.pro@jonathanbotquin.com')
                 ->subject($contact->getSubject())
                 ->text($contact->getMessage())
                 ->htmlTemplate('_partials/_contactTemplate.html.twig')
@@ -49,7 +51,7 @@ class ContactController extends AbstractController
                 'Your message as been send with succes !'
             );
 
-            return $this->redirectToRoute('contact');
+            return $this->redirectToRoute('main');
         }
         
 
@@ -62,11 +64,12 @@ class ContactController extends AbstractController
     #[Route('/mail', name: 'mail')]
     public function mail(MailerInterface $mailer, Request $request, ContactRepository $contactRepo): Response
     {
-        $email = (new Email())
+        $email = (new TemplatedEmail())
             ->from('jonathan@yahoo.fr')
-            ->to('linkz@jonathanbotquin.com')
+            ->to('contact.pro@jonathanbotquin.com')
             ->subject('test de sujet')
-            ->text('message de qualités++');
+            ->text('message de qualités++')
+            ->htmlTemplate('_partials/contacttemplates/_welcome.html.twig');
 
         $mailer->send($email);
 

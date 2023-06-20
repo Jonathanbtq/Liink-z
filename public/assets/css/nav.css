@@ -43,6 +43,10 @@
     color: white;
     font-size: 25px;
     font-weight: bold;
+    padding: 0 0 0 20px;
+}
+.nav-link img{
+    height: 50px;
 }
 .nav_a{
     color: white;

@@ -59,11 +59,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image_back = null;
 
+    #[ORM\Column]
+    private ?bool $token_validation = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Token::class)]
+    private Collection $tokens;
+
     public function __construct()
     {
         $this->subscriptions = new ArrayCollection();
         $this->link = new ArrayCollection();
         $this->links = new ArrayCollection();
+        $this->tokens = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -279,6 +286,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImageBack(?string $image_back): self
     {
         $this->image_back = $image_back;
+
+        return $this;
+    }
+
+    public function isTokenValidation(): ?bool
+    {
+        return $this->token_validation;
+    }
+
+    public function setTokenValidation(bool $token_validation): self
+    {
+        $this->token_validation = $token_validation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Token>
+     */
+    public function getTokens(): Collection
+    {
+        return $this->tokens;
+    }
+
+    public function addToken(Token $token): self
+    {
+        if (!$this->tokens->contains($token)) {
+            $this->tokens->add($token);
+            $token->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeToken(Token $token): self
+    {
+        if ($this->tokens->removeElement($token)) {
+            // set the owning side to null (unless already changed)
+            if ($token->getUser() === $this) {
+                $token->setUser(null);
+            }
+        }
 
         return $this;
     }

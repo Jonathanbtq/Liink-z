@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page d'accueil
+{% block title %}Profile
 {% endblock %}
 
 {% block javascripts %}
@@ -36,22 +36,27 @@
 					{% endif %}
 				</a>
 			</div>
-			{% if app.user.id != user_main[0].id %}
-				{% if user_main[0].isSubscribeAccept == true %}
-					{% if abo is null %}
-						<span class="subscription">
-							<a href="{{path('subscription', {showuser: user_main[0].id } )}}">Subscibe</a>
-						</span>
-					{% else %}
-						<span class="unsubscription">
-							<a href="{{path('unsubscription', {showuser: user_main[0].id } )}}">Unsubscribe</a>
-						</span>
+			{% if app.user %}
+				{% if app.user.id != user_main[0].id %}
+					{% if user_main[0].isSubscribeAccept == true %}
+						{% if abo is null %}
+							<span class="subscription">
+								<a href="{{path('subscription', {showuser: user_main[0].id } )}}">Subscibe</a>
+							</span>
+						{% else %}
+							<span class="unsubscription">
+								<a href="{{path('unsubscription', {showuser: user_main[0].id } )}}">Unsubscribe</a>
+							</span>
+						{% endif %}
 					{% endif %}
 				{% endif %}
 			{% endif %}
+			
 			<div class="profile_show_desc">
-			{% if user_main[0].description != null and app.user.id == user_main[0].id %}
-				<p class="desc_show_p">{{ user_main[0].description }}</p>
+			{% if app.user %}
+				{% if user_main[0].description != null and app.user.id == user_main[0].id %}
+					<p class="desc_show_p">{{ user_main[0].description }}</p>
+				{% endif %}
 			{% endif %}
 			</div>
 		</div>
@@ -66,19 +71,32 @@
 			{% if links is defined  %}
 				{% for link in links %}
 					{% if link.isActived == 1 %}
-						{% if app.user.id == user_main[0].id %}
-							<div class="d-flex text-light align-item-center div_links">
-								<p class="pe-5 p_links">{{ link.title }}</p>
-								<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
-								<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
-									<i class="fas fa-copy">Copy</i>
-								</button>
-								<a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit"><img src="{{ asset('assets/images/show/edit.png')}}"></a>
-							</div>
-							<div class="div_links_phone">
-								<p class="pe-5 p_links_phone">{{ link.title }}</p>
-								<a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit"><img src="{{ asset('assets/images/show/edit.png')}}"></a>
-							</div>
+						{% if app.user %}
+							{% if app.user.id == user_main[0].id %}
+								<div class="d-flex text-light align-item-center div_links">
+									<p class="pe-5 p_links">{{ link.title }}</p>
+									<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
+									<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
+										<i class="fas fa-copy">Copy</i>
+									</button>
+									<a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit"><img src="{{ asset('assets/images/show/edit.png')}}"></a>
+								</div>
+								<div class="div_links_phone">
+									<p class="pe-5 p_links_phone">{{ link.title }}</p>
+									<a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit"><img src="{{ asset('assets/images/show/edit.png')}}"></a>
+								</div>
+							{% else %}
+								<div class="div_links">
+									<p class="pe-5 p_links">{{ link.title }}</p>
+									<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
+									<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
+										<i class="fas fa-copy">Copy</i>
+									</button>
+								</div>
+								<div class="div_links_phone_user">
+									<a href="{{ link.link }}" target="_blank" class="p_links_phone_user">{{ link.title }}</a>
+								</div>
+							{% endif %}
 						{% else %}
 							<div class="div_links">
 								<p class="pe-5 p_links">{{ link.title }}</p>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+.welcome_ctn{
+    display: flex;
+    justify-content: center;
+}
+.a_welcome{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.a_welcome img{
+    width: 20%;
+}
+.welcome_span{
+    font-size: 10px;
+    font-style: italic;
+}
+.welcome_wth{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    width: 60%;
+}
+.welcome_wth h1{
+    display: flex;
+    text-align: center;
+    width: 60%;
+}
+.welcome_wth div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    width: 100%;
+}
+</style>
+<body>
+    <div class="welcome_ctn">
+        <div class="welcome_wth">
+            <a class="a_welcome" href="{{ url('main') }}">
+                <img src="{{ email.image('@logo/logo.PNG') }}" class="logo" alt="logo">
+            </a>
+            <h1>Welcome  in Link'Z</h1>
+
+            <div>
+                <p>
+                You're an official Link'Z User ! Save yours links from another websites and share
+                it with your friend and followers !
+                </p>
+                <a href="{{path('main')}}">Explore your Link'Z Account</a>
+                <span class="welcome_span">
+                    Dont respond at this email ! Its an automatic mail. Thanks !
+                </p>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

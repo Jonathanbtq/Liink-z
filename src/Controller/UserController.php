@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends AbstractController
@@ -105,7 +107,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/modification/user/{pseudo}', name: 'usermodifaccount')]
-    public function userModifAccount(Request $request, $pseudo, UserRepository $userRepo): Response
+    public function userModifAccount(Request $request, $pseudo, MailerInterface $mailer, UserRepository $userRepo): Response
     {
         $message = '';
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
@@ -121,6 +123,14 @@ class UserController extends AbstractController
         if( $form->isSubmitted() && $form->isValid()){
             $user->setEmail($form->get('email')->getData());
 
+            $email = (new TemplatedEmail())
+                ->from('suppchange@linkz.com')
+                ->to($form->get('email')->getData())
+                ->subject('Password Modification')
+                ->htmlTemplate('_partials/contacttemplates/_emailverify.html.twig');
+
+            $mailer->send($email);
+
             $userRepo->save($user, true);
             return $this->redirectToRoute('usermodifaccount', ['pseudo' => $user->pseudo]);
         }
@@ -132,7 +142,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/password/user/{pseudo}', name: 'usermodifpassword')]
-    public function userModifPassword($pseudo, Request $request, UserRepository $userRepo, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function userModifPassword($pseudo, Request $request, MailerInterface $mailer, UserRepository $userRepo, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $message = '';
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
@@ -153,6 +163,16 @@ class UserController extends AbstractController
             if($form->get('verifypassword')->getData() != null){
                 if(password_verify($form->get('verifypassword')->getData(), $hashPassword)){
                     $user->setPassword($hashPassword);
+
+                    $email = (new TemplatedEmail())
+                        ->from('suppchange@linkz.com')
+                        ->to($this->getUser()->email)
+                        ->subject('Password Modification')
+                        ->htmlTemplate('_partials/contacttemplates/_passwordmofify.html.twig');
+
+                    $mailer->send($email);
+
+                    return $this->redirectToRoute('main');
                 }else{
                     return $message = ['state' => 'errorPassword',
                         'error' => "The password dont be the same"

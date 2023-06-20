@@ -58,7 +58,7 @@ class MainController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from($contact->getEmail())
                 ->subject($contact->getSubject())
-                ->to('botquin.jonathan@yahoo.fr')
+                ->to('contact.pro@jonathanbotquin.com')
                 ->text($contact->getMessage())
                 ->htmlTemplate('_partials/_contactTemplate.html.twig')
 
@@ -73,7 +73,7 @@ class MainController extends AbstractController
                 'Your message as been send with succes !'
             );
 
-            return $this->redirectToRoute('contact');
+            return $this->redirectToRoute('main');
         }
 
         // if(isset($_POST['idx_input_avis'])){

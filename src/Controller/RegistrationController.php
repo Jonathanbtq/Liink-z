@@ -8,6 +8,7 @@ use App\Form\RegistrationFormType;
 use App\Repository\LinksRepository;
 use App\Repository\UserRepository;
 use App\Security\UserAuthenticator;
+use App\Repository\ContactRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,11 +17,14 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Part\DataPart;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, LinksRepository $linkRepo, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
+    public function register(Request $request, LinksRepository $linkRepo, ContactRepository $contactRepo, MailerInterface $mailer, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager, UserRepository $userRepo): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -45,6 +49,19 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setRoles(["ROLE_USER"]);
+
+            $contact = $form->getData();
+            $email = (new TemplatedEmail())
+                ->from('contact@Linkz.com')
+                ->subject('Welcome In Link\'z')
+                ->to($contact->getEmail())
+                ->htmlTemplate('_partials/contacttemplates/_welcome.html.twig')
+
+                ->context([
+                    'contact' => $contact
+                ]);
+
+            $mailer->send($email);
 
             $entityManager->persist($user);
             $entityManager->flush();
