@@ -11,7 +11,11 @@
                 <h2>Let visitors subscribe</h2>
                 <div class="head_sub_param">
                     <p>Add a button for your visitor can follow you</p>
-                    <a href="{{ path('usersubscribe', {pseudo: user.pseudo})}}">Accept</a>
+                    {% if user.isSubscribeAccept == true %}
+                        <a href="{{ path('usersubscribe', {pseudo: app.user.pseudo})}}">Refused</a>
+                    {% else %}
+                        <a href="{{ path('usersubscribe', {pseudo: app.user.pseudo})}}">Accept</a>
+                    {% endif %}
                 </div>
                 
             </div>

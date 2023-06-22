@@ -2,23 +2,25 @@
 
 namespace App\Controller;
 
+use Exception;
+use App\Entity\Token;
+use App\Form\UserModifType;
 use App\Entity\Subscription;
 use App\Form\ImgBackFormType;
-use App\Form\UserModifType;
+use App\Repository\UserRepository;
 use App\Form\UserPasswordModifType;
 use App\Repository\LinksRepository;
 use App\Repository\SubscriptionRepository;
-use App\Repository\UserRepository;
-use Exception;
-use phpDocumentor\Reflection\DocBlock\Tags\Var_;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Mailer\MailerInterface;
+use App\Repository\TokenRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
@@ -70,7 +72,7 @@ class UserController extends AbstractController
     {
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
         $links = $linksRepo->findBy(['user' => $this->getUser()]);
-
+        
         return $this->render('user/settings.html.twig', [
             'user' => $user,
             'links' => $links,
@@ -107,7 +109,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/modification/user/{pseudo}', name: 'usermodifaccount')]
-    public function userModifAccount(Request $request, $pseudo, MailerInterface $mailer, UserRepository $userRepo): Response
+    public function userModifAccount(Request $request, $pseudo, TokenRepository $tokenRepo, MailerInterface $mailer, UserRepository $userRepo): Response
     {
         $message = '';
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
@@ -121,18 +123,36 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if( $form->isSubmitted() && $form->isValid()){
-            $user->setEmail($form->get('email')->getData());
+
+            $email = $form->get('email')->getData();
+            $token = $this->TokenGeneration();
+
+            $tokenValid = new Token();
+            
+            $tokenValid->setCode($token);
+            $tokenValid->setUser($this->getUser());
+            $tokenValid->setEmail($email);
+
+            // $user->setEmail($form->get('email')->getData());
 
             $email = (new TemplatedEmail())
                 ->from('suppchange@linkz.com')
                 ->to($form->get('email')->getData())
                 ->subject('Password Modification')
-                ->htmlTemplate('_partials/contacttemplates/_emailverify.html.twig');
+                ->htmlTemplate('_partials/contacttemplates/_emailtokenverify.html.twig')
+
+                ->context([
+                    'token' => $token
+                ]);
 
             $mailer->send($email);
 
+            $tokenRepo->save($tokenValid, true);
+
+            $user->setEmail($form->get('email')->getData());
             $userRepo->save($user, true);
-            return $this->redirectToRoute('usermodifaccount', ['pseudo' => $user->pseudo]);
+            
+            return $this->redirectToRoute('token_email');
         }
 
         return $this->render('user/accountmodif.html.twig', [
@@ -270,5 +290,15 @@ class UserController extends AbstractController
 
         $userRepo->save($user, true);
         return $this->redirectToRoute('usermodifbackground', ['pseudo' => $pseudo]);
+    }
+
+    public function TokenGeneration(){
+        $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $longueurMax = strlen($caracteres);
+        $chaineAleatoire = '';
+        for ($i = 0; $i < 8; $i++){
+            $chaineAleatoire .= $caracteres[rand(0, $longueurMax - 1)];
+        }
+        return $chaineAleatoire;
     }
 }
