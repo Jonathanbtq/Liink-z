@@ -13,14 +13,19 @@
                     {% endif %}
                 {% endif %}
                 <h1>Account information</h1>
-                {{form_start(form)}}
-                {{form_row(form.email)}}
-                <button type="submit">Save</button>
-                {{form_end(form)}}
+                {# {{form_start(form)}}
+                {{form_row(form.email)}} #}
+                <form action="" method="POST">
+                    <label for="">Email</label>
+                    <input type="text" name="email" value={{ email }}>
+                    <button type="submit" name="submit_mail">Save</button>
+                </form>
+                
+                {# {{form_end(form)}} #}
             </div>
             <div class="modif_acc_paw">
                 <h2>Account actions for {{ app.user.pseudo }}</h2>
-                <a href="{{ path('usermodifpassword', {pseudo: app.user.pseudo}) }}">Change Password</a>
+                <a href="{{ path('userpasswordemail') }}">Change Password</a>
             </div>
             <div class="modif_delete_account">
                 <a class="deleteaccount" href="{{ path('deleteaccount', {pseudo: app.user.pseudo}) }}">Delete my account</a>

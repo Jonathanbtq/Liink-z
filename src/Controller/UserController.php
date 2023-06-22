@@ -108,56 +108,83 @@ class UserController extends AbstractController
         return $this->redirectToRoute('usersettings', ['pseudo' => $user->pseudo]);
     }
 
+    #[Route('/modificationemail', name: 'userpasswordemail')]
+    public function userEmailPassword(MailerInterface $mailer, UserRepository $userRepo): Response
+    {
+        $token = $this->TokenGeneration();
+
+        $tokenValid = new Token();
+        
+        $tokenValid->setCode($token);
+        $tokenValid->setUser($this->getUser());
+        $tokenValid->setEmail($this->getUser()->email);
+
+        $email = (new TemplatedEmail())
+            ->from('suppchange@linkz.com')
+            ->to($this->getUser()->email)
+            ->subject('Password Modification')
+            ->htmlTemplate('_partials/contacttemplates/_emailtokenverify.html.twig')
+
+            ->context([
+                'token' => $token,
+                'userpseudo' => $this->getUser()->pseudo
+            ]);
+
+        $mailer->send($email);
+
+        return $this->render('user/accountmodif.html.twig', []);
+    }
+
     #[Route('/modification/user/{pseudo}', name: 'usermodifaccount')]
-    public function userModifAccount(Request $request, $pseudo, TokenRepository $tokenRepo, MailerInterface $mailer, UserRepository $userRepo): Response
+    public function userModifAccount($pseudo, TokenRepository $tokenRepo, MailerInterface $mailer, UserRepository $userRepo): Response
     {
         $message = '';
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+        $userMail = $user->email;
         if(!$this->getUser()){
             return $this->redirectToRoute('login');
         }
         if(!$this->getUser() === $user){
             return $this->redirectToRoute('login');
         }
-        $form = $this->createForm(UserModifType::class, $user);
-        $form->handleRequest($request);
+        // $form = $this->createForm(UserModifType::class, $user);
+        // $form->handleRequest($request);
 
-        if( $form->isSubmitted() && $form->isValid()){
+        if(isset($_POST['submit_mail'])){
+            if(isset($_POST['email'])){
+                // $email = $form->get('email')->getData();
+                $email = $_POST['email'];
+                $token = $this->TokenGeneration();
 
-            $email = $form->get('email')->getData();
-            $token = $this->TokenGeneration();
+                $tokenValid = new Token();
+                
+                $tokenValid->setCode($token);
+                $tokenValid->setUser($this->getUser());
+                $tokenValid->setEmail($email);
 
-            $tokenValid = new Token();
-            
-            $tokenValid->setCode($token);
-            $tokenValid->setUser($this->getUser());
-            $tokenValid->setEmail($email);
+                // $user->setEmail($form->get('email')->getData());
 
-            // $user->setEmail($form->get('email')->getData());
+                $email = (new TemplatedEmail())
+                    ->from('suppchange@linkz.com')
+                    ->to($email)
+                    ->subject('Password Modification')
+                    ->htmlTemplate('_partials/contacttemplates/_emailtokenverify.html.twig')
 
-            $email = (new TemplatedEmail())
-                ->from('suppchange@linkz.com')
-                ->to($form->get('email')->getData())
-                ->subject('Password Modification')
-                ->htmlTemplate('_partials/contacttemplates/_emailtokenverify.html.twig')
+                    ->context([
+                        'token' => $token
+                    ]);
 
-                ->context([
-                    'token' => $token
-                ]);
+                $mailer->send($email);
 
-            $mailer->send($email);
-
-            $tokenRepo->save($tokenValid, true);
-
-            $user->setEmail($form->get('email')->getData());
-            $userRepo->save($user, true);
-            
-            return $this->redirectToRoute('token_email');
+                $tokenRepo->save($tokenValid, true);
+                
+                return $this->redirectToRoute('token_email');
+            }
         }
 
         return $this->render('user/accountmodif.html.twig', [
-            'form' => $form->createView(),
-            'message' => $message
+            'message' => $message,
+            'email' => $userMail
         ]);
     }
 

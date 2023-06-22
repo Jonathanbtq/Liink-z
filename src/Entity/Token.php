@@ -22,6 +22,9 @@ class Token
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
+    #[ORM\Column]
+    private ?bool $password = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class Token
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function isPassword(): ?bool
+    {
+        return $this->password;
+    }
+
+    public function setPassword(bool $password): self
+    {
+        $this->password = $password;
 
         return $this;
     }

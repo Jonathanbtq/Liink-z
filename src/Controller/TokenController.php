@@ -14,10 +14,21 @@ class TokenController extends AbstractController
     public function index(TokenRepository $tokenRepo, UserRepository $userRepo): Response
     {
         $message = '';
+        if(isset($_GET['code'])){
+            if($token = $tokenRepo->findOneBy(['code' => $_GET['code']])){
+                if($token->isPassword() == 1){
+                    return $this->redirectToRoute('usermodifpassword', ['pseudo' => $token->getUser()->pseudo]);
+                }
+            }
+        }
+        
+       
         if(isset($_POST['submit_token'])){
             if($token = $tokenRepo->findOneBy(['code' => $_POST['code']])){
-                $user =  $userRepo->findOneBy(['email' => $token->getEmail()]);
-                $email = $token->getEmail();
+                $user =  $token->getUser();
+                if($token->getEmail() != null){
+                    $email = $token->getEmail();
+                }
 
                 $user->setEmail($email);
 
