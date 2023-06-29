@@ -25,7 +25,7 @@
             </div>
             <div class="modif_acc_paw">
                 <h2>Account actions for {{ app.user.pseudo }}</h2>
-                <a href="{{ path('userpasswordemail') }}">Change Password</a>
+                <a href="{{ path('usermodifpassword', {pseudo: app.user.pseudo}) }}">Change Password</a>
             </div>
             <div class="modif_delete_account">
                 <a class="deleteaccount" href="{{ path('deleteaccount', {pseudo: app.user.pseudo}) }}">Delete my account</a>

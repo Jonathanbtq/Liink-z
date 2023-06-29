@@ -23,7 +23,7 @@ class Token
     private ?string $email = null;
 
     #[ORM\Column]
-    private ?bool $password = null;
+    private ?string $password = null;
 
     public function getId(): ?int
     {
@@ -66,12 +66,12 @@ class Token
         return $this;
     }
 
-    public function isPassword(): ?bool
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(bool $password): self
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 

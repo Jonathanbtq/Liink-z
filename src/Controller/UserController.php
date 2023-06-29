@@ -189,9 +189,9 @@ class UserController extends AbstractController
     }
 
     #[Route('/password/user/{pseudo}', name: 'usermodifpassword')]
-    public function userModifPassword($pseudo, Request $request, MailerInterface $mailer, UserRepository $userRepo, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function userModifPassword($pseudo, Request $request, TokenRepository $tokenRepo, MailerInterface $mailer, UserRepository $userRepo, UserPasswordHasherInterface $userPasswordHasher): Response
     {
-        $message = '';
+        $message = [];
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
         if(!$this->getUser()){
             return $this->redirectToRoute('login');
@@ -209,29 +209,37 @@ class UserController extends AbstractController
                 );
             if($form->get('verifypassword')->getData() != null){
                 if(password_verify($form->get('verifypassword')->getData(), $hashPassword)){
-                    $user->setPassword($hashPassword);
+                    $tokenPass = new Token();
+
+                    $token = $this->TokenGeneration();
+                    $tokenPass->setCode($token);
+
+                    $user = $this->getUser();
+                    $tokenPass->setEmail($user->email);
+                    $tokenPass->setUser($user);
+                    $tokenPass->setPassword($hashPassword);
+
+                    $tokenRepo->save($tokenPass, true);
 
                     $email = (new TemplatedEmail())
                         ->from('suppchange@linkz.com')
                         ->to($this->getUser()->email)
                         ->subject('Password Modification')
-                        ->htmlTemplate('_partials/contacttemplates/_passwordmofify.html.twig');
+                        ->htmlTemplate('_partials/contacttemplates/_passwordmodify.html.twig')
+
+                        ->context([
+                            'token' => $token
+                        ]);
 
                     $mailer->send($email);
 
-                    return $this->redirectToRoute('main');
+                    return $this->redirectToRoute('token_email');
                 }else{
-                    return $message = ['state' => 'errorPassword',
-                        'error' => "The password dont be the same"
-                    ];
+                    $message = "The password dont be the same";
                 }
             }else{
-                return $message = ['state' => 'errorPasswordRepeat',
-                    'error' => "Please repeat you password"
-                ];
+                $message = "Please repeat you password";
             }
-            $userRepo->save($user, true);
-            return $this->redirectToRoute('usermodifaccount', ['pseudo' => $user->pseudo]);
         }
 
         return $this->render('user/passwordmodif.html.twig', [

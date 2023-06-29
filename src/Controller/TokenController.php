@@ -14,28 +14,30 @@ class TokenController extends AbstractController
     public function index(TokenRepository $tokenRepo, UserRepository $userRepo): Response
     {
         $message = '';
-        if(isset($_GET['code'])){
-            if($token = $tokenRepo->findOneBy(['code' => $_GET['code']])){
-                if($token->isPassword() == 1){
-                    return $this->redirectToRoute('usermodifpassword', ['pseudo' => $token->getUser()->pseudo]);
-                }
-            }
-        }
-        
-       
+        $user = $this->getUser();
+
         if(isset($_POST['submit_token'])){
             if($token = $tokenRepo->findOneBy(['code' => $_POST['code']])){
-                $user =  $token->getUser();
-                if($token->getEmail() != null){
-                    $email = $token->getEmail();
+                if($token->getPassword() != null){
+                    $psw = $token->getPassword();
+                    $user = $token->getUser();
+    
+                    $user->setPassword($psw);
+                    $userRepo->save($user, true);
+                    $tokenRepo->remove($token, true);
+                }else{
+                    $user =  $token->getUser();
+                    if($token->getEmail() != null){
+                        $email = $token->getEmail();
+                    }
+
+                    $user->setEmail($email);
+
+                    $userRepo->save($user, true);
+                    $tokenRepo->remove($token, true);
                 }
-
-                $user->setEmail($email);
-
-                $userRepo->save($user, true);
-                $tokenRepo->remove($token, true);
-
-                return $this->redirectToRoute('usermodifaccount', ['pseudo' => $user->pseudo]);
+                
+                // return $this->redirectToRoute('usermodifaccount', ['pseudo' => $user->pseudo]);
             }else{
                 $message = 'The token is not valid !';
             };
