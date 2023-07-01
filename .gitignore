@@ -7,6 +7,11 @@
 /public/bundles/
 /var/
 /vendor/
+*.env
+*.env.test
+*.env.example
+*.env.local
+*.env.staging
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

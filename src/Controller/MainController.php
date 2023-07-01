@@ -54,10 +54,16 @@ class MainController extends AbstractController
             $contact = $form->getData();
             $contact->setCreatedAt(new \DateTimeImmutable());
             $contactRepo->save($contact, true);
+
+            if($contact->getSubject() == null){
+                $subject = 'Null';
+            }else{
+                $subject = $contact->getSubject();
+            };
             
             $email = (new TemplatedEmail())
                 ->from($contact->getEmail())
-                ->subject($contact->getSubject())
+                ->subject($subject)
                 ->to('contact.pro@jonathanbotquin.com')
                 ->text($contact->getMessage())
                 ->htmlTemplate('_partials/_contactTemplate.html.twig')
