@@ -12,11 +12,15 @@
 				{% if app.user %}
 					<a href="{{path('show', {pseudo: app.user.pseudo} )}}">Create it ></a>
 				{% else %}
-					<a href="{{path('app_register')}}">Create it ></a>
+					<a href="{{path('app_register')}}">Create it</a>
 				{% endif %}
 			</div>
-			<div class="right_idx_head">
-				<img src="{{ asset('assets/images/index/profile_pic.PNG')}}" alt="">
+			<div class="wtd_idx_slid">
+				<div class="ctn_slider_idx">
+					<img class="img_idx_one img_idx_slider" src="{{ asset('assets/images/index/profile1.PNG')}}" alt="">
+					<img class="img_idx_deux img_idx_slider" src="{{ asset('assets/images/index/profile2.PNG')}}" alt="">
+					<img class="img_idx_trois img_idx_slider" src="{{ asset('assets/images/index/profile3.PNG')}}" alt="">
+				</div>
 			</div>
 		</div>
 		<div class="idx_ctn_deux_why">
@@ -107,8 +111,6 @@
 					<p>A question ? A joke ? if you have anything to say, its the place !</p>
 					<i></i>
 					<p>Link'z@gmail.com</p>
-					<i></i>
-					<p>twitter.com</p>
 				</div>
 				{% if errormessage is defined %}
 					{% if errormessage == 'Please put correct elements' %}
@@ -118,11 +120,11 @@
 					{% endif %}
 				{% endif %}
 				{{ form_start(formcontact, {attr: {'class':'form_idx_ctn'}}) }}
-					<div class="form_idx_div">
+					<div class="form_idx_div form_idx_one">
 						<label for="">Your name / Pseudo*</label>
 						{{form_row(formcontact.pseudo)}}
 					</div>
-					<div class="form_idx_div">
+					<div class="form_idx_div form_idx_deux">
 						<label for="">Your Email*</label>
 						{{form_row(formcontact.email)}}
 					</div>

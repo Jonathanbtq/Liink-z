@@ -272,7 +272,7 @@ class UserController extends AbstractController
                 // Vérification de l'éxistance d'un fichier nommé à l'id de l'user
                 if(!file_exists($photoDir.'/'.$user->id)){
                     $photoDir = $photoDir.'/'.$user->id;
-                    mkdir($photoDir, 777);
+                    mkdir($photoDir, 755);
                 }else{
                     $objects = scandir($directory);
                     foreach ($objects as $object) {
@@ -286,7 +286,7 @@ class UserController extends AbstractController
                     }
                     rmdir($directory);
                     $photoDir = $photoDir.'/'.$user->id;
-                    mkdir($photoDir, 777);
+                    mkdir($photoDir, 755);
                 }
                 if($img->move($photoDir, $filename)){
                     $message = 'Upload effectué avec succès';
