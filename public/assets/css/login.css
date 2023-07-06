@@ -54,3 +54,26 @@
     margin-top: 50px;
     color: white;
 }
+@media screen and (max-width: 1540px) {
+    .sbt_login{
+        width: 50% !important;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .post_login{
+        width: 90% !important;
+    }
+    .register_h_ctn{
+        width: 80% !important;
+        margin-top: 25px !important;
+    }
+    .form_register_login{
+        width: 70% !important;
+    }
+    .sbt_login{
+        width: 60% !important;
+    }
+    .login_p_ctn{
+        width: 80% !important;
+    }
+}

@@ -83,11 +83,17 @@ class UserController extends AbstractController
     public function userSubscribe($pseudo, UserRepository $userRepo): Response
     {
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
-        if($user->isSubscribeAccept() == false){
-            $user->setSubscribeAccept(true);
-        }else{
-            $user->setSubscribeAccept(false);
-        }
+        $user->setSubscribeAccept(true);
+        
+        $userRepo->save($user, true);
+        return $this->redirectToRoute('usersettings', ['pseudo' => $user->pseudo]);
+    }
+
+    #[Route('/settings/{pseudo}', name: 'userunsubscribe')]
+    public function userUnSubscribe($pseudo, UserRepository $userRepo): Response
+    {
+        $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+        $user->setSubscribeAccept(false);
         
         $userRepo->save($user, true);
         return $this->redirectToRoute('usersettings', ['pseudo' => $user->pseudo]);
@@ -167,7 +173,7 @@ class UserController extends AbstractController
                 $email = (new TemplatedEmail())
                     ->from('suppchange@linkz.com')
                     ->to($email)
-                    ->subject('Password Modification')
+                    ->subject('Email Modification')
                     ->htmlTemplate('_partials/contacttemplates/_emailtokenverify.html.twig')
 
                     ->context([
@@ -248,6 +254,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    // Pas utilisé pour le moment, dans MainController
     // Formulaire d'ajout d'image de BackGround profil
     #[Route('/background/{pseudo}', name: 'usermodifbackground')]
     public function userModifBackGround($pseudo, Request $request, #[Autowire('%background_dir%')] string $photoDir, UserRepository $userRepo, UserPasswordHasherInterface $userPasswordHasher): Response
@@ -272,7 +279,7 @@ class UserController extends AbstractController
                 // Vérification de l'éxistance d'un fichier nommé à l'id de l'user
                 if(!file_exists($photoDir.'/'.$user->id)){
                     $photoDir = $photoDir.'/'.$user->id;
-                    mkdir($photoDir, 755);
+                    mkdir($photoDir, 0777);
                 }else{
                     $objects = scandir($directory);
                     foreach ($objects as $object) {
@@ -284,9 +291,9 @@ class UserController extends AbstractController
                             }
                         }
                     }
-                    rmdir($directory);
+                    rmdir(strval($directory));
                     $photoDir = $photoDir.'/'.$user->id;
-                    mkdir($photoDir, 755);
+                    mkdir($photoDir, 0777);
                 }
                 if($img->move($photoDir, $filename)){
                     $message = 'Upload effectué avec succès';
@@ -324,7 +331,7 @@ class UserController extends AbstractController
         $user->setImageBack(null);
 
         $userRepo->save($user, true);
-        return $this->redirectToRoute('usermodifbackground', ['pseudo' => $pseudo]);
+        return $this->redirectToRoute('appearance', ['pseudo' => $pseudo]);
     }
 
     public function TokenGeneration(){

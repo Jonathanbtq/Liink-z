@@ -5,7 +5,7 @@
 
 {% block body %}
     <div class="div_container">
-        <h2>Profile</h2>
+        <h2 class="appearance_h2">Profile</h2>
         <div class="appearance_ctn">
             {{form_start(form)}}
                 <div class="appearance_img_user">
@@ -17,7 +17,7 @@
                         {% endif %}
                     </div>
                     <div class="app_img_p">
-                        {{ form_row(form.profile_img, {"attr":{"placeholder":img}})}}
+                        {{ form_row(form.profile_img, {"attr":{"placeholder":img}, "label": false, "label_attr": {"hidden": true}})}}
                         {% if img is null %}
                             <a href="">You don't have profile image</a>
                         {% else %}
@@ -26,9 +26,9 @@
                     </div>
                 </div>
 
-                <div class="background_img_app_prof">
+                {# <div class="background_img_app_prof">
                     <a href="{{path('usermodifbackground', {pseudo: app.user.pseudo})}}">Modify Theme</a>
-                </div>
+                </div> #}
                 
                 
                 <div class="textarea_appearance">
@@ -36,6 +36,23 @@
                 </div>
                 <input type="submit" class="sbt_app_btn">
             {{form_end(form)}}
+        </div>
+
+        <h2 class="appearance_h2">Background Profile</h2>
+        <div class="appearance_ctn">
+            <div class="appearance_img_user">
+                <div class="app_back_img">
+                    {% if app.user.getImageBack %}
+                        <img class="profile_img_back_user" src="/assets/images/show/{{app.user.id}}/{{ app.user.getImageBack }}">
+                    {% else %}
+                        <img class="" src="">
+                    {% endif %}
+                </div>
+            </div>
+            {{form_start(form_back)}}
+                <input type="submit" class="sbt_app_btn">
+            {{form_end(form_back)}}
+            <a href="{{path('deletebackground', {pseudo: app.user.pseudo})}}">Delete the Background</a>
         </div>
     </div>
     

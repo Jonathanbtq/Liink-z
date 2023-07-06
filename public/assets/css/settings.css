@@ -15,6 +15,7 @@
     justify-content: center;
     width: 25%;
     font-size: 30px;
+    text-align: center;
     color: white;
     font-weight: bold;
     border-radius: 5px;
@@ -85,6 +86,12 @@
     margin-bottom: 10px;
     width: 90%;
     border-top: 1px solid rgba(255, 255, 255, 0.253);
+}
+.links_ctn_mne{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 25%;
 }
 .links_user_stg p{
     font-size: 25px;
@@ -171,6 +178,9 @@
 }
 
 @media screen and (max-width: 1200px) {
+    .settings_ctn{
+        width: 90% !important;
+    }
     .modif_account_wth{
         width: 90% !important;
         margin-top: 30px;
@@ -183,8 +193,17 @@
     .modif_acc_paw a{
         width: 100%;
     }
+    .sett_a{
+        width: 50% !important;
+    }
 }
 @media screen and (max-width: 500px) {
+    .settings_ctn{
+        width: 90% !important;
+    }
+    .sett_a{
+        width: 90% !important;
+    }
     .modif_account_wth{
         width: 90% !important;
     }
@@ -196,5 +215,26 @@
     }
     .modif_acc_paw a{
         width: 100%;
+    }
+    .links_user_stg{
+        flex-wrap: wrap !important;
+        padding: 0 !important;
+        width: 95% !important;
+        justify-content: space-around !important;
+    }
+    .links_ctn_mne{
+        width: 30% !important;
+    }
+    .prem_title_links{
+        width: 90% !important;
+    }
+    .btn_links_stt{
+        background-color: rgb(43, 38, 56);
+        height: 10vw !important;
+        border-radius: 5px !important;
+    }
+    .delete_button{
+        background-color: rgb(43, 38, 56) !important;
+        color: rgb(204, 66, 66) !important;
     }
 }

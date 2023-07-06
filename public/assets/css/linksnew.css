@@ -63,3 +63,32 @@
     border: none;
     border-radius: .5rem;
 }
+@media screen and (max-width: 1540px) {
+    
+}
+@media screen and (max-width: 1000px) {
+    .link_ctn{
+        width: 60% !important;
+        margin-top: 50px !important;
+    }
+    .link_wdt_box{
+        width: 100% !important;
+    }
+    #add_link_form :nth-child(1), #add_link_form :nth-child(2){
+        justify-content: center;
+        height: 8vw;
+    }
+}
+@media screen and (max-width: 500px) {
+    .link_ctn{
+        width: 90% !important;
+        margin-top: 50px !important;
+    }
+    .link_wdt_box{
+        width: 100% !important;
+    }
+    #add_link_form :nth-child(1), #add_link_form :nth-child(2){
+        justify-content: center;
+        height: 12vw;
+    }
+}

@@ -77,20 +77,28 @@
 									<p class="pe-5 p_links">{{ link.title }}</p>
 									<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
 									<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
-										<i class="fas fa-copy">Copy</i>
+										Copy
+										<img src="{{ asset('assets/images/show/copylogo.png')}}" alt="">
 									</button>
-									<a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit"><img src="{{ asset('assets/images/show/edit.png')}}"></a>
+									{# <a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit"><img src="{{ asset('assets/images/show/modificationlogo.png')}}"></a> #}
+									<a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit">
+										<img src="{{ asset('assets/images/show/crayonlogo.png')}}">Edit
+									</a>
 								</div>
 								<div class="div_links_phone">
 									<p class="pe-5 p_links_phone">{{ link.title }}</p>
-									<a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit"><img src="{{ asset('assets/images/show/edit.png')}}"></a>
+									{# <a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit"><img src="{{ asset('assets/images/show/modificationlogo.png')}}"></a> #}
+									<a href="{{path('modifylink', {link: link.id})}}" class="btn_prf_edit">
+										<img src="{{ asset('assets/images/show/crayonlogo.png')}}">
+									</a>
 								</div>
 							{% else %}
 								<div class="div_links">
 									<p class="pe-5 p_links">{{ link.title }}</p>
 									<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
 									<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
-										<i class="fas fa-copy">Copy</i>
+										Copy
+										<img src="{{ asset('assets/images/show/copylogo.png')}}" alt="">
 									</button>
 								</div>
 								<div class="div_links_phone_user">
@@ -102,7 +110,8 @@
 								<p class="pe-5 p_links">{{ link.title }}</p>
 								<a href="{{ link.link }}" target="_blank" class="box-txt">{{ link.link }}</a>
 								<button class="btn-copy m-2 p-3" onclick="clickCopy(event)">
-									<i class="fas fa-copy">Copy</i>
+									Copy
+									<img src="{{ asset('assets/images/show/copylogo.png')}}" alt="">
 								</button>
 							</div>
 							<div class="div_links_phone_user">

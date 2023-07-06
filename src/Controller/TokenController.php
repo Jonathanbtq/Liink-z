@@ -37,7 +37,7 @@ class TokenController extends AbstractController
                     $tokenRepo->remove($token, true);
                 }
                 
-                // return $this->redirectToRoute('usermodifaccount', ['pseudo' => $user->pseudo]);
+                return $this->redirectToRoute('usermodifaccount', ['pseudo' => $user->pseudo]);
             }else{
                 $message = 'The token is not valid !';
             };

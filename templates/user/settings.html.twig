@@ -12,7 +12,7 @@
                 <div class="head_sub_param">
                     <p>Add a button for your visitor can follow you</p>
                     {% if user.isSubscribeAccept == true %}
-                        <a href="{{ path('usersubscribe', {pseudo: app.user.pseudo})}}">Refused</a>
+                        <a href="{{ path('userunsubscribe', {pseudo: app.user.pseudo})}}">Refused</a>
                     {% else %}
                         <a href="{{ path('usersubscribe', {pseudo: app.user.pseudo})}}">Accept</a>
                     {% endif %}
@@ -25,17 +25,23 @@
                 </div>
                 {% for links in links %}
                     <div class="links_user_stg">
-                        {% if links.title != null %}
-                        <p>{{ links.title }}</p>
-                        {% else %}
-                            <p>{{ links.link }}</p>
-                        {% endif %}
-                        {% if links.isActived == true %}
-                            <a href="{{ path('activedlinks', {link: links.id})}}">Desactived</a>
-                        {% else %}
-                            <a href="{{ path('activedlinks', {link: links.id})}}">Actived</a>
-                        {% endif %}
+                        <div class="links_ctn_mne prem_title_links">
+                            {% if links.title != null %}
+                            <p>{{ links.title }}</p>
+                            {% else %}
+                                <p>{{ links.link }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="links_ctn_mne btn_links_stt">
+                            {% if links.isActived == true %}
+                                <a href="{{ path('activedlinks', {link: links.id})}}">Desactived</a>
+                            {% else %}
+                                <a href="{{ path('activedlinks', {link: links.id})}}">Actived</a>
+                            {% endif %}
+                        </div>
+                        <div class="links_ctn_mne btn_links_stt">
                             <a class="delete_button" href="{{path('deletelink', {link: links.id})}}">Delete</a>
+                        </div>
                     </div>
                 {% endfor %}
             </div>

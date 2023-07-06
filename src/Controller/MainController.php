@@ -2,24 +2,25 @@
 
 namespace App\Controller;
 
-use App\Entity\Contact;
-use App\Entity\Links;
 use App\Entity\User;
+use App\Entity\Links;
+use App\Entity\Contact;
 use App\Form\AddLinkFormType;
+use App\Form\ImgBackFormType;
 use App\Form\DetailUserFormType;
 use App\Form\IndexContactFormType;
-use App\Repository\ContactRepository;
-use App\Repository\LinksRepository;
-use App\Repository\SubscriptionRepository;
 use App\Repository\UserRepository;
+use App\Repository\LinksRepository;
+use App\Repository\ContactRepository;
+use App\Repository\SubscriptionRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 class MainController extends AbstractController
 {
@@ -168,9 +169,16 @@ class MainController extends AbstractController
      * Affichage de la page utilisateur
      */
     #[Route('/appearance/{pseudo}', name: 'appearance')]
-    public function ChangeUser($pseudo, Request $request, #[Autowire('%photo_dir%')] string $photoDir, UserRepository $userRepo): Response
+    public function ChangeUser($pseudo, Request $request, #[Autowire('%photo_dir%')] string $photoDir, #[Autowire('%background_dir%')] string $photoBackDir, UserRepository $userRepo): Response
     {
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
+        if(!$this->getUser()){
+            return $this->redirectToRoute('login');
+        }
+        if(!$this->getUser() === $user){
+            return $this->redirectToRoute('login');
+        }
+
         $form = $this->createForm(DetailUserFormType::class, $user);
         $form->handleRequest($request);
 
@@ -194,9 +202,55 @@ class MainController extends AbstractController
             $userRepo->save($user, true);
             return $this->redirectToRoute('show', ['pseudo' => $user->getPseudo()]);
         }
+
+        //Background image
+        //*** *//
+        $message = '';
+        $form_back = $this->createForm(ImgBackFormType::class, $user);
+        $form_back->handleRequest($request);
+        if($user->getImageBack() != null){
+            $directory = $photoBackDir.'/'.$user->id;
+        }
+
+        if( $form_back->isSubmitted() && $form_back->isValid()){
+            if($img = $form_back['image_back']->getData()){
+                $filename = bin2hex(random_bytes(6)) . '.' . $img->guessExtension();
+                // Vérification de l'éxistance d'un fichier nommé à l'id de l'user
+                if(!file_exists($photoBackDir.'/'.$user->id)){
+                    $photoBackDir = $photoBackDir.'/'.$user->id;
+                    mkdir($photoBackDir, 0777);
+                }else{
+                    $objects = scandir($directory);
+                    foreach ($objects as $object) {
+                        if ($object != "." && $object != "..") {
+                            if (filetype($directory."/".$object) == "dir"){
+                                rmdir($directory."/".$object);
+                            }else{
+                                unlink($directory."/".$object);
+                            }
+                        }
+                    }
+                    rmdir(strval($directory));
+                    $photoBackDir = $photoBackDir.'/'.$user->id;
+                    mkdir($photoBackDir, 0777);
+                }
+                if($img->move($photoBackDir, $filename)){
+                    $message = 'Upload effectué avec succès';
+                }else{
+                    $message = 'Erreur lors de l\'upload';
+                }
+                $user->setImageBack($filename);
+            }
+           
+            $userRepo->save($user, true);
+            return $this->redirectToRoute('appearance', ['pseudo' => $user->pseudo]);
+        }
+
+
         return $this->render('main/appearance.html.twig', [
             'user_main' => $user,
             'form' => $form->createView(),
+            'form_back' => $form_back->createView(),
             'img' => $img,
         ]);
     }

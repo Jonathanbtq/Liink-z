@@ -70,7 +70,6 @@
     display: none;
     width: 80%;
     align-items: center;
-    justify-content: space-between;
     padding: 15px;
     margin-bottom: 50px;
     border-radius: 45px;
@@ -90,20 +89,39 @@
     text-decoration: none;
 }
 .btn_prf_edit{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
     background: var(--gradient-button);
-    width: 3.5vw;
+    padding: 5px 10px 5px 10px;
     border-radius: 50px;
     text-align: center;
     color: white;
-    font-size: 30px;
+    font-size: 25px;
+    font-weight: bold;
 }
 .btn_prf_edit img{
-    width: 2vw;
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
 }
-
+.btn-copy img{
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
 @media screen and (max-width: 1600px) {
     .add_links a{
         height: 4vw !important;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .btn-copy{
+        display: none !important;
     }
 }
 @media screen and (max-width: 720px) {
