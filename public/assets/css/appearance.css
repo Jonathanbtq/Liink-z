@@ -115,6 +115,67 @@
 .app_back_img img{
     width: 100%;
 }
+.theme_ctn{
+    display: flex;
+    width: 35%;
+}
+.theme_pseudo{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: var(--gradient-card);
+    border-radius: .5rem;
+    padding: 20px;
+    width: 100%;
+}
+.theme_pseudo a{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 50px;
+    font-weight: bold;
+    border: 1px rgb(49, 47, 47) solid;
+    background-color: rgb(39, 37, 37);
+    padding: 5px;
+    margin: 5px;
+}
+.theme_pseudo a:hover{
+    border: 1px rgb(14, 13, 13) solid;
+    background-color: rgb(32, 30, 30);
+    text-decoration: none;
+}
+.a_pseudo_white{
+    color: white;
+}
+.a_pseudo_blue{
+    color: rgb(35, 35, 212);
+}
+.a_pseudo_black{
+    color: black;
+}
+.a_pseudo_purple{
+    color: #a321c4;
+}
+.a_pseudo_green{
+    color: rgb(32, 185, 32);
+}
+.a_pseudo_white:hover{
+    color: white;
+}
+.a_pseudo_blue:hover{
+    color: rgb(35, 35, 212);
+}
+.a_pseudo_black:hover{
+    color: black;
+}
+.a_pseudo_purple:hover{
+    color: #a321c4;
+}
+.a_pseudo_green:hover{
+    color: rgb(32, 185, 32);
+}
 @media screen and (max-width: 1540px) {
     .app_img_p{
         width: 50% !important;
