@@ -34,6 +34,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setCertified(0);
             $user->setSubscribeAccept(1);
+            $user->setColorCustom('blue');
             if ($userRepo->findOneByPseudo($form['pseudo']->getData()) != null) {
                 $message = True;
                 return $this->render('registration/register.html.twig', [

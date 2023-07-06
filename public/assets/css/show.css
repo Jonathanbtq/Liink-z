@@ -1,3 +1,26 @@
+:root{
+    --blue-h: rgb(35, 35, 212);
+    --white-h: white;
+    --black-h: black;
+    --green-h: rgb(32, 185, 32);
+    --purple-h: #a321c4;
+}
+.blue-h{
+    color: var(--blue-h);
+}
+.white-h{
+    color: var(--white-h);
+}
+.black-h{
+    color: var(--black-h);
+}
+.green-h{
+    color: var(--green-h);
+}
+.purple-h{
+    color: var(--purple-h);
+}
+
 .show_header{
     display: flex;
     flex-direction: column;

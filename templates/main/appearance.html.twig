@@ -54,6 +54,15 @@
             {{form_end(form_back)}}
             <a href="{{path('deletebackground', {pseudo: app.user.pseudo})}}">Delete the Background</a>
         </div>
+
+        <h2 class="appearance_h2">Pseudo theme Modification</h2>
+        <div class="theme_ctn">
+            <a href="{{ path('changetheme', {color: 'white'})}}">White</a>
+            <a href="{{ path('changetheme', {color: 'Blue'})}}">Blue</a>
+            <a href="{{ path('changetheme', {color: 'Black'})}}">Black</a>
+            <a href="{{ path('changetheme', {color: 'Purple'})}}">Purple</a>
+            <a href="{{ path('changetheme', {color: 'Green'})}}">Green</a>
+        </div>
     </div>
     
     

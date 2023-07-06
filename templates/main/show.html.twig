@@ -22,16 +22,36 @@
 				<a href="{{ path('show', {pseudo: user_main[0].pseudo}) }}">
 					{% if user_main[0].getProfileImg %}
 						<img class="profile_img_user" src="/uploads/photos/{{ user_main[0].getProfileImg }}">
-						<h1>{{ user_main[0].pseudo }}
+						{% if user_main[0].getColorCustom == 'blue' %}
+							<h1 class="blue-h">{{ user_main[0].pseudo }}
+						{% elseif user_main[0].getColorCustom == 'white' %}
+							<h1 class="white-h">{{ user_main[0].pseudo }}
+						{% elseif user_main[0].getColorCustom == 'black' %}
+							<h1 class="black-h">{{ user_main[0].pseudo }}
+						{% elseif user_main[0].getColorCustom == 'green' %}
+							<h1 class="green-h">{{ user_main[0].pseudo }}
+						{% elseif user_main[0].getColorCustom == 'purple' %}
+							<h1 class="purple-h">{{ user_main[0].pseudo }}
+						{% endif %}
 						{% if user_main[0].certified == 1 %}
 							<img class="logo_certified" src="{{ asset('assets/images/certified/certified_badge.png')}}" alt="certified logo">
 						{% endif %}
 						</h1>
 					{% else %}
-						<h1>{{ user_main[0].pseudo }}
-							{% if user_main[0].certified == 1 %}
-								<img class="logo_certified" src="{{ asset('assets/images/certified/certified_badge.png')}}" alt="certified logo">
-							{% endif %}
+						{% if user_main[0].getColorCustom == 'blue' %}
+							<h1 class="blue-h">{{ user_main[0].pseudo }}
+						{% elseif user_main[0].getColorCustom == 'white' %}
+							<h1 class="white-h">{{ user_main[0].pseudo }}
+						{% elseif user_main[0].getColorCustom == 'black' %}
+							<h1 class="black-h">{{ user_main[0].pseudo }}
+						{% elseif user_main[0].getColorCustom == 'green' %}
+							<h1 class="green-h">{{ user_main[0].pseudo }}
+						{% elseif user_main[0].getColorCustom == 'purple' %}
+							<h1 class="purple-h">{{ user_main[0].pseudo }}
+						{% endif %}
+						{% if user_main[0].certified == 1 %}
+							<img class="logo_certified" src="{{ asset('assets/images/certified/certified_badge.png')}}" alt="certified logo">
+						{% endif %}
 						</h1>
 					{% endif %}
 				</a>

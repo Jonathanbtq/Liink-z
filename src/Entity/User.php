@@ -65,6 +65,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Token::class)]
     private Collection $tokens;
 
+    #[ORM\Column(length: 10)]
+    private ?string $colorCustom = null;
+
     public function __construct()
     {
         $this->subscriptions = new ArrayCollection();
@@ -328,6 +331,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $token->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getColorCustom(): ?string
+    {
+        return $this->colorCustom;
+    }
+
+    public function setColorCustom(string $colorCustom): self
+    {
+        $this->colorCustom = $colorCustom;
 
         return $this;
     }
