@@ -9,6 +9,7 @@ use App\Form\AddLinkFormType;
 use App\Form\ImgBackFormType;
 use App\Form\DetailUserFormType;
 use App\Form\IndexContactFormType;
+use App\Form\ProfilImgProfilFormType;
 use App\Repository\UserRepository;
 use App\Repository\LinksRepository;
 use App\Repository\ContactRepository;
@@ -142,24 +143,24 @@ class MainController extends AbstractController
     #[Route('/show/{pseudo}', name: 'show')]
     public function showLink($pseudo, Request $request, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo, User $userc): Response
     {
-        $user = $userRepo->findBy(['pseudo' => $pseudo]);
+        $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
         $abo = $subRepo->findOneByIdAbo($user, $this->getUser());
 
-        if (isset($_POST['addDescShow'])) {
-            if (isset($_POST['description']) && !empty($_POST['description'])) {
-                $monInputValue = $request->request->get('description');
-                $desc = $user[0];
-                $desc->setDescription($monInputValue);
+        // if (isset($_POST['addDescShow'])) {
+        //     if (isset($_POST['description']) && !empty($_POST['description'])) {
+        //         $monInputValue = $request->request->get('description');
+        //         $desc = $user;
+        //         $desc->setDescription($monInputValue);
 
-                $userRepo->save($desc, true);
-                return $this->redirectToRoute('show', ['pseudo' => $user[0]->getPseudo()]);
-            }
-        }
+        //         $userRepo->save($desc, true);
+        //         return $this->redirectToRoute('show', ['pseudo' => $user[0]->getPseudo()]);
+        //     }
+        // }
 
 
         return $this->render('main/show.html.twig', [
             'controller_name' => 'Main page',
-            'links' => $linkRepo->findByAdresse($user[0]->getId()),
+            'links' => $linkRepo->findByAdresse($user->getId()),
             'user_main' => $userRepo->findBy(['pseudo' => $pseudo]),
             'abo' => $abo
         ]);
@@ -179,26 +180,51 @@ class MainController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
+        // Formulaire image de profile
+        $profilForm = $this->createForm(ProfilImgProfilFormType::class, $user);
+        $profilForm->handleRequest($request);
+
+        // Formulaire description
         $form = $this->createForm(DetailUserFormType::class, $user);
         $form->handleRequest($request);
 
-        $img = $user->getProfileImg();
+        if($form->isSubmitted() && $form->isValid()){
+            $desc = $form['description']->getData();
+            $user->setDescription($desc);
 
-        if($form->isSubmitted() && $form->isValid()) {
-            $photo = $form['profile_img']->getData();
-            if(is_string($photo)){
-                $user->setProfileImg($photo);
+            $userRepo->save($user, true);
+        }
+        $img = $user->getProfileImg();
+        if($user->getProfileImg() != null){
+            $directory = $photoDir.'/'.$user->id;
+        }
+
+        if($profilForm->isSubmitted() && $profilForm->isValid()) {
+            $photo = $profilForm['profile_img']->getData();
+            $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+
+            if(!file_exists($photoDir.'/'.$user->id)){
+                $photoDir = $photoDir.'/'.$user->id;
+                mkdir($photoDir, 0777);
             }else{
-                $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
-                try {
-                    $photo->move($photoDir, $filename);
-                } catch (FileException $e) {
-                    // Unable to upload the photo, give up
+                $objects = scandir($directory);
+                foreach ($objects as $object) {
+                    if ($object != "." && $object != "..") {
+                        if (filetype($directory."/".$object) == "dir"){
+                            rmdir($directory."/".$object);
+                        }else{
+                            unlink($directory."/".$object);
+                        }
+                    }
                 }
-                $user->setProfileImg($filename);
+                rmdir(strval($directory));
+                $photoDir = $photoDir.'/'.$user->id;
+                mkdir($photoDir, 0777);
             }
             
-
+            $photo->move($photoDir, $filename);
+            $user->setProfileImg($filename);
+            
             $userRepo->save($user, true);
             return $this->redirectToRoute('show', ['pseudo' => $user->getPseudo()]);
         }
@@ -251,6 +277,7 @@ class MainController extends AbstractController
             'user_main' => $user,
             'form' => $form->createView(),
             'form_back' => $form_back->createView(),
+            'form_img' => $profilForm->createView(),
             'img' => $img,
         ]);
     }

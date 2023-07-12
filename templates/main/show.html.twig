@@ -21,7 +21,7 @@
 			<div class="head_show_h">
 				<a href="{{ path('show', {pseudo: user_main[0].pseudo}) }}">
 					{% if user_main[0].getProfileImg %}
-						<img class="profile_img_user" src="/uploads/photos/{{ user_main[0].getProfileImg }}">
+						<img class="profile_img_user" src="/uploads/photos/{{ user_main[0].getId}}/{{ user_main[0].getProfileImg }}">
 						{% if user_main[0].getColorCustom == 'blue' %}
 							<h1 class="blue-h">{{ user_main[0].pseudo }}
 						{% elseif user_main[0].getColorCustom == 'white' %}
@@ -74,7 +74,7 @@
 			
 			<div class="profile_show_desc">
 			{% if app.user %}
-				{% if user_main[0].description != null and app.user.id == user_main[0].id %}
+				{% if user_main[0].description != null %}
 					<p class="desc_show_p">{{ user_main[0].description }}</p>
 				{% endif %}
 			{% endif %}

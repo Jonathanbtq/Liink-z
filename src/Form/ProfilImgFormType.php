@@ -10,14 +10,20 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DetailUserFormType extends AbstractType
+class ProfilImgProfilFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('description', TextareaType::class, [
-                'empty_data' => 'test',
-            ])
+        ->add('profile_img', FileType::class, [
+            'label' => false,
+            'required' => false,
+            'attr' => [
+                'class' => 'input_img',
+                'data_class' => null
+            ],
+            'data_class' => null // add this line
+        ])
         ;
     }
 

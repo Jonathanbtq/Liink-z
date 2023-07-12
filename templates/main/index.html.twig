@@ -72,7 +72,7 @@
 								{% for subscriber in sub %}
 									<div class="sub_abo">
 										{% if subscriber.getProfileImg %}
-										<img class="profile_img_user" src="/uploads/photos/{{ subscriber.getProfileImg }}">
+										<img class="profile_img_user" src="/uploads/photos//{{ subscriber.getId}}/{{ subscriber.getProfileImg }}">
 										{% else %}
 											<img class="img_empty" src="">
 										{% endif %}

@@ -3,34 +3,39 @@
 {% block title %}Page d'accueil
 {% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('assets/js/appearance.js') }}" defer></script>
+{% endblock %}
+
 {% block body %}
+     
     <div class="div_container">
         <h2 class="appearance_h2">Profile</h2>
         <div class="appearance_ctn">
-            {{form_start(form)}}
-                <div class="appearance_img_user">
-                    <div class="app_img">
-                        {% if app.user.getProfileImg %}
-                            <img class="profile_img_user" src="/uploads/photos/{{ app.user.getProfileImg }}">
-                        {% else %}
-                            <img class="" src="">
-                        {% endif %}
-                    </div>
-                    <div class="app_img_p">
-                        {{ form_row(form.profile_img, {"attr":{"placeholder":img}, "label": false, "label_attr": {"hidden": true}})}}
-                        {% if img is null %}
-                            <a href="">You don't have profile image</a>
-                        {% else %}
-                            <a href="{{ path('appearanceDeleteImg', {pseudo: app.user.pseudo})}}"><p>Remove</p></a>
-                        {% endif %}
-                    </div>
+            {{ form_start(form_img) }}
+            <div class="appearance_img_user">
+                <div class="app_img">
+                    {% if app.user.getProfileImg %}
+                        <img class="profile_img_user" src="/uploads/photos/{{app.user.id}}/{{ app.user.getProfileImg }}">
+                    {% else %}
+                        <img class="" src="">
+                    {% endif %}
                 </div>
-
+                <div class="app_img_p">
+                    {{ form_row(form_img.profile_img, {"attr":{"placeholder":img, 'class': 'image-input','onchange': 'validateImage(this)'}, "label_attr": {"hidden": true}})}}
+                    {% if img is null %}
+                        <a href="">You don't have profile image</a>
+                    {% else %}
+                        <a href="{{ path('appearanceDeleteImg', {pseudo: app.user.pseudo})}}"><p>Remove</p></a>
+                    {% endif %}
+                </div>
+                {# <input type="submit" value=""> #}
+            </div>
+            {{form_end(form_img)}}
+            {{form_start(form)}}
                 {# <div class="background_img_app_prof">
                     <a href="{{path('usermodifbackground', {pseudo: app.user.pseudo})}}">Modify Theme</a>
                 </div> #}
-                
-                
                 <div class="textarea_appearance">
                     {{ form_row(form.description) }}
                 </div>
@@ -50,6 +55,7 @@
                 </div>
             </div>
             {{form_start(form_back)}}
+                {{form_row(form_back.image_back)}}
                 <input type="submit" class="sbt_app_btn">
             {{form_end(form_back)}}
             <a href="{{path('deletebackground', {pseudo: app.user.pseudo})}}">Delete the Background</a>
