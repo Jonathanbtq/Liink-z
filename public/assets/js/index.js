@@ -6,33 +6,30 @@ burger.addEventListener('click', () => {
     divActive.classList.toggle('nav_deux_active')
 })
 
-// const slidingDiv = document.querySelectorAll('.idx_why_ctn_card');
+document.addEventListener('DOMContentLoaded', function() {
+    var slider = document.querySelector('.ctn_slider_idx');
+    var sliderItems = document.querySelectorAll('.ctn_slider_idx img');
 
-// window.addEventListener('scroll', () =>{
-//     const {scrollTop, clientHeight} = document.documentElement;
+    var slideWidth = sliderItems[0].clientWidth;
+    var slideCount = sliderItems.length;
+    var currentIndex = 0;
 
-//     const topElemenetToTopViewport = slidingDiv.getBoundingClientRect().top;
+    function slideTo(index) {
+        if (index < 0 || index >= slideCount) {
+            return;
+        }
 
-//     if(scroll > (scrollTop + topElemenetToTopViewport).toFixed() - clientHeight * 0.80){
-//         slidingDiv.classList.add('active')
-//     }
-// })
+        slider.style.transform = 'translateX(' + (-slideWidth * index) + 'px)';
+        currentIndex = index;
+    }
 
-// var images = document.querySelectorAll('.right_idx_head img');
-// var currentIndex = 0;
+    function slideNext() {
+        var newIndex = currentIndex + 3;
+        if (newIndex >= slideCount) {
+            newIndex = 0;
+        }
+        slideTo(newIndex);
+    }
 
-// function showNextImage() {
-//   images[currentIndex].style.transform = 'scale(1.2)';
-//   currentIndex = (currentIndex + 1) % images.length;
-//   images[currentIndex].style.opacity = '0.8';
-//   images[currentIndex].style.transform = 'scale(1)';
-
-//   if (currentIndex === 1) {
-//     images[0].classList.add('img_idx_deux');
-//     images[1].classList.remove('img_idx_deux');
-//     images[1].classList.add('img_idx_one');
-//     images[0].classList.remove('img_idx_one');
-//   }
-// }
-
-// setInterval(showNextImage, 3000);
+    setInterval(slideNext, 4000);
+});

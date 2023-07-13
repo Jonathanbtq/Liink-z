@@ -7,11 +7,12 @@ use App\Entity\Links;
 use App\Entity\Contact;
 use App\Form\AddLinkFormType;
 use App\Form\ImgBackFormType;
+use App\Form\ProfilImgFormType;
 use App\Form\DetailUserFormType;
 use App\Form\IndexContactFormType;
-use App\Form\ProfilImgProfilFormType;
 use App\Repository\UserRepository;
 use App\Repository\LinksRepository;
+use App\Form\ProfilImgProfilFormType;
 use App\Repository\ContactRepository;
 use App\Repository\SubscriptionRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -140,23 +141,15 @@ class MainController extends AbstractController
     /***
      * Affichage de la page utilisateur
      */
-    #[Route('/show/{pseudo}', name: 'show')]
-    public function showLink($pseudo, Request $request, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo, User $userc): Response
+    #[Route('/{pseudo}', name: 'show')]
+    public function showLink($pseudo, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo): Response
     {
+        if(!$this->getUser()){
+            return $this->redirectToRoute('login');
+        }
+
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
         $abo = $subRepo->findOneByIdAbo($user, $this->getUser());
-
-        // if (isset($_POST['addDescShow'])) {
-        //     if (isset($_POST['description']) && !empty($_POST['description'])) {
-        //         $monInputValue = $request->request->get('description');
-        //         $desc = $user;
-        //         $desc->setDescription($monInputValue);
-
-        //         $userRepo->save($desc, true);
-        //         return $this->redirectToRoute('show', ['pseudo' => $user[0]->getPseudo()]);
-        //     }
-        // }
-
 
         return $this->render('main/show.html.twig', [
             'controller_name' => 'Main page',
@@ -181,7 +174,7 @@ class MainController extends AbstractController
         }
 
         // Formulaire image de profile
-        $profilForm = $this->createForm(ProfilImgProfilFormType::class, $user);
+        $profilForm = $this->createForm(ProfilImgFormType::class, $user);
         $profilForm->handleRequest($request);
 
         // Formulaire description

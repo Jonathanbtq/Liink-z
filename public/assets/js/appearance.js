@@ -1,4 +1,3 @@
-console.log('test');
 function validateImage(input) {
     var image = input.files[0];
 

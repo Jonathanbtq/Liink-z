@@ -1,6 +1,7 @@
 .idx_ctn_head{
     display: flex;
     flex-wrap: nowrap;
+    position: relative;
     background-color: black;
     height: 35vw;
     width: 100%;
@@ -10,13 +11,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 50%;
+    width: 70%;
     height: 100%;
+    z-index: 1;
 }
 .left_idx_head h2{
     display: flex;
-    width: 60%;
-    font-size: clamp(30px, 4.5vw, 70px) !important;
+    width: 80%;
+    font-size: clamp(30px, 4.5vw, 90px) !important;
     text-align: center;
     font-weight: bold;
     animation: apparition 0.8s ease-in-out;
@@ -62,13 +64,22 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: absolute;
     width: 50%;
+    right: 0;
+    height: 100%;
+    border-radius: 45% 0 0 45%;
+    z-index: 0;
 }
 .ctn_slider_idx{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 3s ease;
+    /* overflow: hidden; */
 }
 /* .img_idx_slider{
     position: absolute;
@@ -108,35 +119,31 @@
         transform: rotateY(360deg);
     }
 } */
-.img_idx_one{
+.img_idx_slider{
+    opacity: 0.4;
     display: flex;
-    width: 25%;
-    border-radius: 50px;
+    height: 100%;
+    /* border-radius: 50px 50px 0 0; */
     transition: all .5s ease;
-    animation: rotate 500ms ease-in-out;
+    /* animation: rotate 500ms ease-in-out; */
     z-index: 2;
 }
 .img_idx_deux{
-    width: 22.5%;
-    left: 15%;
-    border-radius: 50px;
-    transition: all .5s ease;
-    animation: rotate 700ms ease-in-out;
-    z-index: 1;
+    image-orientation: revert;
 }
 .img_idx_deux:hover, .img_idx_one:hover{
     /* animation: rotate 500ms ease-in-out; */
     z-index: 3;
     box-shadow:  0 2px 5px 2px rgba(0, 0, 0, 2.5);
 }
-.img_idx_trois{
-    width: 20%;
-    right: 15%;
+/* .img_idx_trois{
     border-radius: 50px;
+    right: 600px;
+    position: absolute;
     transition: all .5s ease;
     animation: rotate 900ms ease-in-out;
     z-index: 1;
-}
+} */
 .img_idx_trois:hover{
     box-shadow:  0 2px 5px 2px rgba(0, 0, 0, 2.5);
     /* animation: rotate 500ms ease-in-out; */
@@ -169,6 +176,7 @@
     flex-direction: column;
     padding: 30px 0 50px 0;
     width: 100%;
+    z-index: 1;
     /* height: 30vw; */
     /* background: var(--gradient-card); */
 }

@@ -37,8 +37,9 @@
     width: 96px;
     background-color: grey;
 }
-
-body {
+@import url('https://fonts.googleapis.com/css2?family=Coiny&display=swap');
+html, body{
+    /* font-family: 'Coiny', cursive !important; */
     background-color: rgb(24, 21, 33);
 }
 
