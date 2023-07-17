@@ -3,6 +3,10 @@
 {% block title %}Accueil
 {% endblock %}
 
+{% block javascripts %}
+	<script src="{{ asset('assets/js/index.js') }}" defer></script>
+{% endblock %}
+
 {% block body %}
 	{# <a href="{{ path('mail')}}">Click</a> #}
 	<div class="example-wrapper div_container">

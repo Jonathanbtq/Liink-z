@@ -12,6 +12,10 @@
                         <p>{{ message.error }}</p>
                     {% endif %}
                 {% endif %}
+                <div class="btn_settacc_wdt">
+                    <a class ="sett_a" href="{{ path('usermodifaccount', {pseudo: app.user.pseudo}) }}">Account</a>
+                    <a class ="sett_a" href="{{ path('usersettings', {pseudo: app.user.pseudo}) }}">Profile</a>
+                </div>
                 <h1>Account information</h1>
                 {# {{form_start(form)}}
                 {{form_row(form.email)}} #}

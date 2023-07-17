@@ -6,7 +6,10 @@
 {% block body %}
     <div class="div_container">
         <div class="settings_ctn">
-            <a class ="sett_a" href="{{ path('usermodifaccount', {pseudo: app.user.pseudo}) }}">My account</a>
+            <div class="btn_sett_wdt">
+                <a class ="sett_a" href="{{ path('usermodifaccount', {pseudo: app.user.pseudo}) }}">Account</a>
+                <a class ="sett_a" href="{{ path('usersettings', {pseudo: app.user.pseudo}) }}">Profile</a>
+            </div>
             <div class="subscribe_parameter_ctn">
                 <h2>Let visitors subscribe</h2>
                 <div class="head_sub_param">

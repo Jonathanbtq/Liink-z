@@ -214,12 +214,12 @@ class MainController extends AbstractController
                 $photoDir = $photoDir.'/'.$user->id;
                 mkdir($photoDir, 0777);
             }
-            
-            $photo->move($photoDir, $filename);
-            $user->setProfileImg($filename);
-            
-            $userRepo->save($user, true);
-            return $this->redirectToRoute('show', ['pseudo' => $user->getPseudo()]);
+                
+                $photo->move($photoDir, $filename);
+                $user->setProfileImg($filename);
+                
+                $userRepo->save($user, true);
+                return $this->redirectToRoute('appearance', ['pseudo' => $user->getPseudo()]);
         }
 
         //Background image
@@ -234,37 +234,40 @@ class MainController extends AbstractController
         if( $form_back->isSubmitted() && $form_back->isValid()){
             if($img = $form_back['image_back']->getData()){
                 $filename = bin2hex(random_bytes(6)) . '.' . $img->guessExtension();
-                // Vérification de l'éxistance d'un fichier nommé à l'id de l'user
-                if(!file_exists($photoBackDir.'/'.$user->id)){
-                    $photoBackDir = $photoBackDir.'/'.$user->id;
-                    mkdir($photoBackDir, 0777);
-                }else{
-                    $objects = scandir($directory);
-                    foreach ($objects as $object) {
-                        if ($object != "." && $object != "..") {
-                            if (filetype($directory."/".$object) == "dir"){
-                                rmdir($directory."/".$object);
-                            }else{
-                                unlink($directory."/".$object);
+                $ext = ['JPEG', 'jpeg', 'jpg', 'PNG', 'png', 'JPG', 'GIF', 'gif'];
+                if(in_array($img->guessExtension(), $ext)){
+                    if(!file_exists($photoBackDir.'/'.$user->id)){
+                        $photoBackDir = $photoBackDir.'/'.$user->id;
+                        mkdir($photoBackDir, 0777);
+                    }else{
+                        $objects = scandir($directory);
+                        foreach ($objects as $object) {
+                            if ($object != "." && $object != "..") {
+                                if (filetype($directory."/".$object) == "dir"){
+                                    rmdir($directory."/".$object);
+                                }else{
+                                    unlink($directory."/".$object);
+                                }
                             }
                         }
+                        rmdir(strval($directory));
+                        $photoBackDir = $photoBackDir.'/'.$user->id;
+                        mkdir($photoBackDir, 0777);
                     }
-                    rmdir(strval($directory));
-                    $photoBackDir = $photoBackDir.'/'.$user->id;
-                    mkdir($photoBackDir, 0777);
-                }
-                if($img->move($photoBackDir, $filename)){
-                    $message = 'Upload effectué avec succès';
+                    if($img->move($photoBackDir, $filename)){
+                        $message = 'Upload effectué avec succès';
+                    }else{
+                        $message = 'Erreur lors de l\'upload';
+                    }
+                    $user->setImageBack($filename);
                 }else{
-                    $message = 'Erreur lors de l\'upload';
+                    $message = 'Extension autorisé (JPEG, JPG, GIF, PNG)';
                 }
-                $user->setImageBack($filename);
             }
            
             $userRepo->save($user, true);
             return $this->redirectToRoute('appearance', ['pseudo' => $user->pseudo]);
         }
-
 
         return $this->render('main/appearance.html.twig', [
             'user_main' => $user,
@@ -272,6 +275,7 @@ class MainController extends AbstractController
             'form_back' => $form_back->createView(),
             'form_img' => $profilForm->createView(),
             'img' => $img,
+            'message' => $message
         ]);
     }
 

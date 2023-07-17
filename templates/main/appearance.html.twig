@@ -45,6 +45,9 @@
 
         <h2 class="appearance_h2">Background Profile</h2>
         <div class="appearance_ctn">
+            {% if message is defined %}
+                {{ message }}
+            {% endif %}
             <div class="appearance_img_user">
                 <div class="app_back_img">
                     {% if app.user.getImageBack %}

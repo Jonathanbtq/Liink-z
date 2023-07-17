@@ -10,11 +10,17 @@
     width: 40%;
     margin-top: 50px;
 }
+.btn_sett_wdt{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+}
 .sett_a{
     display: flex;
     justify-content: center;
     width: 25%;
     font-size: 30px;
+    margin-right: 10px;
     text-align: center;
     color: white;
     font-weight: bold;
@@ -112,6 +118,12 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+}
+.btn_settacc_wdt{
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 50px;
+    width: 70%;
 }
 .modifaccount_ctn form{
     display: flex;
