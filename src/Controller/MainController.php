@@ -234,8 +234,8 @@ class MainController extends AbstractController
         if( $form_back->isSubmitted() && $form_back->isValid()){
             if($img = $form_back['image_back']->getData()){
                 $filename = bin2hex(random_bytes(6)) . '.' . $img->guessExtension();
-                $ext = ['JPEG', 'jpeg', 'jpg', 'PNG', 'png', 'JPG', 'GIF', 'gif'];
-                if(in_array($img->guessExtension(), $ext)){
+                $ext = ['JPEG', 'jpeg', 'jpg', 'PNG', 'png', 'JPG', 'GIF', 'gif', 'webp'];
+                if (in_array(strtolower($img->getClientOriginalExtension()), $ext)) {
                     if(!file_exists($photoBackDir.'/'.$user->id)){
                         $photoBackDir = $photoBackDir.'/'.$user->id;
                         mkdir($photoBackDir, 0777);
@@ -260,13 +260,14 @@ class MainController extends AbstractController
                         $message = 'Erreur lors de l\'upload';
                     }
                     $user->setImageBack($filename);
+
+                    $userRepo->save($user, true);
+                    return $this->redirectToRoute('appearance', ['pseudo' => $user->pseudo]);
                 }else{
                     $message = 'Extension autorisé (JPEG, JPG, GIF, PNG)';
                 }
             }
            
-            $userRepo->save($user, true);
-            return $this->redirectToRoute('appearance', ['pseudo' => $user->pseudo]);
         }
 
         return $this->render('main/appearance.html.twig', [
