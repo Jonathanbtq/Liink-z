@@ -193,14 +193,14 @@
 .wth_idx_persona{
     display: flex;
     flex-wrap: nowrap;
-    min-height: 50vw;
+    min-height: 100vh;
     width: 100%;
 }
 .left_side_idx_perso{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 45%;
+    width: 49%;
 }
 .left_side_idx_perso h3{
     font-size: 70px;
@@ -208,30 +208,74 @@
     font-weight: bolder;
 }
 .left_side_idx_perso p{
+    display: flex;
+    width: 90%;
     font-size: 20px;
     text-align: start;
 }
+.rgt_ctn_perso{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 49%;
+}
+/*GRID*/
+/* .rgt_side_idx_perso{
+    display: grid;
+    gap: 5%;
+    grid-template-columns: repeat(4,1fr);
+    pointer-events: none;
+    width: 100%;
+}
+.rgt_side_idx_perso img{
+    height: 300px;
+    width: 100%;
+    transform: rotate(-4deg);
+    border-radius: 15px;
+    grid-row: 1/1;
+    perspective: 100rem;
+    pointer-events: auto;
+    transition: transform 0.3s ease;
+} */
+/* .rgt_side_idx_perso img:hover{
+    transform: scale(1.2);
+} */
+.rgt_side_idx_perso img:nth-child(1){
+    --index: -0.5;
+    top: 0;
+    /* grid-column: 1/span 2; */
+}
+.rgt_side_idx_perso img:nth-child(2){
+    --index: 0.5;
+    top: 200px;
+    /* grid-column: 2/span 2; */
+}
+.rgt_side_idx_perso img:nth-child(3){
+    --index: 1.5;
+    top: 300px;
+    /* grid-column: 3/span 2; */
+}
+.rgt_ctn_perso{
+    display: flex;
+    width: 49%;
+}
 .rgt_side_idx_perso{
     display: flex;
-    position: relative;
     flex-direction: column;
     align-items: center;
-    width: 45%;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 .rgt_side_idx_perso img{
     position: absolute;
-    width: 75%;
-    height: 400px;
+    height: 300px;
+    width: 50%;
     border-radius: 15px;
+    perspective: 100rem;
+    pointer-events: auto;
+    transition: transform 0.3s ease;
 }
-.rgt_side_idx_perso:nth-child(1){
-    z-index: 2;
-}
-.rgt_side_idx_perso:nth-child(2){
-    z-index: 1;
-    bottom: 50px;
-}
-
 
 /**** TROISIEME PARTIE ****/
 
