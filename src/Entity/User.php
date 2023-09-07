@@ -269,6 +269,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /******
+     * Permet de pouvoir accepter l'abonnement au compte
+     */
     public function isSubscribeAccept(): ?bool
     {
         return $this->subscribe_accept;

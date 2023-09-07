@@ -93,7 +93,11 @@ class UserController extends AbstractController
     public function userUnSubscribe($pseudo, UserRepository $userRepo): Response
     {
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
-        $user->setSubscribeAccept(false);
+        if($user->isSubscribeAccept() == false){
+            $user->setSubscribeAccept(true);
+        }else{
+            $user->setSubscribeAccept(false);
+        }
         
         $userRepo->save($user, true);
         return $this->redirectToRoute('usersettings', ['pseudo' => $user->pseudo]);

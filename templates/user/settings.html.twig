@@ -17,7 +17,7 @@
                     {% if user.isSubscribeAccept == true %}
                         <a href="{{ path('userunsubscribe', {pseudo: app.user.pseudo})}}">Refused</a>
                     {% else %}
-                        <a href="{{ path('usersubscribe', {pseudo: app.user.pseudo})}}">Accept</a>
+                        <a href="{{ path('userunsubscribe', {pseudo: app.user.pseudo})}}">Accept</a>
                     {% endif %}
                 </div>
                 
