@@ -58,7 +58,7 @@ class SocialLink
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $kick = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $etsy = null;
 
     #[ORM\Column(length: 255, nullable: true)]

@@ -8,6 +8,7 @@ use App\Entity\Token;
 use App\Form\UserModifType;
 use App\Entity\Subscription;
 use App\Form\ImgBackFormType;
+use App\Form\SocialLinkFormType;
 use App\Repository\UserRepository;
 use App\Form\UserPasswordModifType;
 use App\Repository\LinksRepository;
@@ -70,16 +71,29 @@ class UserController extends AbstractController
 
     
     #[Route('/settings/{pseudo}', name: 'usersettings')]
-    public function userSetting($pseudo, UserRepository $userRepo, LinksRepository $linksRepo, SocialLinkRepository $socialLinkRepo): Response
+    public function userSetting($pseudo, Request $request, UserRepository $userRepo, LinksRepository $linksRepo, SocialLinkRepository $socialLinkRepo): Response
     {
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
         $links = $linksRepo->findBy(['user' => $this->getUser()]);
-        $socialLink = $socialLinkRepo->findBy(['user' => $this->getUser()]);
+        $socialLink = $socialLinkRepo->findOneBy(['user' => $this->getUser()]);
+        if(!$socialLink){
+            $socialLink = new SocialLink();
+            $socialLink->setUser($this->getUser());
+            $socialLinkRepo->save($socialLink, true);
+        }
+        $socialForm = $this->createForm(SocialLinkFormType::class, $socialLink);
+        $socialForm->handleRequest($request);
         
+        if ($socialForm->isSubmitted() && $socialForm->isValid()) {
+            $socialLinkRepo->save($socialLink, true);
+            return $this->redirectToRoute('usersettings', [ 'pseudo' => $user->pseudo]);
+        }
+
         return $this->render('user/settings.html.twig', [
             'user' => $user,
             'links' => $links,
-            'socialLink' => $socialLink
+            'socialLinkform' => $socialForm,
+            'Scllink' => $socialLink
         ]);
     }
 
