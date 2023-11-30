@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\SocialLink;
 use Exception;
 use App\Entity\Token;
 use App\Form\UserModifType;
@@ -10,6 +11,7 @@ use App\Form\ImgBackFormType;
 use App\Repository\UserRepository;
 use App\Form\UserPasswordModifType;
 use App\Repository\LinksRepository;
+use App\Repository\SocialLinkRepository;
 use App\Repository\SubscriptionRepository;
 use App\Repository\TokenRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -68,14 +70,16 @@ class UserController extends AbstractController
 
     
     #[Route('/settings/{pseudo}', name: 'usersettings')]
-    public function userSetting($pseudo, UserRepository $userRepo, LinksRepository $linksRepo): Response
+    public function userSetting($pseudo, UserRepository $userRepo, LinksRepository $linksRepo, SocialLinkRepository $socialLinkRepo): Response
     {
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
         $links = $linksRepo->findBy(['user' => $this->getUser()]);
+        $socialLink = $socialLinkRepo->findBy(['user' => $this->getUser()]);
         
         return $this->render('user/settings.html.twig', [
             'user' => $user,
             'links' => $links,
+            'socialLink' => $socialLink
         ]);
     }
 
@@ -198,6 +202,9 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * Modification du mot de passe
+     */
     #[Route('/password/user/{pseudo}', name: 'usermodifpassword')]
     public function userModifPassword($pseudo, Request $request, TokenRepository $tokenRepo, MailerInterface $mailer, UserRepository $userRepo, UserPasswordHasherInterface $userPasswordHasher): Response
     {
@@ -338,6 +345,9 @@ class UserController extends AbstractController
         return $this->redirectToRoute('appearance', ['pseudo' => $pseudo]);
     }
 
+    /**
+     * Modification du théme
+     */
     #[Route('/color/{color}', name:'changetheme')]
     public function colorModification($color, UserRepository $userRepo){
         $user = $userRepo->findOneBy(['pseudo' => $this->getUser()->pseudo]);

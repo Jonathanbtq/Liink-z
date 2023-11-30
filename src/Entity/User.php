@@ -68,12 +68,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 10)]
     private ?string $colorCustom = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: SocialLink::class)]
+    private Collection $socialLinks;
+
     public function __construct()
     {
         $this->subscriptions = new ArrayCollection();
         $this->link = new ArrayCollection();
         $this->links = new ArrayCollection();
         $this->tokens = new ArrayCollection();
+        $this->socialLinks = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -346,6 +350,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setColorCustom(string $colorCustom): self
     {
         $this->colorCustom = $colorCustom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SocialLink>
+     */
+    public function getSocialLinks(): Collection
+    {
+        return $this->socialLinks;
+    }
+
+    public function addSocialLink(SocialLink $socialLink): self
+    {
+        if (!$this->socialLinks->contains($socialLink)) {
+            $this->socialLinks->add($socialLink);
+            $socialLink->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialLink(SocialLink $socialLink): self
+    {
+        if ($this->socialLinks->removeElement($socialLink)) {
+            // set the owning side to null (unless already changed)
+            if ($socialLink->getUser() === $this) {
+                $socialLink->setUser(null);
+            }
+        }
 
         return $this;
     }
