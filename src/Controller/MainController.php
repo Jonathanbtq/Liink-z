@@ -14,6 +14,7 @@ use App\Repository\UserRepository;
 use App\Repository\LinksRepository;
 use App\Form\ProfilImgProfilFormType;
 use App\Repository\ContactRepository;
+use App\Repository\SocialLinkRepository;
 use App\Repository\SubscriptionRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -142,7 +143,7 @@ class MainController extends AbstractController
      * Affichage de la page utilisateur
      */
     #[Route('/{pseudo}', name: 'show')]
-    public function showLink($pseudo, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo): Response
+    public function showLink($pseudo, LinksRepository $linkRepo, UserRepository $userRepo, SubscriptionRepository $subRepo, SocialLinkRepository $socialLinkRepo): Response
     {
         if(!$this->getUser()){
             return $this->redirectToRoute('login');
@@ -150,12 +151,14 @@ class MainController extends AbstractController
 
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
         $abo = $subRepo->findOneByIdAbo($user, $this->getUser());
+        $socialLink = $socialLinkRepo->findOneBy(['user' => $user]);
 
         return $this->render('main/show.html.twig', [
             'controller_name' => 'Main page',
             'links' => $linkRepo->findByAdresse($user->getId()),
             'user_main' => $userRepo->findBy(['pseudo' => $pseudo]),
-            'abo' => $abo
+            'abo' => $abo,
+            'sociallink' => $socialLink
         ]);
     }
 

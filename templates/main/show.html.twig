@@ -88,6 +88,31 @@
 					</div>
 				{% endif %}
 			{% endif %}
+			{% for platform, username in {
+				'YouTube': sociallink.youtube,
+				'Snapchat': sociallink.snapchat,
+				'Instagram': sociallink.instagram,
+				'twitch': sociallink.twitch,
+				'Email': sociallink.email,
+				'twitter': sociallink.twitter,
+				'tiktok': sociallink.tiktok,
+				'whatsapp': sociallink.whatsapp,
+				'amazon': sociallink.amazon,
+				'applemusic': sociallink.applemusic,
+				'discord': sociallink.discord,
+				'hithub': sociallink.github,
+				'kick': sociallink.kick,
+				'etsy': sociallink.etsy,
+				'linkedin': sociallink.linkedin,
+				'patreon': sociallink.patreon,
+				'printerest': sociallink.printerest,
+				'spotify': sociallink.spotify,
+				'telegram': sociallink.telegram,
+			} %}
+				{% if username is not null %}
+					<i class="{{ platform | lower }}-icon"></i>
+				{% endif %}
+			{% endfor %}
 			{% if links is defined  %}
 				{% for link in links %}
 					{% if link.isActived == 1 %}
