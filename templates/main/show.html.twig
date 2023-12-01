@@ -109,9 +109,10 @@
 				'spotify': sociallink.spotify,
 				'telegram': sociallink.telegram,
 			} %}
-				{% if username is not null %}
+				{{ username is not null ? username : '' }}
+				{# {% if username is not null %}
 					<i class="{{ platform | lower }}-icon"></i>
-				{% endif %}
+				{% endif %} #}
 			{% endfor %}
 			{% if links is defined  %}
 				{% for link in links %}
