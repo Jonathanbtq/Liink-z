@@ -58,7 +58,7 @@ class UserController extends AbstractController
         $user = $userRepo->findOneBy(['pseudo' => $pseudo]);
         $img = $user->getProfileImg();
 
-        if($img != null){
+        if(!empty($img)){
             unlink("../public/uploads/photos/" . $img);
             $user->setProfileImg(null);
             
