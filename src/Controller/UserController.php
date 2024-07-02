@@ -365,25 +365,32 @@ class UserController extends AbstractController
     #[Route('/color/{color}', name:'changetheme')]
     public function colorModification($color, UserRepository $userRepo){
         $user = $userRepo->findOneBy(['pseudo' => $this->getUser()->pseudo]);
-        $color = $color;
 
-        if($color === 'white'){
-            $user->setColorCustom('white');
-        }elseif($color === 'Blue'){
-            $user->setColorCustom('blue');
-        }elseif($color === 'Black'){
-            $user->setColorCustom('black');
-        }elseif($color === 'Purple'){
-            $user->setColorCustom('purple');
-        }elseif($color === 'Green'){
-            $user->setColorCustom('green');
+        if (!empty($color)) {
+            switch ($color) {
+                case 'white':
+                    $user->setColorCustom('white');
+                    break;
+                case 'Blue':
+                    $user->setColorCustom('blue');
+                    break;
+                case 'Black':
+                    $user->setColorCustom('black');
+                    break;
+                case 'Purple':
+                    $user->setColorCustom('purple');
+                    break;
+                case 'Green':
+                    $user->setColorCustom('green');
+                    break;
+            }
         }
 
         $userRepo->save($user, true);
         return $this->redirectToRoute('appearance', ['pseudo' => $user->pseudo]);
     }
 
-    public function TokenGeneration(){
+    private function TokenGeneration(){
         $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longueurMax = strlen($caracteres);
         $chaineAleatoire = '';
